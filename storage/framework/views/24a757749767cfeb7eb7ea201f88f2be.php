@@ -1,0 +1,2997 @@
+<?php $__env->startSection('content'); ?>
+    <style>
+        .bs-stepper .bs-stepper-header .step .step-trigger .bs-stepper-label .bs-stepper-title {
+            font-size: 1rem !important;
+
+        }
+
+        .bs-stepper .line i {
+            font-size: 1.5rem !important;
+        }
+
+        .modal {
+            --bs-modal-width: 57rem !important;
+        }
+
+        .bn-node {
+            text-transform: math-auto !important;
+            margin-bottom: .2rem;
+            font-size: 1.2rem !important;
+            color: #0311ff;
+        }
+
+        .nb {
+            text-transform: math-auto !important;
+            font-size: 1rem !important;
+            margin-bottom: .2rem;
+            color: red !important;
+        }
+
+        span.text-danger {
+            font-size: 16px;
+        }
+
+        .form-label,
+        .col-form-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: inherit;
+        }
+
+        .form-check-label {
+            font-size: 16px;
+        }
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: flex;
+        }
+
+        .showinput {
+            display: block;
+        }
+
+        .text-bold button span {
+            font-weight: bold !important;
+            font-size: 18px !important;
+        }
+
+        .bs-stepper .bs-stepper-header .step .step-trigger {
+            padding: 0 .4rem !important;
+        }
+
+        .error {
+            border-color: red !important;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: red !important;
+            box-shadow: 0 0 5px red;
+        }
+
+        @media (min-width: 600px) {
+            .bs-stepper {
+                max-height: 80vh;
+                overflow-y: auto;
+                position: relative;
+            }
+
+            .bs-stepper-header {
+                position: sticky;
+                top: 0;
+                background-color: #e5e5e5;
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            .justify-content-between {
+                position: sticky;
+                bottom: 0;
+                background-color: #e5e5e5;
+                padding: 10px !important;
+            }
+
+            .bs-stepper .bs-stepper-content {
+                padding: .75rem .75rem !important;
+            }
+
+            .bs-stepper-content {
+                padding: 0 8px 4px !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .btn-info {
+                margin-left: 40% !important;
+            }
+
+            .bs-stepper .bs-stepper-header {
+                padding: .485rem 1.125rem !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="<?php echo e(asset('/')); ?>public/backend/assets/vendor/libs/bs-stepper/bs-stepper.css" />
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            
+            <nav aria-label="breadcrumb" class="my-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="<?php echo e(route('dashboard')); ?>">Dashboard</a>
+                    </li>
+					<!--
+                    <li class="breadcrumb-item">
+                        <a href="<?php echo e(Auth::user()->group_id == 3 ? route('teacherStudent') : route('students.index')); ?>">
+                            Students
+                        </a>
+                    </li>
+					-->
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <?php echo e($student->student_code ? 'Update Profile' : 'Student Admission Form'); ?></li>
+                </ol>
+            </nav>
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="bs-stepper wizard-icons wizard-icons-example mt-2">
+                        
+                        <div class="bs-stepper-header">
+                            <div class="step <?php echo e(($student->stage==1 || $student->submit==2)?'active':''); ?> text-bold " id="accountdetails">
+                                <button type="button" class="step-trigger headermenu" data-currentdata="account-details"
+                                    data-pre="none" aria-selected="true">
+                                    <span class="bs-stepper-label">Personal Info</span>
+                                </button>
+                            </div>
+                            <div class="line">
+                                <i class="bx bx-chevron-right"></i>
+                            </div>
+                            <div class="step <?php echo e($student->stage==2?'active':''); ?>" id="desiredsubject">
+                                <button type="button" class="step-trigger headermenu" data-currentdata="personal-info"
+                                    data-pre="account-details" aria-selected="false">
+
+                                    <span class="bs-stepper-label">Subject Selection</span>
+                                </button>
+                            </div>
+                            <div class="line">
+                                <i class="bx bx-chevron-right"></i>
+                            </div>
+                            <div class="step <?php echo e($student->stage==3?'active':''); ?>" id="sscexamdetails" id="sscexam">
+                                <button type="button" class="step-trigger headermenu" data-currentdata="address"
+                                    data-pre="personal-info" aria-selected="false">
+
+                                    <span class="bs-stepper-label">SSC Exam Details</span>
+                                </button>
+                            </div>
+                            <div class="line">
+                                <i class="bx bx-chevron-right"></i>
+                            </div>
+                            <div class="step <?php echo e($student->stage==4?'active':''); ?>" id="force">
+                                <button type="button" class="step-trigger headermenu" data-currentdata="social-links"
+                                    data-pre="address" aria-selected="false">
+                                    <span class="bs-stepper-label">Special Information</span>
+                                </button>
+                            </div>
+                            <div class="line">
+                                <i class="bx bx-chevron-right"></i>
+                            </div>
+                            <div class="step <?php echo e($student->stage==5?'active':''); ?>" id="academicinfo">
+                                <button type="button" class="step-trigger headermenu" data-currentdata="review-submit"
+                                    data-pre="social-links" aria-selected="false">
+                                    <span class="bs-stepper-label">Admitted Class Info</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bs-stepper-content">
+                            <form id="formAdmission" method="POST" action="<?php echo e(route('students.store')); ?>"
+                                enctype="multipart/form-data">
+                                <?php echo csrf_field(); ?>
+                                <input type="hidden" name="student_code" id="student_code"
+                                    value="<?php echo e($student->student_code ?? ''); ?>" />
+								<input type="hidden" name="stage" id="stage"
+                                    value="<?php echo e($student->stage ?? ''); ?>" />
+                                <input type="hidden" name="id" id="id" value="<?php echo e($id ?? ''); ?>" />
+                                <!-- Account Details -->
+                                <div id="account-details" class="content <?php echo e(($student->stage==1 || $student->submit==2)?'active dstepper-block':''); ?> ">
+                                    <div class="content-header mb-3">
+                                        <h6 class="mb-0"
+                                            style="color: #da45dc;weight: bold;font-size: 16px;font-weight: bold">Student
+                                            Information</h6>
+                                        <small class="text-danger">Asterisk(*) fields need to be completed.</small>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="first_name" class="form-label">Student's Name (English)<span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="text" readonly="readonly" id="first_name"
+                                                name="first_name" value="<?php echo e($student->first_name ?? ''); ?>"
+                                                <?php echo e(Auth::user()->group_id != 2 || Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                placeholder="Student's Name (English)" autofocus="">
+
+                                        </div>
+                                        <!-- <div class="mb-3 col-md-4">
+                                                                                                                                                                                                                    <label for="last_name" class="form-label">Last Name</label>
+                                                                                                                                                                                                                    <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="Last Name" value="<?php echo e($student->last_name ?? ''); ?>">
+                                                                                                                                                                                                                </div> -->
+                                        <div class="mb-3 col-md-6">
+                                            <label for="last_name" class="form-label">Student's Name (Bangla)</label>
+                                            <input class="form-control" type="text" name="bangla_name"
+                                                id="bangla_name" placeholder="Student's Name (Bangla)"
+                                                value="<?php echo e($student->bangla_name ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="state" class="form-label">Birth Date<span
+                                                    class="text-danger">*</span></label>
+                                            <?php if($student->birthdate && Auth::user()->group_id != 2 && Auth::user()->group_id != 7): ?>
+                                                <input disabled class="form-control" type="date" id="birthdate"
+                                                    name="birthdate" placeholder="Birth Date"
+                                                    value="<?php echo e($student->birthdate ?? ''); ?>">
+                                            <?php else: ?>
+                                                <input class="form-control" type="date" id="birthdate"
+                                                    name="birthdate" placeholder="Birth Date"
+                                                    value="<?php echo e($student->birthdate ?? ''); ?>">
+                                            <?php endif; ?>
+                                            <div class="invalid-feedback">Please enter your Birth Date. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="state" class="form-label">Birth Registration No</label>
+
+                                            <input class="form-control" type="number" id="birth_no" name="birth_no"
+                                                placeholder="Birth Registration No"
+                                                value="<?php echo e($student->birth_no ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="religion" class="form-label">Religion<span
+                                                    class="text-danger">*</span></label>
+                                            <select id="religion" name="religion" class=" form-select"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>>
+                                                <option value="">Select Religion</option>
+                                                <option value="1"
+                                                    <?php echo e(isset($student) && $student->religion == '1' ? 'selected="selected"' : ''); ?>>
+                                                    Islam</option>
+                                                <option value="2"
+                                                    <?php echo e(isset($student) && $student->religion == '2' ? 'selected="selected"' : ''); ?>>
+                                                    Hindu</option>
+                                                <option value="3"
+                                                    <?php echo e(isset($student) && $student->religion == '3' ? 'selected="selected"' : ''); ?>>
+                                                    christian</option>
+                                                <option value="4"
+                                                    <?php echo e(isset($student) && $student->religion == '4' ? 'selected="selected"' : ''); ?>>
+                                                    Buddhism</option>
+                                                <option value="5"
+                                                    <?php echo e(isset($student) && $student->religion == '5' ? 'selected="selected"' : ''); ?>>
+                                                    Others</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select your Religion. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="nationality" class="form-label">Nationality<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" required id="nationality"
+                                                name="nationality" placeholder="Nationality"
+                                                value="<?php echo e($student->nationality ?? 'Bangladeshi'); ?>">
+                                            <div class="invalid-feedback">Please enter your Nationality. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="email" class="form-label">E-mail</label>
+                                            <input class="form-control" type="email" id="email" name="email"
+                                                placeholder="john.doe@example.com" value="<?php echo e($student->email ?? ''); ?>"
+                                                placeholder="john.doe@example.com">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="organization" class="form-label">Mobile<span
+                                                    class="text-danger">*</span></label>
+                                            <div class="input-group input-group-merge">
+                                                <span class="input-group-text">BD (+88)</span>
+                                                <input type="number" id="mobile" name="mobile" class="form-control"
+                                                    <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                    placeholder="01XXXXXXXXX" value="<?php echo e($student->mobile ?? ''); ?>">
+                                            </div>
+                                            <div class="invalid-feedback">Please enter your Mobile. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="gender" class="form-label">Gender<span
+                                                    class="text-danger">*</span></label>
+                                            <select id="gender" name="gender" class="form-select"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>>
+                                                <option value="">Select Gender</option>
+                                                <option value="1"
+                                                    <?php echo e(isset($student) && $student->gender == '1' ? 'selected="selected"' : ''); ?>>
+                                                    Male</option>
+                                                <option value="2"
+                                                    <?php echo e(isset($student) && $student->gender == '2' ? 'selected="selected"' : ''); ?>>
+                                                    Female</option>
+                                                <!-- <option value="3" <?php echo e(isset($student) && $student->gender == '3' ? 'selected="selected"' : ''); ?>>Other</option> -->
+                                            </select>
+                                            <div class="invalid-feedback">Please select your Gender. </div>
+                                        </div>
+
+                                        <div class="mb-3 col-md-6">
+                                            <label for="blood" class="form-label">Blood</label>
+                                            <select id="blood" name="blood" id="blood" class=" form-select">
+                                                <option value="">Select Blood</option>
+                                                <option value="O+"
+                                                    <?php echo e(isset($student) && $student->blood == 'O+' ? 'selected="selected"' : ''); ?>>
+                                                    O+</option>
+                                                <option value="O-"
+                                                    <?php echo e(isset($student) && $student->blood == 'O-' ? 'selected="selected"' : ''); ?>>
+                                                    O-</option>
+                                                <option value="A+"
+                                                    <?php echo e(isset($student) && $student->blood == 'A+' ? 'selected="selected"' : ''); ?>>
+                                                    A+</option>
+                                                <option value="A-"
+                                                    <?php echo e(isset($student) && $student->blood == 'A-' ? 'selected="selected"' : ''); ?>>
+                                                    A-</option>
+                                                <option value="B+"
+                                                    <?php echo e(isset($student) && $student->blood == 'B+' ? 'selected="selected"' : ''); ?>>
+                                                    B+</option>
+                                                <option value="B-"
+                                                    <?php echo e(isset($student) && $student->blood == 'B-' ? 'selected="selected"' : ''); ?>>
+                                                    B-</option>
+                                                <option value="AB+"
+                                                    <?php echo e(isset($student) && $student->blood == 'AB+' ? 'selected="selected"' : ''); ?>>
+                                                    AB+</option>
+                                                <option value="AB-"
+                                                    <?php echo e(isset($student) && $student->blood == 'AB-' ? 'selected="selected"' : ''); ?>>
+                                                    AB-</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="first_name" class="form-label">Father's Name<span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                type="text" id="father_name" name="father_name"
+                                                placeholder="Father's Name" value="<?php echo e($student->father_name ?? ''); ?>"
+                                                autofocus="">
+                                            <div class="invalid-feedback">Please enter your Father's Name. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="father_email" class="form-label">Father's Email</label>
+                                            <input class="form-control" type="email" id="father_email"
+                                                name="father_email" placeholder="Father's Email"
+                                                value="<?php echo e($student->father_email ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="father_phone" class="form-label">Father's Contact Number</label>
+                                            <input class="form-control" type="number" id="father_phone"
+                                                name="father_phone" placeholder="Father's Phone"
+                                                value="<?php echo e($student->father_phone ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="father_profession" class="form-label">Father's Profession</label>
+                                            <input class="form-control" type="text" id="father_profession"
+                                                name="father_profession" placeholder="Father's Profession"
+                                                value="<?php echo e($student->father_profession ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="mother_name" class="form-label">Mother's Name<span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                type="text" name="mother_name" id="mother_name"
+                                                placeholder="Mother's Name" value="<?php echo e($student->mother_name ?? ''); ?>">
+                                            <div class="invalid-feedback">Please enter your Mother's Name. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="mother_email" class="form-label">Mother's Email</label>
+                                            <input class="form-control" type="email" name="mother_email"
+                                                id="mother_email" placeholder="Mother's Email"
+                                                value="<?php echo e($student->mother_email ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="mother_phone" class="form-label">Mother's Contact Number</label>
+                                            <input class="form-control" type="number" name="mother_phone"
+                                                id="mother_phone" placeholder="Mother's Phone"
+                                                value="<?php echo e($student->mother_phone ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="mother_profession" class="form-label">Mother's Profession</label>
+                                            <input class="form-control" type="text" name="mother_profession"
+                                                id="mother_profession" placeholder="Mother Profession"
+                                                value="<?php echo e($student->mother_profession ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="mother_profession" class="form-label">Father's NID Number</label>
+                                            <input class="form-control" type="number" name="father_nid_number"
+                                                id="father_nid_number" placeholder="Father's NID Number"
+                                                value="<?php echo e($student->father_nid_number ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="mother_profession" class="form-label">Mother's NID Number</label>
+                                            <input class="form-control" type="number" name="mother_nid_number"
+                                                id="mother_nid_number" placeholder="Mother's NID Number"
+                                                value="<?php echo e($student->mother_nid_number ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="father_nid" class="form-label">Father's NID (jpg,jpeg,pdf
+                                                format)</label>
+                                            <input class="form-control" type="file"
+                                                onchange="loadFile(event,'father_nid_preview')" id="father_nid"
+                                                name="father_nid">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="father_nid_old"
+                                                value="<?php echo e($student->father_nid ?? ''); ?>" name="father_nid_old">
+                                            <div class="mb-3 col-md-12">
+												<?php
+													$file = $student->father_nid;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" id=father_nid_preview" type="application/pdf" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($file??"").'" id="father_nid_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="mother_nid" class="form-label">Mother's NID (jpg,jpeg,pdf
+                                                format)</label>
+                                            <input class="form-control" type="file"
+                                                onchange="loadFile(event,'mother_nid_preview')" id="mother_nid"
+                                                name="mother_nid">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="mother_nid_old"
+                                                value="<?php echo e($student->mother_nid ?? ''); ?>" name="mother_nid_old">
+                                            <div class="mb-3 col-md-12">
+												<?php
+													$file = $student->mother_nid;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" id="mother_nid_preview" type="application/pdf" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($student->mother_nid??"").'" id="mother_nid_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                                
+                                            </div>
+                                        </div>
+										
+                                        <div class="mb-3 col-md-6">
+                                            <label for="sms_notification" class="form-label">SMS Notification <span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="number" name="sms_notification"
+                                                required="required" 
+                                                id="sms_notification" placeholder="SMS Notification"
+                                                value="<?php echo e($student->sms_notification ?? ''); ?>"
+												   <?php echo e(!empty($student->sms_notification) ? 'readonly' : ''); ?>
+
+												   >
+                                            <div class="invalid-feedback">Please enter your SMS Notification Number. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="parent_income" class="form-label">Parent's Annual Income</label>
+                                            <input class="form-control" type="number" name="parent_income"
+                                                id="parent_income" placeholder="Parent's Annual Income"
+                                                value="<?php echo e($student->parent_income ?? ''); ?>">
+                                        </div>
+
+                                        <div class="mb-3 col-md-12">
+                                            <p style="color: rgb(0,149,221)">Address:</p>
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="present_addr" class="form-label">Present Address</label>
+                                            <input type="text" id="present_addr" name="present_addr"
+                                                class="form-control" placeholder="Present Address"
+                                                value="<?php echo e($student->present_addr ?? ''); ?>">
+
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="present_police_station" class="form-label">Present Police
+                                                Station</label>
+                                            <input type="text" id="present_police_station"
+                                                name="present_police_station" class="form-control"
+                                                placeholder="Present Police Station"
+                                                value="<?php echo e($student->present_police_station ?? ''); ?>">
+
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="present_district_id" class="form-label">Present District</label>
+                                            <select id="present_district_id" name="present_district_id"
+                                                id="present_district_id" class=" form-select">
+                                                <option value="">Select District</option>
+                                                <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($district->id); ?>"
+                                                        <?php echo e(isset($student) && $student->present_district_id == $district->id ? 'selected="selected"' : ''); ?>>
+                                                        <?php echo e($district->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-12">
+                                            <div class="demo-inline-spacing">
+                                                <label class="form-check m-0">
+                                                    <input type="checkbox" class="form-check-input"
+                                                        <?php echo e(isset($student) && $student->same_as == '1' ? 'checked="checked"' : ''); ?>
+
+                                                        id="same_as" name="same_as" value="1">
+                                                    <span class="form-check-label">SAME AS PRESENT ADDRESS</span>
+                                                </label>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3 col-md-4">
+                                            <label for="permanent_addr" class="form-label">Permanent Address</label>
+                                            <input type="text" id="permanent_addr" name="permanent_addr"
+                                                class="form-control" placeholder="Permanent Address"
+                                                value="<?php echo e($student->permanent_addr ?? ''); ?>">
+
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="permanent_police_station" class="form-label">Permanent Police
+                                                Station</label>
+                                            <input type="text" id="permanent_police_station"
+                                                name="permanent_police_station" class="form-control"
+                                                placeholder="Permanent Police Station"
+                                                value="<?php echo e($student->permanent_police_station ?? ''); ?>">
+
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="permanent_district_id" class="form-label">Permanent
+                                                District</label>
+                                            <select id="permanent_district_id" name="permanent_district_id"
+                                                id="permanent_district_id" class=" form-select">
+                                                <option value="">Select District</option>
+                                                <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($district->id); ?>"
+                                                        <?php echo e(isset($student) && $student->permanent_district_id == $district->id ? 'selected="selected"' : ''); ?>>
+                                                        <?php echo e($district->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-12">
+                                            <p style="color: rgb(0,149,221)">Local Guardian (Father/Mother/Relative):</p>
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="local_guardian_name" class="form-label">Local Guardian Name<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                id="local_guardian_name" name="local_guardian_name"
+                                                placeholder="Guardian Name"
+                                                value="<?php echo e($student->local_guardian_name ?? ''); ?>">
+                                            <div class="invalid-feedback">Please enter your Guardian Name. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="guardian_name" class="form-label">Local Guardian Mobile<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="number" class="form-control"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                id="local_guardian_mobile" name="local_guardian_mobile"
+                                                placeholder="Guardian Mobile"
+                                                value="<?php echo e($student->local_guardian_mobile ?? ''); ?>">
+                                            <div class="invalid-feedback">Please enter your Guardian Mobile. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="guardian_email" class="form-label">Local Guardian Email</label>
+                                            <input type="email" class="form-control" id="local_guardian_email"
+                                                name="local_guardian_email" placeholder="Guardian Email"
+                                                value="<?php echo e($student->local_guardian_email ?? ''); ?>">
+
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="student_relation" class="form-label">Relation with Student<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" id="student_relation"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                name="student_relation" class="form-control"
+                                                placeholder="Relation With student"
+                                                value="<?php echo e($student->student_relation ?? ''); ?>">
+                                            <div class="invalid-feedback">Please enter your Guardian Name. </div>
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="local_guardian_address" class="form-label">Local Guardian
+                                                Address</label>
+                                            <input type="text" id="local_guardian_address"
+                                                name="local_guardian_address" class="form-control"
+                                                placeholder="Local guardian Address"
+                                                value="<?php echo e($student->local_guardian_address ?? ''); ?>">
+
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="local_guardian_police_station" class="form-label">Local Police
+                                                Station</label>
+                                            <input type="text" id="local_guardian_police_station"
+                                                name="local_guardian_police_station" class="form-control"
+                                                placeholder="Local guardian Police Station"
+                                                value="<?php echo e($student->local_guardian_police_station ?? ''); ?>">
+
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="local_guardian_district_id" class="form-label">Local guardian
+                                                District</label>
+                                            <select id="local_guardian_district_id" name="local_guardian_district_id"
+                                                id="local_permanent_district_id" class=" form-select">
+                                                <option value="">Select District</option>
+                                                <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($district->id); ?>"
+                                                        <?php echo e(isset($student) && $student->local_guardian_district_id == $district->id ? 'selected="selected"' : ''); ?>>
+                                                        <?php echo e($district->name); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="photo" class="form-label">Student's Recent Passport Size Photo
+                                                (jpg,jpeg format)<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="file" id="photo"
+                                                onchange="loadFile(event,'photo_preview')" name="photo"
+                                                <?php echo e(empty($student->photo) && !(Auth::user()->group_id == 2 || Auth::user()->group_id == 7) ? 'required=""' : ''); ?>>
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="photo_old"
+                                                value="<?php echo e($student->photo ?? ''); ?>" name="photo_old">
+
+                                            <div class="mb-3 col-md-12">
+                                                <img src="<?php echo e($student->photo ?? ''); ?>" id="photo_preview"
+                                                    style="height: 100px; width: auto" />
+                                            </div>
+                                            <div class="invalid-feedback">Please choose your Student's Photo. </div>
+                                        </div>
+
+
+                                        <div class="mb-3 col-md-6">
+                                            <label for="academic_transcript" class="form-label">BIRTH Certificate
+                                                (jpg,jpeg,pdf format)</label>
+                                            <input class="form-control" type="file"
+                                                onchange="loadFile(event,'birth_certificate_preview')"
+                                                id="birth_certificate" name="birth_certificate">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="birth_certificate_old"
+                                                value="<?php echo e($student->birth_certificate ?? ''); ?>"
+                                                name="birth_certificate_old">
+                                            <div class="mb-3 col-md-12">
+												<?php
+													$file = $student->birth_certificate;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" type="application/pdf" id="birth_certificate_preview" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($file??"").'" id="birth_certificate_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                                
+                                            </div>
+                                        </div>
+                                        <!-- <?php if(Auth::user()->group_id != 4): ?>
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <button class="btn btn-label-secondary btn-prev" disabled="">
+                                                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                                <span
+                                                                    class="align-middle d-sm-inline-block d-none Previous">Previous</span>
+                                                            </button>
+                                                            <button style="margin-left: 60%;" type="button"
+                                                                data-value="desiredsubject" data-pre="accountdetails"
+                                                                data-target="#personal-info" class="btn btn-info">
+                                                                <span class="align-right d-sm-inline-block d-none me-sm-1">Save</span>
+                                                            </button>
+                                                            <button type="button" data-value="desiredsubject"
+                                                                data-currentdata="account-details" data-pre="accountdetails"
+                                                                data-target="#personal-info" class="btn btn-primary nextbtn">
+                                                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
+                                                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                                            </button>
+                                                        </div>
+<?php else: ?>
+    -->
+                                        <?php if($student->submit != 2): ?>
+                                            <div class="col-12 d-flex justify-content-between">
+                                                <button class="btn btn-label-secondary btn-prev" disabled="">
+                                                    <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                    <span
+                                                        class="align-middle d-sm-inline-block d-none Previous">Previous</span>
+                                                </button>
+                                                <button style="margin-left: 60%;" type="button"
+                                                    data-value="desiredsubject" data-pre="accountdetails"
+                                                    data-target="#personal-info" data-currentstage="0" class="btn btn-info">
+                                                    <span class="align-right d-sm-inline-block d-none me-sm-1">Save</span>
+                                                </button>
+                                                <button type="button" data-value="desiredsubject"
+                                                    data-currentdata="account-details" data-currentstage="1" data-pre="accountdetails"
+                                                    data-target="#personal-info" class="btn btn-primary nextbtn">
+                                                    <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
+                                                    <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                                </button>
+                                            </div>
+                                        <?php else: ?>
+                                           
+                                        <?php endif; ?>
+                                        <!-- <?php endif; ?> -->
+                                    </div>
+                                </div>
+                                <!-- Personal Info -->
+                                <div id="personal-info" class="content <?php echo e(($student->stage==2 || $student->submit==2)?'active dstepper-block':''); ?>">
+                                    <div class="content-header mb-3">
+                                        <h6 class="mb-0" style="color: #da45dc;font-weight: bold;font-size: 16px;">
+                                            Desired Subject</h6>
+                                        <small>According ot the college prospectus</small>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="mb-3 col-md-6">
+                                            <div class="col-md">
+                                                <?php
+                                                    $colors = [
+                                                        'primary',
+                                                        'secondary',
+                                                        'success',
+                                                        'danger',
+                                                        'warning',
+                                                        'info',
+                                                        'primary',
+                                                        'secondary',
+                                                        'success',
+                                                        'danger',
+                                                        'warning',
+                                                        'info',
+                                                        'primary',
+                                                        'secondary',
+                                                        'success',
+                                                        'danger',
+                                                        'warning',
+                                                        'info',
+                                                        'primary',
+                                                        'secondary',
+                                                        'success',
+                                                        'danger',
+                                                        'warning',
+                                                        'info',
+                                                        'primary',
+                                                        'secondary',
+                                                        'success',
+                                                        'danger',
+                                                        'warning',
+                                                        'info',
+                                                    ];
+                                                    $i = 0;
+                                                ?>
+                                                <label for="disabledRange" class="form-label"
+                                                    style="font-weight: bold">Compulsory Subjects</label>
+                                                <?php $__currentLoopData = $comsubjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php
+                                                        $ids = '';
+                                                        foreach ($subject as $kye => $sub) {
+                                                            if ($kye == 0) {
+                                                                $ids = $sub->id;
+                                                            } else {
+                                                                $ids = $ids . '-' . $sub->id;
+                                                            }
+                                                        }
+
+                                                    ?>
+                                                    <input type="hidden" name="mainsubject[]"
+                                                        value="<?php echo e($ids); ?>">
+                                                    <div class="form-check form-check-<?php echo e($colors[0]); ?> ">
+                                                        <input class="form-check-input" type="radio"
+                                                            value="<?php echo e($ids); ?>" id="customRadioPrimary"
+                                                            checked="">
+                                                        <label class="form-check-label"
+                                                            for="customRadio<?php echo e($colors[0]); ?>"> <?php echo e($key); ?>
+
+                                                        </label>
+                                                    </div>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                <label for="disabledRange" class="form-label"
+                                                    style="font-weight: bold">Group Subjects</label>
+                                                <?php $__currentLoopData = $groupsubjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php
+                                                        $ids = '';
+                                                        foreach ($subject as $kye => $sub) {
+                                                            if ($kye == 0) {
+                                                                $ids = $sub->id;
+                                                            } else {
+                                                                $ids = $ids . '-' . $sub->id;
+                                                            }
+                                                        }
+
+                                                    ?>
+                                                    <input type="hidden" name="mainsubject[]"
+                                                        value="<?php echo e($ids); ?>">
+                                                    <div class="form-check form-check-<?php echo e($colors[4]); ?> ">
+                                                        <input class="form-check-input" type="radio"
+                                                            value="<?php echo e($ids); ?>" id="customRadioPrimary"
+                                                            checked="">
+                                                        <label class="form-check-label"
+                                                            for="customRadio<?php echo e($colors[4]); ?>"> <?php echo e($key); ?>
+
+                                                        </label>
+                                                    </div>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <span style="font-size: .80rem;font-weight: bold;">Select 3rd Subject(s)</span>
+                                            <?php $__currentLoopData = $optionalsubjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php
+                                                    $ids = [];
+                                                    $pair = [];
+                                                    foreach ($subject as $kye => $sub) {
+                                                        if ($kye == 0) {
+                                                            $ids[0] = $sub->id;
+                                                            $pair[0] = $sub->pair;
+                                                        } else {
+                                                            $ids[1] = $sub->id;
+                                                            $pair[1] = $sub->pair;
+                                                        }
+                                                    }
+
+                                                    if ($pair) {
+                                                        sort($pair);
+                                                        $pair = implode('-', $pair);
+                                                    }
+                                                    if ($ids) {
+                                                        sort($ids);
+                                                        $ids = implode('-', $ids);
+                                                    }
+
+                                                    if (isset($activity) && in_array($activity->group_id, [1, 3])) {
+                                                        $text = 'radio';
+                                                    } else {
+                                                        $text = 'checkbox';
+                                                    }
+
+                                                    if (isset($student_third_subject[$key])) {
+                                                        $checked = 'checked="checked"';
+                                                    } else {
+                                                        $checked = '';
+                                                    }
+                                                ?>
+                                                <div class="form-check form-check-<?php echo e($colors[2]); ?> ">
+                                                    <input
+                                                        class="form-check-input third_subject subject<?php echo e($pair); ?>"
+                                                        type="<?php echo e($text); ?>" name="third_subject[]"
+                                                        data-pair="<?php echo e($pair); ?>" value="<?php echo e($ids); ?>"
+                                                        id="customRadio<?php echo e($colors[$i]); ?>" <?php echo e($checked); ?>>
+                                                    <label class="form-check-label"
+                                                        for="customRadio<?php echo e($colors[2]); ?>">
+                                                        <?php echo e($key); ?> </label>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <span style="font-size: .80rem;font-weight: bold;">Select 4th Subject</span>
+                                            <?php
+                                                $pre_pair1 = '';
+                                                $pre_pair2 = '';
+                                            ?>
+                                            <?php $__currentLoopData = $fourthsubjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php
+
+                                                    $ids = [];
+                                                    $pair = [];
+                                                    foreach ($subject as $kye => $sub) {
+                                                        if ($kye == 0) {
+                                                            $pre_pair1 = $sub->id;
+                                                            $ids[0] = $sub->id;
+                                                            $pair[0] = $sub->pair;
+                                                        } else {
+                                                            $pre_pair2 = $sub->id;
+                                                            $ids[1] = $sub->id;
+                                                            $pair[1] = $sub->pair;
+                                                        }
+                                                    }
+
+                                                    if ($pair) {
+                                                        sort($pair);
+                                                        $pair = implode('-', $pair);
+                                                    }
+                                                    if ($ids) {
+                                                        sort($ids);
+                                                        $ids = implode('-', $ids);
+                                                    }
+                                                    if (isset($student_fourth_subject[$key])) {
+                                                        $checked = 'checked="checked"';
+                                                    } else {
+                                                        $checked = '';
+                                                    }
+                                                ?>
+                                                <div class="form-check form-check-<?php echo e($colors[3]); ?> ">
+													<?php if($activity->version_id==1 && $pair=='67-68' && $ids=='71-72'): ?>
+                                                    <input
+                                                        class="form-check-input fourth_subject subject"
+                                                        type="radio" name="fourth_subject[]"
+                                                        value="<?php echo e($ids); ?>" data-pair=""
+                                                        id="subject<?php echo e($colors[$i]); ?>" <?php echo e($checked); ?>>
+                                                    <label class="form-check-label" for="subject<?php echo e($colors[3]); ?>">
+                                                        <?php echo e($key); ?> </label>
+													<?php else: ?>
+													<input
+                                                        class="form-check-input fourth_subject subject<?php echo e($pair); ?>"
+                                                        type="radio" name="fourth_subject[]"
+                                                        value="<?php echo e($ids); ?>" data-pair="<?php echo e($pair); ?>"
+                                                        id="subject<?php echo e($colors[$i]); ?>" <?php echo e($checked); ?>>
+                                                    <label class="form-check-label" for="subject<?php echo e($colors[3]); ?>">
+                                                        <?php echo e($key); ?> </label>
+													<?php endif; ?>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </div>
+                                        <div class="mb-3 col-md-2">
+                                        </div>
+                                        <?php if($activity->group_id == 1): ?>
+                                            <div class="mb-3 col-md-10">
+                                                <label for="first_name" class="form-label bn-node">N.B.</label><br>
+												<!--
+                                                <label for="first_name" class="form-label nb">* If 3rd subject is Biology,
+                                                    EDS cannot be taken as the 4th subject</label><br>
+                                                <?php if($activity->version_id == 1): ?>
+                                                    <label for="first_name" class="form-label nb">* If 3rd subject is
+                                                        Higher Math, Psychology cannot be taken as the 4th
+                                                        subject</label><br>
+                                                <?php endif; ?>
+												-->
+                                                <label for="first_name" class="form-label nb">* If 3rd subject is Biology,
+                                                    Statistics cannot be taken as the 4th subject</label><br>
+                                            </div>
+                                        <?php elseif($activity->group_id == 2): ?>
+                                            <div class="mb-3 col-md-10">
+                                                <label for="first_name" class="form-label bn-node">N.B.</label><br>
+                                                <label for="first_name" class="form-label nb">* ৩য় বিষয় হিসেবে IHC/ECO,
+                                                    GEO/LOGIC এবং CGG/SW থেকে ৩টি বিষয় নির্বাচন করতে হবে।</label><br>
+                                                <label for="first_name" class="form-label nb">* ৩য় বিষয় হিসেবে LOGIC
+                                                    নির্বাচন করলে ৪র্থ বিষয় হিসেবে Agri নির্বাচন করা যাবে না।</label>
+                                            </div>
+										<?php elseif($activity->group_id == 3 && $activity->version_id == 2): ?>
+											<div class="mb-3 col-md-10">
+                                                <label for="first_name" class="form-label bn-node">N.B.</label><br>
+                                                <label for="first_name" class="form-label nb">* ৩য় বিষয় হিসেবে PMM
+                                                    নির্বাচন করলে ৪র্থ বিষয় হিসেবে Agri নির্বাচন করা যাবে না।</label>
+                                            </div>
+                                        <?php endif; ?>
+										<?php if($student->submit!=2): ?>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-primary btn-prev">
+                                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                <span class="align-middle d-sm-inline-block d-none Previous"
+                                                    data-next="accountdetails" data-currentdata="personal-info"
+                                                    data-target="#account-details">Previous</span>
+                                            </button>
+                                            <button style="margin-left: 60%;" type="button" data-value="desiredsubject"
+                                                data-pre="accountdetails" data-currentstage="1" data-target="#personal-info"
+                                                class="btn btn-info">
+                                                <span class="align-right d-sm-inline-block d-none me-sm-1">Save</span>
+                                            </button>
+                                            <button type="button" data-value="sscexamdetails"
+                                                data-currentdata="personal-info" data-pre="desiredsubject"
+                                                data-target="#address" data-currentstage="2" class="btn btn-primary btn-next">
+                                                <span class="align-middle d-sm-inline-block d-none me-sm-1"> Next</span>
+                                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                            </button>
+                                        </div>
+										<?php endif; ?>
+                                    </div>
+                                </div>
+                                <!-- Address -->
+                                <div id="address" class="content <?php echo e(($student->stage==3 || $student->submit==2)?'active dstepper-block':''); ?>">
+                                    <div class="content-header mb-3">
+                                        <h6 class="mb-0" style="color: #da45dc;font-weight: bold;font-size: 16px;">
+                                            Secondary (SSC) Exam details</h6>
+                                        <small></small>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="first_name" class="form-label">Name Of School</label>
+                                            <input class="form-control" type="text" id="school_name"
+                                                name="school_name" placeholder="Name Of School"
+                                                value="<?php echo e($student->school_name ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="father_email" class="form-label">Upozila/Thana</label>
+                                            <input class="form-control" type="email" id="thana" name="thana"
+                                                placeholder="Upozila/Thana" value="<?php echo e($student->thana ?? ''); ?>"
+                                                autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="first_name" class="form-label">Exam Center</label>
+                                            <input class="form-control" type="text" id="exam_center"
+                                                name="exam_center" placeholder="Exam Center"
+                                                value="<?php echo e($student->exam_center ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="father_email" class="form-label">Roll Number</label>
+                                            <input class="form-control" type="number" id="roll_number"
+                                                name="roll_number" placeholder="Roll Number"
+                                                value="<?php echo e($student->roll_number ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="father_email" class="form-label">Registration Number<span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="number"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : ''); ?>
+
+                                                id="registration_number" name="registration_number"
+                                                placeholder="Registration Number"
+                                                value="<?php echo e($student->registration_number ?? ''); ?>" autofocus="">
+                                        </div>
+
+                                        <div class="mb-3 col-md-4">
+                                            <label for="father_email" class="form-label">Session: </label>
+                                            <input class="form-control" type="number" id="session" name="session"
+                                                placeholder="Session" value="<?php echo e($student->session ?? ''); ?>"
+                                                autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="father_email" class="form-label">Board Name</label>
+                                            <input class="form-control" type="text" id="board" name="board"
+                                                placeholder="Board Name" value="<?php echo e($student->board ?? ''); ?>"
+                                                autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="first_name" class="form-label">Year of passing</label>
+                                            <input class="form-control" type="number" id="passing_year"
+                                                name="passing_year" placeholder="Year of passing"
+                                                value="<?php echo e($student->passing_year ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="father_email" class="form-label">Result GPA</label>
+                                            <input class="form-control" type="number" id="result" name="result"
+                                                placeholder="Result GPA" value="<?php echo e($student->result ?? ''); ?>"
+                                                autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="first_name" class="form-label">GPA without 4th subject</label>
+                                            <input class="form-control" type="number" id="result_fourth_subject"
+                                                name="result_fourth_subject" placeholder="GPA without 4th subject"
+                                                value="<?php echo e($student->result_fourth_subject ?? ''); ?>" autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="total_mark" class="form-label">Total Marks With 4th Subject</label>
+                                            <input class="form-control" type="number" id="total_mark" name="total_mark"
+                                                placeholder="Total Marks" value="<?php echo e($student->total_mark ?? ''); ?>"
+                                                autofocus="">
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="testimonial" class="form-label">SSC Testimonial Of The School
+                                                (jpg,jpeg,pdf format)</label>
+                                            <input class="form-control" type="file" id="testimonial"
+                                                onchange="loadFile(event,'testimonial_preview')" name="testimonial">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="testimonial_old"
+                                                value="<?php echo e($student->testimonial ?? ''); ?>" name="testimonial_old">
+                                            <div class="mb-3 col-md-12">
+												<?php
+													$file = $student->testimonial;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" id="testimonial_preview" type="application/pdf" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($file??"").'" id="testimonial_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="academic_transcript" class="form-label">SSC Academic Transcript
+                                                (jpg,jpeg,pdf format)<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="file"
+                                                onchange="loadFile(event,'academic_transcript_preview')"
+                                                id="academic_transcript" 
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 && empty($student->academic_transcript) ? 'required' : ''); ?>
+
+                                                name="academic_transcript">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="academic_transcript_old"
+                                                value="<?php echo e($student->academic_transcript ?? ''); ?>"
+                                                name="academic_transcript_old">
+                                            <div class="mb-3 col-md-12">
+												<?php
+													$file = $student->academic_transcript;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" id="academic_transcript_preview" type="application/pdf" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($file??"").'" id="academic_transcript_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label for="academic_transcript" class="form-label">SSC Admit Card
+                                                (jpg,jpeg,pdf format)<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="file"
+                                                onchange="loadFile(event,'admit_card_preview')"
+                                                <?php echo e(Auth::user()->group_id != 2 && Auth::user()->group_id != 7 && empty($student->admit_card) ? 'required' : ''); ?>
+
+                                                id="admit_card" name="admit_card">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="admit_card_old"
+                                                value="<?php echo e($student->admit_card ?? ''); ?>" name="admit_card_old">
+                                            <div class="mb-3 col-md-12">
+                                                
+												<?php
+													$file = $student->admit_card;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" id="admit_card_preview" type="application/pdf" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($file??"").'" id="admit_card_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                            </div>
+                                        </div>
+										<?php if($student->submit!=2): ?>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-primary btn-prev">
+                                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                <span class="align-middle d-sm-inline-block d-none Previous"
+                                                    data-next="desiredsubject" data-currentdata="address"
+                                                    data-target="#personal-info">Previous</span>
+                                            </button>
+                                            <button style="margin-left: 60%;" type="button" data-value="desiredsubject"
+                                                data-pre="accountdetails" data-currentstage="2" data-target="#personal-info"
+                                                class="btn btn-info">
+                                                <span class="align-right d-sm-inline-block d-none me-sm-1">Save</span>
+                                            </button>
+                                            <button type="button" data-value="force" data-currentdata="personal-info"
+                                                data-pre="sscexamdetails" data-target="#social-links" data-currentstage="3"
+                                                class="btn btn-primary btn-next">
+                                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
+                                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                            </button>
+                                        </div>
+										<?php endif; ?>
+                                    </div>
+                                </div>
+                                <!-- Social Links -->
+                                <div id="social-links" class="content <?php echo e(($student->stage==4 || $student->submit==2)?'active dstepper-block':''); ?>">
+                                    <div class="content-header mb-3" id="armedforce">
+                                        <h6 class="mb-0" style="color: #da45dc;font-weight: bold;font-size: 19px;">
+                                            Select Your Category</h6>
+                                        <div class="col-md">
+                                            <div class="form-check mt-3">
+                                                <input name="categoryid" class="form-check-input specialinfo"
+                                                    <?php echo e(isset($student) && $student->categoryid == 1 ? 'checked="checked"' : ''); ?>
+
+                                                    type="radio" value="1" id="defaultRadio1">
+                                                <label class="form-check-label" for="defaultRadio1">
+                                                    Civil
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input name="categoryid" class="form-check-input specialinfo"
+                                                    type="radio"
+                                                    <?php echo e(isset($student) && $student->categoryid == 2 ? 'checked="checked"' : ''); ?>
+
+                                                    value="2" id="defaultRadio2">
+                                                <label class="form-check-label" for="defaultRadio2">
+                                                    Son/daughter of Armed Forces' Member
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input specialinfo" name="categoryid"
+                                                    type="radio"
+                                                    <?php echo e(isset($student) && $student->categoryid == 3 ? 'checked="checked"' : ''); ?>
+
+                                                    value="3" id="disabledRadio3">
+                                                <label class="form-check-label" for="disabledRadio3">
+                                                    Son/daughter of Teaching/Non-Teaching staff of BAFSD
+                                                </label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row g-3  <?php echo e(isset($student) && $student->categoryid == 2 ? 'show' : 'hide'); ?>"
+                                        id="armforce">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="guardian_email" class="form-label">Name of service Holder (Father/Mother - Only)<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                <?php echo e(isset($student) && $student->categoryid == 2 ? 'required' : ''); ?>
+
+                                                id="name" name="name" placeholder="Name of service holder"
+                                                value="<?php echo e($student->name ?? ''); ?>">
+                                        </div>
+
+                                        <div class="mb-3 col-md-3">
+                                            <label for="guardian_name" class="form-label">Rank/Designation<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                <?php echo e(isset($student) && $student->categoryid == 2 ? 'required' : ''); ?>
+
+                                                id="designation" name="designation" placeholder="Rank/Designation"
+                                                value="<?php echo e($student->designation ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-3">
+                                            <label for="local_guardian_name" class="form-label">Service number<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control"
+                                                <?php echo e(isset($student) && $student->categoryid == 2 ? 'required' : ''); ?>
+
+                                                id="service_number" name="service_number" placeholder="Service number"
+                                                value="<?php echo e($student->service_number ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="guardian_name" class="form-label">Name of Service<span
+                                                    class="text-danger">*</span></label>
+                                            <select id="arms_name" name="arms_name"
+                                                <?php echo e(isset($student) && $student->categoryid == 2 ? 'required' : ''); ?>
+
+                                                class=" form-select">
+                                                <option value="">Select Option</option>
+                                                <option
+                                                    <?php echo e(isset($student) && $student->arms_name == 'Air Force' ? 'selected="selected"' : ''); ?>
+
+                                                    value="Air Force">Air Force</option>
+                                                <option
+                                                    <?php echo e(isset($student) && $student->arms_name == 'Army' ? 'selected="selected"' : ''); ?>
+
+                                                    value="Army">Army</option>
+                                                <option
+                                                    <?php echo e(isset($student) && $student->arms_name == 'Navy' ? 'selected="selected"' : ''); ?>
+
+                                                    value="Navy">Navy</option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="guardian_email" class="form-label">Serving/Retired<span
+                                                    class="text-danger">*</span></label>
+                                            <select id="is_service" name="is_service"
+                                                <?php echo e(isset($student) && $student->categoryid == 2 ? 'required' : ''); ?>
+
+                                                class=" form-select">
+                                                <option value="">Select Option</option>
+                                                <option
+                                                    <?php echo e(isset($student) && $student->is_service == 1 ? 'selected="selected"' : ''); ?>
+
+                                                    value="1">Serving</option>
+                                                <option
+                                                    <?php echo e(isset($student) && $student->is_service == 2 ? 'selected="selected"' : ''); ?>
+
+                                                    value="2">Retired</option>
+
+
+                                            </select>
+                                        </div>
+                                        <?php
+                                            if (
+                                                isset($student) &&
+                                                $student->categoryid == 2 &&
+                                                $student->is_service == 2
+                                            ) {
+                                                $requird = '';
+                                            } elseif (isset($student) && $student->categoryid == 1) {
+                                                $requird = '';
+                                            } elseif (isset($student) && $student->categoryid == 3) {
+                                                $requird = '';
+                                            } elseif (
+                                                isset($student) &&
+                                                $student->categoryid == 2 &&
+                                                $student->is_service == 1
+                                            ) {
+                                                $requird = 'required';
+                                            } else {
+                                                $requird = '';
+                                            }
+
+                                        ?>
+                                        <div class="mb-3 col-md-6 <?php echo e($requird == 'required' ? 'showinput' : 'hide'); ?>"
+                                            id="office_address_div">
+                                            <label for="guardian_email" class="form-label">Present office Address<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="office_address"
+                                                <?php echo e($requird); ?> name="office_address" placeholder="Office Address"
+                                                value="<?php echo e($student->office_address ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="arm_certification" class="form-label">Certification/Testimonial
+                                                from office (jpg,jpeg,pdf format)<span class="text-danger">*</span></label>
+                                            <input class="form-control" type="file"
+                                                onchange="loadFile(event,'arm_certification_preview')"
+                                                <?php echo e(isset($student) && $student->categoryid == 2 && $student->arm_certification == '' && $student->arm_certification == null ? 'required' : ''); ?>
+
+                                                id="arm_certification" name="arm_certification">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="arm_certification_old"
+                                                value="<?php echo e($student->arm_certification ?? ''); ?>"
+                                                name="arm_certification_old">
+                                            <div class="mb-3 col-md-12">
+												<?php
+													$file = $student->arm_certification;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" id="arm_certification_preview" type="application/pdf" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($file??"").'" id="arm_certification_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                                
+                                            </div>
+                                        </div>
+                                        
+										<?php if($student->submit!=2): ?>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-primary btn-prev">
+                                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                <span class="align-middle d-sm-inline-block d-none Previous"
+                                                    data-next="sscexamdetails" data-currentdata="social-links"
+                                                    data-target="#address">Previous</span>
+                                            </button>
+                                            <button style="margin-left: 60%;" type="button"
+                                                data-value="desiredsubject" data-pre="accountdetails"
+                                                data-target="#personal-info" data-currentstage="3" class="btn btn-info">
+                                                <span class="align-right d-sm-inline-block d-none me-sm-1">Save</span>
+                                            </button>
+                                            <button type="button" data-value="academicinfo"
+                                                data-currentdata="address" data-pre="force"
+                                                data-target="#review-submit" data-currentstage="4" class="btn btn-primary nextbtn">
+                                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
+                                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                            </button>
+                                        </div>
+										<?php endif; ?>
+                                    </div>
+                                    <div class="row g-3 <?php echo e(isset($student) && $student->categoryid == 3 ? 'show' : 'hide'); ?>"
+                                        id="teacherinfo">
+                                        <div class="mb-3 col-md-6">
+                                            <label for="local_guardian_name" class="form-label">Name of the staff<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="name_of_staff"
+                                                <?php echo e(isset($student) && $student->categoryid == 3 ? 'required' : ''); ?>
+
+                                                name="name_of_staff" placeholder="Name of the staff"
+                                                value="<?php echo e($student->name_of_staff ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="guardian_name" class="form-label">Designation<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="staff_designation"
+                                                <?php echo e(isset($student) && $student->categoryid == 3 ? 'required' : ''); ?>
+
+                                                name="staff_designation" placeholder="Designation"
+                                                value="<?php echo e($student->staff_designation ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="guardian_email" class="form-label">Staff ID<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="staff_id"
+                                                name="staff_id"
+                                                <?php echo e(isset($student) && $student->categoryid == 3 ? 'required' : ''); ?>
+
+                                                placeholder="Staff ID" value="<?php echo e($student->staff_id ?? ''); ?>">
+                                        </div>
+                                        <div class="mb-3 col-md-6">
+                                            <label for="academic_transcript" class="form-label">Staff
+                                                Certification/Testimonial from BAFSD (jpg,jpeg,pdf format)<span
+                                                    class="text-danger">*</span></label>
+                                            <input class="form-control" type="file"
+                                                onchange="loadFile(event,'staff_certification_preview')"
+                                                <?php echo e(isset($student) && $student->categoryid == 3 && $student->staff_certification == '' && $student->staff_certification == null ? 'required' : ''); ?>
+
+                                                id="staff_certification" name="staff_certification">
+                                            <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
+                                            <input class="form-control" type="hidden" id="staff_certification_old"
+                                                value="<?php echo e($student->staff_certification ?? ''); ?>"
+                                                name="staff_certification_old">
+                                            <div class="mb-3 col-md-12">
+                                                
+												<?php
+													$file = $student->staff_certification;
+
+													if (pathinfo($file, PATHINFO_EXTENSION) === "pdf") {
+														echo '<embed src="'.$file.'" id="staff_certification_preview" type="application/pdf" width="100%" height="100px" />';
+													}else{
+														echo '<img src="'.($file??"").'" id="staff_certification_preview"
+                                                    style="height: 100px; width: auto" />';
+													}
+													?>
+                                            </div>
+                                        </div>
+
+
+										<?php if($student->submit!=2): ?>
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-primary btn-prev">
+                                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                <span class="align-middle d-sm-inline-block d-none Previous"
+                                                    data-next="sscexamdetails" data-currentdata="social-links"
+                                                    data-target="#address">Previous</span>
+                                            </button>
+                                            <button style="margin-left: 60%;" type="button"
+                                                data-value="desiredsubject" data-pre="accountdetails"
+                                                data-target="#personal-info" data-currentstage="3" class="btn btn-info">
+                                                <span class="align-right d-sm-inline-block d-none me-sm-1">Save</span>
+                                            </button>
+                                            <button type="button" data-value="academicinfo"
+                                                data-currentdata="address" data-pre="force" data-currentstage="4"
+                                                data-target="#review-submit" class="btn btn-primary nextbtn">
+                                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
+                                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                            </button>
+                                        </div>
+										<?php endif; ?>
+
+                                    </div>
+									<?php if($student->submit!=2): ?>
+                                    <div class="row g-3 <?php echo e(isset($student) && $student->categoryid == 1 ? 'show' : 'hide'); ?>"
+                                        id="civildata">
+
+										
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <button type="button" class="btn btn-primary btn-prev">
+                                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                <span class="align-middle d-sm-inline-block d-none Previous"
+                                                    data-next="sscexamdetails" data-currentdata="social-links"
+                                                    data-target="#address">Previous</span>
+                                            </button>
+                                            <button style="margin-left: 60%;" type="button"
+                                                data-value="desiredsubject" data-pre="accountdetails"
+                                                data-target="#personal-info" data-currentstage="3" class="btn btn-info">
+                                                <span class="align-right d-sm-inline-block d-none me-sm-1">Save</span>
+                                            </button>
+                                            <button type="button" data-value="academicinfo"
+                                                data-currentdata="address" data-pre="force"
+                                                data-target="#review-submit" data-currentstage="4" class="btn btn-primary nextbtn">
+                                                <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span>
+                                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+									<?php endif; ?>
+                                </div>
+                                <!-- Review -->
+                                <div id="review-submit" class="content <?php echo e(($student->stage==5 || $student->submit==2)?'active dstepper-block':''); ?>">
+                                    <div class="content-header mb-3">
+                                        <h6 class="mb-0" style="color: #da45dc;font-weight: bold;font-size: 16px;">
+                                            Academic Info</h6>
+                                    </div>
+
+
+                                    <?php if(isset($activity) && Auth::user()->group_id == 4): ?>
+                                        <input type="hidden" name="class_id" id="class_id"
+                                            value="<?php echo e($activity->class_code); ?>" />
+
+                                        <input type="hidden" name="session_id" id="session_id"
+                                            value="<?php echo e($activity->session_id); ?>" />
+                                        <input type="hidden" name="version_id" id="version_id"
+                                            value="<?php echo e($activity->version_id); ?>" />
+                                        <input type="hidden" name="shift_id" value="<?php echo e($activity->shift_id); ?>" />
+                                        <input type="hidden" name="class_code" id="class_code"
+                                            value="<?php echo e($activity->class_code); ?>" />
+                                        <input type="hidden" name="category_id"
+                                            value="<?php echo e($activity->category_id); ?>" />
+                                        <input type="hidden" name="group_id" id="group_id"
+                                            value="<?php echo e($activity->group_id); ?>" />
+                                        <input type="hidden" name="section_id" id="section_id"
+                                            value="<?php echo e($activity->section_id); ?>" />
+                                        <input type="hidden" name="house_id" value="<?php echo e($activity->house_id); ?>" />
+                                        <input type="hidden" name="roll" value="<?php echo e($activity->roll); ?>" />
+										<?php endif; ?>
+                                        <div class="row g-3">
+                                            <div class="mb-3 col-md-4">
+                                                <label for="session_id" class="form-label">Session</label>
+                                                <select disabled="disabled"=======<select
+                                                    <?php if(Auth::user()->group_id == 4): ?> disabled="disabled" <?php endif; ?>
+                                                    name="session_id" class=" form-select" required="">
+                                                    <option value="">Select Session</option>
+                                                    
+                                                    <option value="<?php echo e($activity->session_id); ?>" selected="selected">
+                                                        <?php echo e($activity->session_id); ?></option>
+
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <label for="version_id" class="form-label">Version</label>
+                                                <select id="version_id" disabled="disabled" name="version_id"
+                                                    class=" form-select" required="">
+                                                    <option value="">Select Version</option>
+                                                    <?php $__currentLoopData = $versions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $version): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($version->id); ?>"
+                                                            <?php echo e(isset($activity) && $activity->version_id == $version->id ? 'selected="selected"' : ''); ?>>
+                                                            <?php echo e($version->version_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3 col-md-4">
+                                                <label for="shift_id" class="form-label">Shift</label>
+                                                <select id="shift_id" disabled="disabled" name="shift_id"
+                                                    class=" form-select" required="">
+                                                    <option value="">Select Shift</option>
+                                                    <?php $__currentLoopData = $shifts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $shift): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($shift->id); ?>"
+                                                            <?php echo e(isset($activity) && $activity->shift_id == $shift->id ? 'selected="selected"' : ''); ?>>
+                                                            <?php echo e($shift->shift_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <label for="class_id" class="form-label">Class</label>
+                                                <label for="class_code" class="form-label">Class</label>
+                                                <select id="class_code" disabled="disabled" name="class_id"
+                                                    class=" form-select" required="">
+                                                    <option value="">Select Class</option>
+
+                                                    <option value="0"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 0 ? 'selected="selected"' : ''); ?>>
+                                                        KG</option>
+                                                    <option value="1"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 1 ? 'selected="selected"' : ''); ?>>
+                                                        Class I</option>
+                                                    <option value="2"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 2 ? 'selected="selected"' : ''); ?>>
+                                                        Class II</option>
+                                                    <option value="3"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 3 ? 'selected="selected"' : ''); ?>>
+                                                        Class III</option>
+                                                    <option value="4"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 4 ? 'selected="selected"' : ''); ?>>
+                                                        Class IV</option>
+                                                    <option value="5"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 5 ? 'selected="selected"' : ''); ?>>
+                                                        Class V</option>
+                                                    <option value="6"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 6 ? 'selected="selected"' : ''); ?>>
+                                                        Class VI</option>
+                                                    <option value="7"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 7 ? 'selected="selected"' : ''); ?>>
+                                                        Class VII</option>
+                                                    <option value="8"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 8 ? 'selected="selected"' : ''); ?>>
+                                                        Class VIII</option>
+                                                    <option value="9"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 9 ? 'selected="selected"' : ''); ?>>
+                                                        Class IX</option>
+                                                    <option value="10"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 10 ? 'selected="selected"' : ''); ?>>
+                                                        Class X</option>
+                                                    <option value="11"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 11 ? 'selected="selected"' : ''); ?>>
+                                                        Class XI</option>
+                                                    <option value="12"
+                                                        <?php echo e(isset($activity) && $activity->class_code == 12 ? 'selected="selected"' : ''); ?>>
+                                                        Class XII</option>
+
+
+                                                </select>
+                                            </div>
+									<!--
+                                            <div class="mb-3 col-md-4">
+                                                <label for="category_id" class="form-label">Category</label>
+                                                <select id="category_id" disabled="disabled" name="category_id"
+                                                    class=" form-select">
+                                                    <option value="">Select Category</option>
+
+                                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($category->id); ?>"
+                                                            <?php echo e(isset($activity) && $activity->category_id == $category->id ? 'selected="selected"' : ''); ?>>
+                                                            <?php echo e($category->category_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                            </div>
+-->
+                                            <div class="mb-3 col-md-4">
+                                                <label for="group_id" class="form-label">Group</label>
+                                                <select id="group_id" disabled="disabled" name="group_id"
+                                                    class=" form-select" required="">
+                                                    <option value="">Select Group</option>
+
+                                                    <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($group->id); ?>"
+                                                            <?php echo e(isset($activity) && $activity->group_id == $group->id ? 'selected="selected"' : ''); ?>>
+                                                            <?php echo e($group->group_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3 col-md-4">
+                                                <label for="section_id" class="form-label">Section</label>
+                                                <select id="section_id" disabled="disabled" name="section_id"
+                                                    class=" form-select">
+                                                    <!-- <option value="">Select Section</option> -->
+													<option value="">Section will be assigned after confirm final submission</option>
+                                                    <?php $__currentLoopData = $sections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($section->id); ?>"
+                                                            <?php echo e(isset($activity) && $activity->section_id == $section->id ? 'selected="selected"' : ''); ?>>
+                                                            <?php echo e($section->section_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <label for="house_id" class="form-label">House</label>
+                                                <select id="house_id" disabled="disabled" name="house_id"
+                                                    class=" form-select">
+                                                    <option value="">Select House </option>
+                                                    <?php $__currentLoopData = $houses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $house): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($house->id); ?>"
+                                                            <?php echo e(isset($activity) && $activity->house_id == $house->id ? 'selected="selected"' : ''); ?>>
+                                                            <?php echo e($house->house_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <label for="roll" class="form-label">Roll</label>
+                                                <input class="form-control" disabled="disabled" type="text"
+                                                    id="roll" name="roll"
+                                                    value="<?php echo e($activity->roll ?? ''); ?>" placeholder="Roll"
+                                                    autofocus="">
+                                            </div>
+
+                                            <div class="col-12 d-flex justify-content-between">
+
+                                                <!-- <input type="hidden" class="btn btn-warning me-2" name="submit"
+                                                                id="submit" value="1">
+                                                            <button type="button" class="btn btn-primary btn-prev">
+                                                                <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                                <span class="align-middle d-sm-inline-block d-none Previous"
+                                                                    data-next="force" data-currentdata="review-submit"
+                                                                    data-target="#social-links">Previous</span>
+                                                            </button>
+                                                            <button type="button" class="btn btn-info btn-save">Save</button>
+                                                            <button type="button" class="btn btn-success " id="btn-submit">Submit
+                                                                & Preview</button>
+                                                    </div> -->
+
+                                              <?php if($student->submit != 2): ?>
+                                                    <input type="hidden" class="btn btn-warning me-2" name="submit"
+                                                        id="submit" value="<?php echo e($student->submit); ?>">
+                                                    <button type="button" class="btn btn-primary btn-prev">
+                                                        <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
+                                                        <span class="align-middle d-sm-inline-block d-none Previous"
+                                                            data-next="force" data-currentdata="review-submit"
+                                                            data-target="#social-links">Previous</span>
+                                                    </button>
+                                                    <!-- <button type="button" class="btn btn-info btn-save">Save</button> -->
+                                                    <button type="button" class="btn btn-success " data-currentstage="5"
+                                                        id="btn-submit">Submit &
+                                                        Preview</button>
+                                            </div>
+                                            <!-- <input type="hidden" class="btn btn-warning me-2" name="submit" id="submit"  value="1">
+
+                                                                                                                <button type="button" class="btn btn-outline-warning" id="final_submit">Final Submit</button>
+                                                                                                                <button type="submit" class="btn btn-outline-primary" id="savebuuton">Save</button>
+                                                                                                                <button type="reset" class="btn btn-outline-secondary">Cancel</button> -->
+                                        <?php else: ?>
+                                            <a href="<?php echo e(url('admin/studentPrint/' . $student->id)); ?>" target="_blank"
+                                                class="btn btn-outline-primary">Print</a>
+
+                                        <?php endif; ?>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Validation Wizard -->
+                <!-- Vertical Wizard -->
+
+                <!-- /Vertical Wizard -->
+            </div>
+
+
+
+        </div>
+        <!-- / Content -->
+        <div class="content-backdrop fade"></div>
+    </div>
+    <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            
+            <form id="formAdmission" method="POST" action="<?php echo e(route('storePreview')); ?>"
+                enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+                <input type="hidden" name="student_code" value="<?php echo e($student->student_code ?? ''); ?>" />
+                <input type="hidden" name="id" value="<?php echo e($student->id ?? ''); ?>" />
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFullTitle" style="margin-left:33%;">BAF SHAHEEN COLLEGE DHAKA
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body" id="studentpreview">
+
+                    </div>
+                    <div class="modal-footer" style="text-align: center!important;display: block!important">
+                        <button type="button" class="btn btn-outline-secondary btn-success" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+
+                    </div>
+                </div>
+                <form>
+        </div>
+    </div>
+    <script src="<?php echo e(asset('public/vendor/laravel-filemanager/js/stand-alone-button.js')); ?>"></script>
+    <script src="<?php echo e(asset('/')); ?>public/backend/assets/js/ui-modals.js"></script>
+			<!--
+    <script>
+        var loadFile = function(event, preview) {
+
+            var sizevalue = (event.target.files[0].size);
+
+            if (sizevalue > 200000) {
+
+                Swal.fire({
+                    title: "warning!",
+                    text: "File Size Too Large",
+                    icon: "warning"
+                });
+                var idvalue = preview.slice(0, -8);
+
+                $('#' + idvalue).val('');
+                return false;
+            } else {
+
+                var output = document.getElementById(preview);
+                output.src = URL.createObjectURL(event.target.files[0]);
+                output.onload = function() {
+                    URL.revokeObjectURL(output.src) // free memory
+                }
+                $.LoadingOverlay("show");
+                var formElement = document.getElementById('formAdmission');
+                var formData = new FormData(formElement);
+
+                $.ajax({
+                    url: '<?php echo e(route('uploadimage')); ?>',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Upload Successfully",
+                            icon: "success"
+                        });
+                        $.LoadingOverlay("hide");
+
+                    },
+                    error: function(data, errorThrown) {
+                        handleError(data, errorThrown);
+                    },
+                    complete: function() {
+                        $.LoadingOverlay("hide");
+                    }
+                });
+            }
+
+        };
+    </script> -->
+			<script>
+    var loadFile = function(event, preview) {
+        var file = event.target.files[0];
+
+        if (!file) return; // no file selected
+
+        // Allowed file types
+        var allowedTypes = ['image/jpeg', 'image/jpg', 'application/pdf'];
+        var fileType = file.type;
+        var fileSize = file.size;
+
+        // Check file type
+        if (!allowedTypes.includes(fileType)) {
+            Swal.fire({
+                title: "Warning!",
+                text: "Invalid file type. Allowed types: jpg, jpeg, pdf.",
+                icon: "warning"
+            });
+
+            var idvalue = preview.slice(0, -8);
+            $('#' + idvalue).val('');
+            return false;
+        }
+
+        // Check file size (max 200KB)
+        if (fileSize > 200000) {
+            Swal.fire({
+                title: "Warning!",
+                text: "File size too large. Maximum allowed: 200KB.",
+                icon: "warning"
+            });
+
+            var idvalue = preview.slice(0, -8);
+            $('#' + idvalue).val('');
+            return false;
+        }
+
+        // Preview the file
+        var output = document.getElementById(preview);
+        output.src = URL.createObjectURL(file);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src); // free memory
+        }
+
+        $.LoadingOverlay("show");
+        var formElement = document.getElementById('formAdmission');
+        var formData = new FormData(formElement);
+
+        $.ajax({
+            url: '<?php echo e(route('uploadimage')); ?>',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Upload Successfully",
+                    icon: "success"
+                });
+                $.LoadingOverlay("hide");
+            },
+            error: function(data, errorThrown) {
+                handleError(data, errorThrown);
+            },
+            complete: function() {
+                $.LoadingOverlay("hide");
+            }
+        });
+    };
+</script>
+
+    <script>
+        <?php if(Session::has('success')): ?>
+            Swal.fire({
+                title: "Good job!",
+                text: "<?php echo e(Session::get('success')); ?>",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+        <?php endif; ?>
+
+        <?php if(Session::has('warning')): ?>
+            Swal.fire({
+                title: "Warning!",
+                text: "<?php echo e(Session::get('warning')); ?>",
+                icon: "warning",
+                confirmButtonText: "OK"
+            });
+        <?php endif; ?>
+
+        <?php if(Session::has('error')): ?>
+            Swal.fire({
+                title: "Error!",
+                text: "<?php echo e(Session::get('error')); ?>",
+                icon: "error",
+                confirmButtonText: "OK"
+            });
+        <?php endif; ?>
+    </script>
+    <script>
+        $(function() {
+            <?php if(Auth::user()->group_id == 4): ?>
+                // checksection();
+            <?php endif; ?>
+
+
+            $("#formAdmission").submit(function(e) {
+
+                e.preventDefault(); // avoid to execute the actual submit of the form.
+
+                var form = $(this);
+                var actionUrl = form.attr('action');
+
+                $.ajax({
+                    type: "POST",
+                    url: actionUrl,
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function(data) {
+                        // show response from the php script.
+                    }
+                });
+
+            });
+            $(document).on('click', '.edit-icon', function() {
+                var forvalue = $(this).data('forvalue');
+
+                $("input[name='" + forvalue + "']").prop('readonly', false);
+            });
+            $(document).on('change', '#is_service', function() {
+                if ($(this).val() == 1) {
+                    $("#office_address_div").removeClass('hide').addClass('showinput');
+                    $("#office_address").attr('required', true);
+                } else {
+
+                    $("#office_address_div").addClass('hide').removeClass('showinput');
+                    $("#office_address").removeAttr('required');
+                }
+
+            });
+            $(document.body).on('click', '.specialinfo', function() {
+                var value = $(this).val();
+                if (value == 1) {
+                    $('#armforce').addClass('hide').removeClass('show');
+                    $('#teacherinfo').addClass('hide').removeClass('show');
+                    $('#civildata').removeClass('hide').addClass('show');
+                    $('#teacherinfo select').removeAttr('required');
+                    $('#teacherinfo input').removeAttr('required');
+                    $('#armforce input').removeAttr('required');
+                    $('#armforce select').removeAttr('required');
+                } else if (value == 2) {
+                    $('#armforce').removeClass('hide').addClass('show');
+                    $('#teacherinfo').addClass('hide').removeClass('show');
+                    $('#civildata').addClass('hide').removeClass('show');
+                    $('#armforce input').attr('required', true);
+                    $('#armforce select').attr('required', true);
+                    $('#teacherinfo select').removeAttr('required');
+                    $('#teacherinfo input').removeAttr('required');
+                    $('#arm_certification_old').removeAttr('required');
+                    $('#staff_certification_old').removeAttr('required');
+
+
+
+                } else {
+                    $('#armforce').addClass('hide').removeClass('show');
+                    $('#teacherinfo').removeClass('hide').addClass('show');
+                    $('#civildata').addClass('hide').removeClass('show');
+                    $('#armforce input').removeAttr('required');
+                    $('#armforce select').removeAttr('required');
+                    $('#teacherinfo input').attr('required', true);
+                    $('#teacherinfo select').attr('required', true);
+                    $('#arm_certification_old').removeAttr('required');
+                    $('#staff_certification_old').removeAttr('required');
+                }
+                $('#armforce input').val('');
+                $('#teacherinfo input').val('');
+				$('#arm_certification_preview').attr('src','');
+				$('#staff_certification_preview').attr('src','');
+            });
+            $(document.body).on('click', '.btn-info', function() {
+                var form = $('#formAdmission')[0];
+                var formData = new FormData(form);
+                var actionUrl = "<?php echo e(route('admissionSave')); ?>";
+                $.LoadingOverlay("show");
+                $.ajax({
+                    type: "POST",
+                    url: actionUrl,
+                    data: formData, // Use FormData
+                    processData: false, // Prevent jQuery from processing the data
+                    contentType: false, // Prevent jQuery from setting the content type // serializes the form's elements.
+                    success: function(data) {
+                        Swal.fire({
+                            title: "Success",
+                            text: "Successfuly Save",
+                            icon: "success"
+                        });
+                        $.LoadingOverlay("hide");
+
+                        //showpreview(data);
+                        //alert(data); // show response from the php script.
+                    },
+                    error: function(data, errorThrown) {
+                        handleError(data, errorThrown);
+
+                    },
+                    complete: function() {
+                        $.LoadingOverlay("hide");
+                    }
+                });
+            });
+            $(document.body).on('click', '.headermenu', function() {
+                var elementId = '';
+                $('.active.dstepper-block').each(function() {
+                    // Get the id attribute value of each element
+                    elementId = $(this).attr('id');
+                    // console.log(elementId); // Output the id value
+                });
+                var currentdata = $(this).data('currentdata');
+                var pre = $(this).data('pre');
+
+                var focustext = '';
+
+                // Determine the focus text based on the current data and checked value
+
+
+                var isValid = true;
+
+                // Check for required fields and handle validation
+                $('#' + elementId + ' :input[required]').each(function() {
+
+                    if (!$(this).val()) {
+                        $(this).addClass('error').focus();
+                        isValid = false;
+                        return false; // Exit the .each loop
+                    } else {
+                        $(this).removeClass('error');
+                    }
+                });
+
+                var userGroupId = <?php echo e(Auth::user()->group_id); ?>;
+
+                if (elementId == 'personal-info') {
+                    var group_id = $('#group_id').val();
+                    var third_subject = [];
+                    var fourth_subject = [];
+                    $('.form-check-input.third_subject:checked').each(function() {
+                        third_subject.push($(this).val());
+                    });
+
+                    $('.form-check-input.fourth_subject:checked').each(function() {
+                        fourth_subject.push($(this).val());
+                    });
+                    var third_subjectcheck = false;
+                    var third_subjectcheck3 = false;
+                    var fourth_subjectcheck = false;
+
+
+                    if (group_id == 2) {
+
+                        if (third_subject.length != 3) {
+
+                            third_subjectcheck3 = true;
+                        }
+
+                        if (fourth_subject.length != 1) {
+
+                            fourth_subjectcheck == true;
+                        }
+                    } else {
+                        if (third_subject.length != 1) {
+
+                            third_subjectcheck = true;
+                        }
+                        if (fourth_subject.length != 1) {
+
+                            fourth_subjectcheck == true;
+                        }
+                    }
+
+                    if (userGroupId != 2 && group_id != 7) {
+
+
+                        if (third_subjectcheck3) {
+                            Swal.fire({
+                                title: "Error",
+                                text: "Please choose 3 subject in 'Select 3rd Subject(s)' option",
+                                icon: "warning"
+                            });
+                            return false;
+                        }
+                        if (third_subjectcheck) {
+                            Swal.fire({
+                                title: "Error",
+                                text: "Please choose 1 subject in 'Select 3rd Subject(s)' option",
+                                icon: "warning"
+                            });
+                            return false;
+                        }
+                        if (third_subjectcheck) {
+                            Swal.fire({
+                                title: "Error",
+                                text: "Please choose 1 subject in 'Select 3rd Subject(s)' option",
+                                icon: "warning"
+                            });
+                            return false;
+                        }
+                    }
+
+                }
+
+
+
+
+
+
+
+                if (!isValid) {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Asterisk(*) fields need to be completed",
+                        icon: "warning"
+                    });
+                    return false; // Stop further execution
+                }
+                if (isValid) {
+                    $('#formAdmission .content').removeClass('active dstepper-block');
+                    $('.step').removeClass('text-bold');
+                    $('.bs-stepper-header .step').removeClass('active');
+                    // $('.bs-stepper-header .step:first').addClass('crossed');
+                    $('#' + pre).removeClass('active dstepper-block');
+                    // $('#'+pre).addClass('crossed');
+                    $(this).parent().addClass('active dstepper-block text-bold');
+                    $('#' + currentdata).addClass('active dstepper-block');
+                }
+
+            });
+            $(document.body).on('click', '.nextbtn,.btn-next', function() {
+                var boxdata = $(this).data('value');
+                var currentdata = $(this).data('currentdata');
+				var currentstage = $(this).data('currentstage');
+                var pre = $(this).data('pre');
+                var targetdiv = $(this).data('target');
+                var first_name = $('#first_name').val();
+                var father_name = $('#father_name').val();
+                var mother_name = $('#mother_name').val();
+                var birthdate = $('#birthdate').val();
+                var religion = $('#religion').val();
+                var email = $('#email').val();
+                var mobile = $('#mobile').val();
+                var gender = $('#gender').val();
+                var sms_notification = $('#sms_notification').val();
+                var local_guardian_name = $('#local_guardian_name').val();
+                var local_guardian_mobile = $('#local_guardian_mobile').val();
+
+
+                var testimonialElement = $('#testimonial')[0];
+                var oldTestimonialValue = $('#testimonial_old').val();
+                var testimonial = '';
+
+                if (testimonialElement.files.length > 0 && testimonialElement.files[0].name) {
+                    testimonial = testimonialElement.files[0].name;
+                } else if (oldTestimonialValue) {
+                    testimonial = oldTestimonialValue;
+                } else {
+                    // // Display error message
+                    // alert('Please provide a testimonial or upload a file.');
+                    // return false;
+                    // // Alternatively, you can update the UI to show the error message
+                    // //$('#error-message').text('Please provide a testimonial or upload a file.').show();
+                }
+
+
+                var photoElement = $('#photo')[0];
+                var oldPhotoValue = $('#photo_old').val();
+                var photo = '';
+
+                if (testimonialElement.files.length > 0 && testimonialElement.files[0].name) {
+                    photo = photoElement.files[0].name;
+                } else if (oldPhotoValue) {
+                    photo = oldPhotoValue;
+                } else {
+                    // // Display error message
+                    // alert('Please provide a testimonial or upload a file.');
+                    // return false;
+                    // // Alternatively, you can update the UI to show the error message
+                    // //$('#error-message').text('Please provide a testimonial or upload a file.').show();
+                }
+
+                var photoElement = $('#photo')[0];
+                var oldPhotoValue = $('#photo_old').val();
+                var academic_transcript = '';
+
+                if (testimonialElement.files.length > 0 && testimonialElement.files[0].name) {
+                    academic_transcript = photoElement.files[0].name;
+                } else if (oldPhotoValue) {
+                    academic_transcript = oldPhotoValue;
+                } else {
+                    // // Display error message
+                    // alert('Please provide a testimonial or upload a file.');
+                    // return false;
+                    // // Alternatively, you can update the UI to show the error message
+                    // //$('#error-message').text('Please provide a testimonial or upload a file.').show();
+                }
+
+                var academicTranscriptElement = $('#academic_transcript')[0];
+                var oldAcademicTranscriptValue = $('#academic_transcript_old').val();
+                var academic_transcript;
+
+                if (academicTranscriptElement.files.length > 0 && academicTranscriptElement.files[0].name) {
+                    academic_transcript = academicTranscriptElement.files[0].name;
+                } else if (oldAcademicTranscriptValue) {
+                    academic_transcript = oldAcademicTranscriptValue;
+                } else {
+                    // Display error message
+                    // alert('Please provide an academic transcript or upload a file.');
+                    // Alternatively, you can update the UI to show the error message
+                    // $('#error-message').text('Please provide an academic transcript or upload a file.').show();
+                }
+                var admit_cardElement = $('#admit_card')[0];
+                var oldadmit_cardValue = $('#admit_card_old').val();
+                var admit_card;
+
+                if (admit_cardElement.files.length > 0 && admit_cardElement.files[0].name) {
+                    admit_card = admit_cardElement.files[0].name;
+                } else if (oldadmit_cardValue) {
+                    admit_card = oldadmit_cardValue;
+                } else {
+                    // Display error message
+                    // alert('Please provide an academic transcript or upload a file.');
+                    // Alternatively, you can update the UI to show the error message
+                    // $('#error-message').text('Please provide an academic transcript or upload a file.').show();
+                }
+                var currentdata = $(this).data('currentdata');
+
+                var checkedValue = $("input[name='categoryid']:checked").val();
+
+                var focustext = '';
+
+
+                if (currentdata == 'personal-info') {
+                    var group_id = $('#group_id').val();
+                    var third_subject = [];
+                    var fourth_subject = [];
+
+                    $('.form-check-input.third_subject:checked').each(function() {
+                        third_subject.push($(this).val());
+                    });
+
+                    $('.form-check-input.fourth_subject:checked').each(function() {
+                        fourth_subject.push($(this).val());
+                    });
+                    var third_subjectcheck = false;
+                    var third_subjectcheck3 = false;
+                    var fourth_subjectcheck = false;
+                    if (group_id == 2) {
+
+                        if (third_subject.length != 3) {
+
+                            third_subjectcheck3 = true;
+                        }
+
+                        if (fourth_subject.length != 1) {
+
+                            fourth_subjectcheck == true;
+                        }
+                    } else {
+                        if (third_subject.length != 1) {
+
+                            third_subjectcheck = true;
+                        }
+                        if (fourth_subject.length != 1) {
+
+                            fourth_subjectcheck == true;
+                        }
+                    }
+
+                    if (third_subjectcheck3) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Please choose 3 subject in 'Select 3rd Subject(s)' option",
+                            icon: "warning"
+                        });
+                        return false;
+                    }
+                    if (third_subjectcheck) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Please choose 1 subject in 'Select 3rd Subject(s)' option",
+                            icon: "warning"
+                        });
+                        return false;
+                    }
+                    if (third_subjectcheck) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Please choose 1 subject in 'Select 3rd Subject(s)' option",
+                            icon: "warning"
+                        });
+                        return false;
+                    }
+                }
+
+                // Determine the focus text based on the current data and checked value
+                if (currentdata == 'address') {
+                    if (checkedValue == 2) {
+                        focustext = 'armforce';
+                    } else if (checkedValue == 3) {
+                        focustext = 'teacherinfo';
+                    } else {
+                        focustext = 'civildata';
+                    }
+                } else {
+                    focustext = currentdata;
+                }
+
+                var isValid = true;
+
+                // Check for required fields and handle validation
+                $('#' + focustext + ' :input[required]').each(function() {
+                    if (!$(this).val()) {
+                        $(this).addClass('error').focus();
+                        isValid = false;
+                        return false; // Exit the .each loop
+                    } else {
+                        $(this).removeClass('error');
+                    }
+                });
+
+                if (!isValid) {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Asterisk(*) fields need to be completed",
+                        icon: "warning"
+                    });
+                    return false; // Stop further execution
+                }
+
+                //return false;
+
+
+
+
+                // if (typeof $('#photo')[0].files[0]['name'] !== 'undefined' && $('#photo')[0].files[0]['name'] !== null) {
+                //     var photo=$('#photo')[0].files[0]['name'];
+                // }else{
+                //     var photo=$('#photo_old').val();
+                // }
+                // if (typeof $('#academic_transcript')[0].files[0]['name'] !== 'undefined' && $('#academic_transcript')[0].files[0]['name'] !== null) {
+                //     var academic_transcript=$('#academic_transcript')[0].files[0]['name'];
+                // }else{
+                //     var academic_transcript=$('#academic_transcript_old').val();
+                // }
+                // var photo=$('#photo')[0].files[0]['name']?$('#photo')[0].files[0]['name']:$('#photo_old').val();
+                // var testimonial=$('#testimonial')[0].files[0]['name']?$('#testimonial')[0].files[0]['name']:$('#testimonial_old').val();
+                // var academic_transcript=$('#academic_transcript')[0].files[0]['name']?$('#academic_transcript')[0].files[0]['name']:$('#academic_transcript_old').val();
+                //console.log(first_name,birthdate,religion,mobile,gender,sms_notification,photo,testimonial,academic_transcript)
+
+                if (isValid) {
+                   
+
+
+
+                    var form = $('#formAdmission')[0];
+                    var formData = new FormData(form);
+					formData.set("stage", currentstage);
+                    var actionUrl = "<?php echo e(route('admissionSave')); ?>";
+                    $.LoadingOverlay("show");
+                    $.ajax({
+                        type: "POST",
+                        url: actionUrl,
+                        data: formData, // Use FormData
+                        processData: false, // Prevent jQuery from processing the data
+                        contentType: false, // Prevent jQuery from setting the content type // serializes the form's elements.
+                        success: function(data) {
+                            // Swal.fire({
+                            //    title: "Success",
+                            //    text: "Successfuly Save",
+                            //    icon: "success"
+                           // });
+                            $.LoadingOverlay("hide");
+							
+							if(data>=1 && data<=5){
+								$('#formAdmission .content').removeClass('active dstepper-block');
+								$('.step').removeClass('text-bold');
+								$('.bs-stepper-header .step').removeClass('active');
+								// $('.bs-stepper-header .step:first').addClass('crossed');
+								// $('#'+pre).addClass('crossed');
+								$('#' + boxdata).addClass('active');
+								$('#' + boxdata).first().addClass('text-bold');
+								$(targetdiv).addClass('active dstepper-block');
+								$('#stage').val(data);
+							}else{
+							Swal.fire({
+								title: "Error",
+								text: data,
+								icon: "warning"
+							});
+							}
+							 
+                        },
+                        error: function(data, errorThrown) {
+                            handleError(data, errorThrown);
+
+                        },
+                        complete: function() {
+                            $.LoadingOverlay("hide");
+                        }
+
+                    });
+
+
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Asterisk(*) fields need to be completed",
+                        icon: "warning"
+                    });
+                }
+            });
+            $(document.body).on('click', '.Previous', function() {
+                var elementId = '';
+                $('.active.dstepper-block').each(function() {
+                    // Get the id attribute value of each element
+                    elementId = $(this).attr('id');
+                    // console.log(elementId); // Output the id value
+                });
+                var targetvalue = $(this).data('target');
+                var next = $(this).data('next');
+                var currentdata = $(this).data('currentdata');
+
+
+
+                var isValid = true;
+
+                // Check for required fields and handle validation
+                $('#' + elementId + ' :input[required]').each(function() {
+                    if (!$(this).val()) {
+                        $(this).addClass('error').focus();
+                        isValid = false;
+                        return false; // Exit the .each loop
+                    } else {
+                        $(this).removeClass('error');
+                    }
+                });
+
+
+
+                if (elementId == 'personal-info') {
+                    var group_id = $('#group_id').val();
+                    var third_subject = [];
+                    var fourth_subject = [];
+                    $('.form-check-input.third_subject:checked').each(function() {
+                        third_subject.push($(this).val());
+                    });
+
+                    $('.form-check-input.fourth_subject:checked').each(function() {
+                        fourth_subject.push($(this).val());
+                    });
+                    var third_subjectcheck = false;
+                    var third_subjectcheck3 = false;
+                    var fourth_subjectcheck = false;
+                    if (group_id == 2) {
+
+                        if (third_subject.length != 3) {
+
+                            third_subjectcheck3 = true;
+                        }
+
+                        if (fourth_subject.length != 1) {
+
+                            fourth_subjectcheck == true;
+                        }
+                    } else {
+                        if (third_subject.length != 1) {
+
+                            third_subjectcheck = true;
+                        }
+                        if (fourth_subject.length != 1) {
+
+                            fourth_subjectcheck == true;
+                        }
+                    }
+
+                    if (third_subjectcheck3) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Please choose 3 subject in 'Select 3rd Subject(s)' option",
+                            icon: "warning"
+                        });
+                        return false;
+                    }
+                    if (third_subjectcheck) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Please choose 1 subject in 'Select 3rd Subject(s)' option",
+                            icon: "warning"
+                        });
+                        return false;
+                    }
+                    if (third_subjectcheck) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Please choose 1 subject in 'Select 3rd Subject(s)' option",
+                            icon: "warning"
+                        });
+                        return false;
+                    }
+                }
+
+
+
+
+
+
+
+                if (!isValid) {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Asterisk(*) fields need to be completed",
+                        icon: "warning"
+                    });
+                    return false; // Stop further execution
+                }
+
+
+
+
+
+
+
+                $('#formAdmission .content').removeClass('active dstepper-block');
+                $('.bs-stepper-header .step').removeClass('active');
+                $('.step').removeClass('text-bold');
+                //$('.bs-stepper-header .step:first').addClass('crossed');
+
+                $('#' + currentdata).removeClass('active dstepper-block').removeClass('crossed');
+                $(targetvalue).addClass('active dstepper-block');
+                $('#' + next).addClass('active text-bold');
+            });
+            $(document.body).on('click', '#same_as', function() {
+                if ($('#same_as').is(':checked')) {
+                    var present_addr = $('#present_addr').val();
+                    var present_police_station = $('#present_police_station').val();
+                    var present_district_id = $('#present_district_id').val();
+
+                    $('#permanent_addr').val(present_addr);
+                    $('#permanent_police_station').val(present_police_station);
+                    $('#permanent_district_id').val(present_district_id);
+                } else {
+                    $('#permanent_addr').val('');
+                    $('#permanent_police_station').val('');
+                    $('#permanent_district_id').val('');
+                }
+            });
+            $(document.body).on('click', '.btn-save', function() {
+                var form = $('#formAdmission')[0];
+                var formData = new FormData(form);
+                var actionUrl = "<?php echo e(route('admissionSave')); ?>";
+                $.LoadingOverlay("show");
+                $.ajax({
+                    type: "POST",
+                    url: actionUrl,
+                    data: formData, // Use FormData
+                    processData: false, // Prevent jQuery from processing the data
+                    contentType: false, // Prevent jQuery from setting the content type // serializes the form's elements.
+                    success: function(data) {
+                        Swal.fire({
+                            title: "Success",
+                            text: "Successfuly Save",
+                            icon: "success"
+                        });
+                        $.LoadingOverlay("hide");
+
+                        //showpreview(data);
+                        //alert(data); // show response from the php script.
+                    },
+                    error: function(data, errorThrown) {
+                        handleError(data, errorThrown);
+                    },
+                    complete: function() {
+                        $.LoadingOverlay("hide");
+                    }
+                });
+            });
+            $(document.body).on('click', '#btn-submit', function() {
+				var student_code=$('#student_code').val();
+                var form = $('#formAdmission')[0];
+                var formData = new FormData(form);
+                var actionUrl = "<?php echo e(route('admissionSave')); ?>";
+                $.LoadingOverlay("show");
+                $.ajax({
+                    type: "POST",
+                    url: actionUrl,
+                    data: formData, // Use FormData
+                    processData: false, // Prevent jQuery from processing the data
+                    contentType: false, // Prevent jQuery from setting the content type // serializes the form's elements.
+                    success: function(data) {
+                        console.log(data);
+                        console.log('ajaxSuccess');
+                        // Swal.fire({
+                        //            title: "Success",
+                        //            text: "Successfuly Save",
+                        //            icon: "success"
+                        //      });
+                        //$.LoadingOverlay("hide");
+
+                        showpreview(student_code);
+                        //alert(data); // show response from the php script.
+                    },
+                    error: function(data, errorThrown) {
+                        handleError(data, errorThrown);
+
+                    },
+                    complete: function() {
+                        $.LoadingOverlay("hide");
+                    }
+                });
+            });
+            $(document.body).on('click', '#final_submit', function() {
+
+                Swal.fire({
+                    title: 'Do you want to Final Submit For Admission?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Yes',
+                    denyButtonText: 'No',
+                    customClass: {
+                        actions: 'my-actions',
+                        cancelButton: 'order-1 right-gap',
+                        confirmButton: 'order-2',
+                        denyButton: 'order-3',
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $('#submit').val(2);
+                        var btn = document.getElementById('savebuuton');
+                        btn.click();
+                        btn.disabled = true;
+                        //$('#savebuuton').trigger('click');
+                    } else if (result.isDenied) {
+
+                    }
+                })
+
+            });
+            $('#lfm').filemanager('image');
+            $('#lfm1').filemanager('image');
+
+
+
+            $('.form-check-input.third_subject').change(function() {
+                var checkvalue = $(this).val();
+				var group_id=$('#group_id').val();
+				var version_id = $('#version_id').val();
+                var pair = $(this).data('pair');
+                var third_subject = [];
+                var third_pair_subject = [];
+                var pre_pair = 'na';
+                $('.form-check-input.third_subject:checked').each(function() {
+                    // alert(pre_pair,$(this).val());
+                    if (pre_pair == $(this).val()) {
+                        $(this).prop("checked", false);
+                        Swal.fire({
+                            title: "Error",
+                            text: "Subject Mismatch",
+                            icon: "warning"
+                        });
+                        return false;
+                    } else {
+                        pre_pair = $(this).data('pair');
+                    }
+
+                   // third_subject.push($(this).val());
+
+                });
+                // selectedThirdValues = [];
+                // $('.form-check-input.third_subject:checked').each(function(){
+                //    selectedThirdValues.push($(this).val());
+                // });
+                var fourth_pair_subject = [];
+                var check = 0;
+                $('.form-check-input.fourth_subject:checked').each(function() {
+
+                    if ($(this).val() == checkvalue || (checkvalue == '67-68' && $(this).val() ==
+                            '82-90')) {
+                        Swal.fire({
+                            title: "warning",
+                            text: "Subject Mismatch",
+                            icon: "warning"
+                        });
+                        $(this).prop("checked", false);
+                    } else if (checkvalue == '89-98' && $(this).val() == '73-74') {
+                        check = 1;
+                    }
+
+                });
+                if (check == 1) {
+                    $(this).prop("checked", false);
+                    Swal.fire({
+                        title: "warning",
+                        text: "Subject Mismatch",
+                        icon: "warning"
+                    });
+                    return false;
+                }
+                var fourth_subject = [];
+                $('.form-check-input.fourth_subject:checked').each(function() {
+                    fourth_subject.push($(this).val());
+
+                });
+                console.log(pair, fourth_subject);
+
+                // third to array
+                if ($.inArray(pair, fourth_subject) >= 0) {
+                    $('.subject' + pair).prop("checked", false);
+                    Swal.fire({
+                        title: "Error",
+                        text: "Subject Mismatch",
+                        icon: "warning"
+                    });
+                    return false;
+                }
+                $('.form-check-input.third_subject:checked').each(function() {
+                    third_subject.push($(this).val());
+
+                });
+				console.log(third_subject,fourth_subject);
+				if (third_subject.includes("79-81") && group_id==3 && version_id==2) {
+					if (fourth_subject.includes("82-90")) {
+						$(this).prop("checked", false);
+						Swal.fire({
+							title: "Error",
+							text: "Subject Mismatch",
+							icon: "warning"
+						});
+						return false;
+					}
+				}
+                var url = "<?php echo e(route('checksection')); ?>";
+
+                var gender = $('#gender').val();
+                if (fourth_subject.length > 0 && third_subject.length > 0 && gender != '' && gender !=
+                    null) {
+
+                    var class_id = $('#class_id').val();
+                    var session_id = $('#session_id').val();
+                    var version_id = $('#version_id').val();
+                    var group_id = $('#group_id').val();
+
+                    var roll = $('#roll').val();
+                    <?php if(Auth::user()->group_id == 4): ?>
+                        $.LoadingOverlay("show");
+                        $.ajax({
+                            type: "post",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                            },
+                            url: url,
+                            data: {
+                                "_token": "<?php echo e(csrf_token()); ?>",
+                                gender,
+                                fourth_subject,
+                                third_subject,
+                                student_code: roll,
+                                class_id,
+                                session_id,
+                                version_id,
+                                group_id
+                            },
+                            success: function(response) {
+
+                                $.LoadingOverlay("hide");
+
+                                $('#section_id').val(response);
+
+
+                            },
+                            error: function(data, errorThrown) {
+                                handleError(data, errorThrown);
+
+                            },
+                            complete: function() {
+                                $.LoadingOverlay("hide");
+                            }
+                        });
+                    <?php endif; ?>
+                }
+            });
+            $('.form-check-input.fourth_subject').change(function() {
+                var checkvalue = $(this).val();
+				var version_id = $('#version_id').val();
+                var group_id = $('#group_id').val();
+                var pair = $(this).data('pair');
+                var fourth_subject = [];
+                $('.form-check-input.fourth_subject:checked').each(function() {
+                    fourth_subject.push($(this).val());
+
+                });
+                // selectedThirdValues = [];
+                // $('.form-check-input.third_subject:checked').each(function(){
+                //    selectedThirdValues.push($(this).val());
+                // });
+                var check = 0;
+                $('.form-check-input.third_subject:checked').each(function() {
+
+                    if ($(this).val() == checkvalue) {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Subject Mismatch",
+                            icon: "warning"
+                        });
+                        $(this).prop("checked", false);
+                    } else if (checkvalue == '73-74' && $(this).val() == '89-98') {
+                        check = 1;
+                    }
+                });
+                if (check == 1) {
+                    $(this).prop("checked", false);
+                    Swal.fire({
+                        title: "Error",
+                        text: "Subject Mismatch",
+                        icon: "warning"
+                    });
+                    return false;
+                }
+                var third_subject = [];
+                $('.form-check-input.third_subject:checked').each(function() {
+                    third_subject.push($(this).val());
+
+                });
+                // fourth to array
+                console.log(pair, third_subject);
+                if ($.inArray(pair, third_subject) >= 0) {
+
+                    $('.subject' + pair).prop("checked", false);
+                    Swal.fire({
+                        title: "Error",
+                        text: "Subject Mismatch",
+                        icon: "warning"
+                    });
+                    return false;
+                }
+
+                $('.form-check-input.fourth_subject:checked').each(function() {
+                    fourth_subject.push($(this).val());
+
+                });
+				
+				if (third_subject.includes("79-81") && group_id==3 && version_id==2) {
+					if (fourth_subject.includes("82-90")) {
+						$(this).prop("checked", false);
+						Swal.fire({
+							title: "Error",
+							text: "Subject Mismatch",
+							icon: "warning"
+						});
+						return false;
+					}
+				}
+                var gender = $('#gender').val();
+
+
+                var url = "<?php echo e(route('checksection')); ?>";
+
+                if (fourth_subject.length > 0 && third_subject.length > 0 && gender != '' && gender !=
+                    null) {
+
+                    var class_id = $('#class_id').val();
+                    var session_id = $('#session_id').val();
+                    var version_id = $('#version_id').val();
+                    var group_id = $('#group_id').val();
+                    var roll = $('#roll').val();
+                    <?php if(Auth::user()->group_id == 4): ?>
+                        $.LoadingOverlay("show");
+                        $.ajax({
+                            type: "post",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                            },
+                            url: url,
+                            data: {
+                                "_token": "<?php echo e(csrf_token()); ?>",
+                                gender,
+                                fourth_subject,
+                                third_subject,
+                                student_code: roll,
+                                class_id,
+                                session_id,
+                                version_id,
+                                group_id
+                            },
+                            success: function(response) {
+
+                                $.LoadingOverlay("hide");
+
+                                $('#section_id').val(response);
+
+
+                            },
+                            error: function(data, errorThrown) {
+                                handleError(data, errorThrown);
+
+                            },
+                            complete: function() {
+                                $.LoadingOverlay("hide");
+                            }
+                        });
+                    <?php endif; ?>
+                }
+            });
+
+            <?php if(isset($student->submit) && $student->submit == 2 && Auth::user()->group_id == 4): ?>
+
+                $(":input:not([type=hidden]),select,textarea").prop("disabled", true);
+                $("#photo").prop("disabled", false);
+            <?php endif; ?>
+        });
+
+        function showpreview(studentcode) {
+
+            var url = "<?php echo e(route('studentpreview')); ?>";
+            $.ajax({
+                type: "post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                },
+                url: url,
+                data: {
+                    "_token": "<?php echo e(csrf_token()); ?>",
+                    studentcode,
+                },
+                success: function(response) {
+                    $('#modalScrollable').modal('show');
+                    $.LoadingOverlay("hide");
+
+                    $('#studentpreview').html(response);
+
+
+                },
+                error: function(data, errorThrown) {
+                    handleError(data, errorThrown);
+
+                },
+                complete: function() {
+                    $.LoadingOverlay("hide");
+                }
+            });
+        }
+
+        function checksection() {
+            var third_subject = [];
+            $('.form-check-input.third_subject:checked').each(function() {
+                third_subject.push($(this).val());
+
+            });
+            var fourth_subject = [];
+            $('.form-check-input.fourth_subject:checked').each(function() {
+                fourth_subject.push($(this).val());
+
+            });
+
+
+
+            var url = "<?php echo e(route('checksection')); ?>";
+
+            var gender = $('#gender').val();
+            if (fourth_subject.length > 0 && third_subject.length > 0 && gender != '' && gender != null) {
+
+                var class_id = $('#class_id').val();
+                var session_id = $('#session_id').val();
+                var version_id = $('#version_id').val();
+                var group_id = $('#group_id').val();
+
+                var roll = $('#roll').val();
+                <?php if(Auth::user()->group_id == 4): ?>
+                    $.LoadingOverlay("show");
+                    $.ajax({
+                        type: "post",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                        },
+                        url: url,
+                        data: {
+                            "_token": "<?php echo e(csrf_token()); ?>",
+                            gender,
+                            fourth_subject,
+                            third_subject,
+                            student_code: roll,
+                            class_id,
+                            session_id,
+                            version_id,
+                            group_id
+                        },
+                        success: function(response) {
+                            $.LoadingOverlay("hide");
+                            $('#section_id').val(response);
+                        },
+                        error: function(data, errorThrown) {
+                            handleError(data, errorThrown);
+                        },
+                        complete: function() {
+                            $.LoadingOverlay("hide");
+                        }
+                    });
+                <?php endif; ?>
+            }
+        }
+
+
+
+        function handleError(data, xhr) {
+            const errorMessage = data?.responseJSON?.message || 'An error occurred';
+            Swal.fire({
+                title: "Error",
+                text: errorMessage,
+                icon: "warning"
+            });
+        }
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/vhosts/bafsdadmission.com/httpdocs/resources/views/student/studentAdmissionNew.blade.php ENDPATH**/ ?>
