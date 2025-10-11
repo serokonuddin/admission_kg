@@ -1,0 +1,78 @@
+@extends('admin.layouts.layout')
+@section('content')
+    <style>
+        /* .bx {
+            vertical-align: middle;
+            font-size: 2.15rem;
+            line-height: 1;
+        } */
+        .text-capitalize {
+            text-transform: capitalize !important;
+            font-size: 25px;
+        }
+
+        .avatar {
+            position: relative;
+            width: 4rem;
+            height: 4rem;
+            cursor: pointer;
+        }
+    </style>
+    <link href="{{ asset('backend/vendor/fonts/boxicons.css') }}" />
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="py-3" style="margin: 15px 0">
+                <span class="text-muted fw-light">Dashboard </span>
+            </h4>
+
+            <div class="row mt-4">
+
+                <div class="col-sm-6 col-lg-3 mb-4">
+                    <div class="card icon-card card-border-shadow-primary cursor-pointer text-center h-100">
+                        <a href="{{ url('admin/students') }}">
+                            <div class="card-body bg-label-danger">
+                                <div class="avatar flex-shrink-0 " style="margin: 0px auto">
+                                    <img src="{{ asset('public/dashboard/student.jpg') }}" alt="cube" class="rounded">
+                                </div>
+
+                                <p class="icon-name text-capitalize text-truncate mb-0">Students</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 mb-4">
+                    <div class="card icon-card card-border-shadow-warning cursor-pointer text-center h-100">
+                        <a href="{{ route('admissionstatus') }}">
+                            <div class="card-body bg-label-primary ">
+                                <div class="avatar flex-shrink-0 " style="margin: 0px auto">
+                                    <img src="{{ asset('public/image/admission.png') }}" alt="cube" class="rounded">
+                                </div>
+
+                                <p class="icon-name text-capitalize text-truncate mb-0">Admission</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-4">
+                    <div class="card icon-card cursor-pointer card-border-shadow-primary text-center  h-100">
+                        <a href="{{ route('calendarDashboard') }}">
+                            <div class="card-body bg-label-info">
+                                <div class="avatar flex-shrink-0 " style="margin: 0px auto">
+                                    <img src="{{ asset('public/dashboard/calendar.png') }}" alt="cube" class="rounded">
+                                </div>
+
+                                <p class="icon-name text-capitalize text-truncate mb-0">Year Calendar</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- / Content -->
+
+        <div class="content-backdrop fade"></div>
+    </div>
+@endsection
