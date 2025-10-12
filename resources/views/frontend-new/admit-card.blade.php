@@ -20,8 +20,8 @@
         }
 
         /* .table-striped tr:nth-child(even) {
-                            background-color: #f9f9f9;
-                        } */
+                                background-color: #f9f9f9;
+                            } */
         .table-bordered th,
         .table-bordered td {
             border: 1px solid #000 !important;
@@ -224,8 +224,8 @@
                 <table class="table table-striped table-no-bordered ">
                     <tr>
                         <td style="float: right;padding:0px"></td>
-                        <td style="float: right;padding:0px;text-align: right"><img src="{{ asset('public/psi.jpg') }}"
-                                style="width: 90px;" /></td>
+                        <td style="float: right;padding:0px;text-align: right"><img
+                                src="{{ asset('public/principal.jpg') }}" style="width: 90px;" /></td>
                     </tr>
                     <tr>
                         <td style="float: left;padding:0px">
