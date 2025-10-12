@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Models\Finance\StudentFeeTansaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Library\SslCommerz\SslCommerzNotification;
 use Session;
 use App\Helpers\Helpers;
+use Illuminate\Support\Facades\DB;
 
 class SslCommerzPaymentController extends Controller
 {
@@ -229,24 +229,24 @@ class SslCommerzPaymentController extends Controller
     }
     function generateRandomNumber()
     {
-		$numbers = '0123456789';
-		$specials = '!@#$%^&*()-_=+[]{}';
+        $numbers = '0123456789';
+        $specials = '!@#$%^&*()-_=+[]{}';
 
-		// Generate a random number string with length - 1
-		$randomNumbers = '';
-		for ($i = 0; $i < 9 - 1; $i++) {
-			$randomNumbers .= $numbers[random_int(0, strlen($numbers) - 1)];
-		}
+        // Generate a random number string with length - 1
+        $randomNumbers = '';
+        for ($i = 0; $i < 9 - 1; $i++) {
+            $randomNumbers .= $numbers[random_int(0, strlen($numbers) - 1)];
+        }
 
-		// Add one random special character
-		$specialChar = $specials[random_int(0, strlen($specials) - 1)];
+        // Add one random special character
+        $specialChar = $specials[random_int(0, strlen($specials) - 1)];
 
-		// Insert the special character at a random position
-		$position = random_int(0, strlen($randomNumbers));
-		$result = substr($randomNumbers, 0, $position)  . substr($randomNumbers, $position);
+        // Insert the special character at a random position
+        $position = random_int(0, strlen($randomNumbers));
+        $result = substr($randomNumbers, 0, $position)  . substr($randomNumbers, $position);
 
-		return $result;
-	}
+        return $result;
+    }
     public function kgadmission($paymenthistory, $admission)
     {
         DB::table('student_fee_tranjection')
@@ -273,20 +273,21 @@ class SslCommerzPaymentController extends Controller
     }
 
 
-    public function KgStudentCreate($temporary_id){
-        $student=DB::table('student_admission')
-        ->where('temporary_id',$temporary_id)
-        ->first();
-        
+    public function KgStudentCreate($temporary_id)
+    {
+        $student = DB::table('student_admission')
+            ->where('temporary_id', $temporary_id)
+            ->first();
+
         if (!$student) {
-            $session_id=(int)$student->session_id+1;
+            $session_id = (int)$student->session_id + 1;
             $count = DB::table('student_activity')
                 ->where('session_id', $session_id)
                 // ->where('version_id', $student->version_id)
                 // ->where('shift_id', $student->shift_id)
                 ->where('class_code', 0)
                 ->count();
-            
+
             // if ($admission->group_name == 'Science' && $admission->version_id == 1) {
             //     $middel = 1000;
             // } else if ($admission->group_name == 'Science' && $admission->version_id == 2) {
@@ -301,7 +302,7 @@ class SslCommerzPaymentController extends Controller
             //     $middel = 3601;
             // }
             $serial = 1000 + $count + 1;
-            $student_code=$session_id.''.($serial);
+            $student_code = $session_id . '' . ($serial);
 
             $studentdata = array(
                 'student_code' => $student_code,
@@ -320,7 +321,7 @@ class SslCommerzPaymentController extends Controller
                 'birth_no' => $student->birth_registration_number,
                 'service_number' => $student->service_name,
                 'name' => $student->service_holder_name,
-                'arms_name' => $student->name_of_service??$student->service_name,
+                'arms_name' => $student->name_of_service ?? $student->service_name,
                 'in_service' => $student->in_service,
                 'office_address' => $student->office_address,
                 'name_of_staff' => $student->name_of_staff,
@@ -336,7 +337,7 @@ class SslCommerzPaymentController extends Controller
             );
 
             $studentid = DB::table('students')->insertGetId($studentdata);
-            DB::table('student_admission')->where('temporary_id', $temporary_id)->update(['student_code' => $student_code,'status' => 2]);
+            DB::table('student_admission')->where('temporary_id', $temporary_id)->update(['student_code' => $student_code, 'status' => 2]);
             $student_activity = array(
                 'student_code' => $student_code,
                 'session_id' => $session_id,
@@ -364,22 +365,22 @@ class SslCommerzPaymentController extends Controller
                 'group_id' => 4,
             );
             DB::table('users')->insert($user);
-             //$tran_id=0;
+            //$tran_id=0;
             DB::table('student_fee_tranjection')
-                    ->where('id', $tran_id)
-                    ->update(['status' => 'Complete', 'student_code' => $student_code, 'updated_at' => date('Y-m-d H:i:s')]);
-             
+                ->where('id', $tran_id)
+                ->update(['status' => 'Complete', 'student_code' => $student_code, 'updated_at' => date('Y-m-d H:i:s')]);
 
-               
+
+
 
             sms_send($student->phone, 'College Admission payment for BAF Shaheen college Dhaka is completed. Please login and fill up your admission form. Usermame: ' . $student->username . ', Password: ' . $password . '. Link: https://bafsdadmission.com/login');
             $text = "College Admission payment for BAF Shaheen college Dhaka is completed. Please login and fill up your admission form.";
             return redirect()->route('sslredirect')->with('warging', $text);
         }
     }
-	public function success(Request $request)
+    public function success(Request $request)
     {
-		
+
         $text = "Admission Payment is Successful";
 
         $tran_id = $request->input('tran_id');
@@ -392,15 +393,16 @@ class SslCommerzPaymentController extends Controller
         $order_details = DB::table('student_fee_tranjection')
             ->where('id', $tran_id)
             ->select('*')->first();
+        // dd($order_details);
         // if ($order_details) {
-            
+
         //         DB::table('student_fee_tranjection')
         //         ->where('id', $tran_id)
         //         ->update(['status' => 'Complete', 'updated_at' => date('Y-m-d H:i:s')]);
         //        // $this->KgStudentCreate($order_details->admission_id);
         //         $text="Payment Successfully Paid";
         //         return redirect()->route('sslredirect')->with('warging', $text);
-            
+
         // }
         if ($order_details->status == 'Pending') {
             $validation = $sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
@@ -412,30 +414,25 @@ class SslCommerzPaymentController extends Controller
                 Here you can also sent sms or email for successfull transaction to customer
                 */
 
-                
-                    $admission = DB::table('student_admission')->where('id', $order_details->admission_id)->first();
-                    $temporay_id = $this->kgadmission($order_details, $admission);
-                    sms_send($admission->mobile, 'KG Admission payment for '.env('APP_NAME').' is completed.Your Temporay Number is ' . $temporay_id . '. Please Collect Your Admit Card Link: '.env('APP_URL').'/admissionview');
-                    $text = "Admission payment for ".env('APP_NAME')." is completed. Please Collect Your Admit Card.";
-                    return redirect()->route('admissionSearchByNumber', $temporay_id)->with('warging', $text);
-                
 
-
-
-                
+                $admission = DB::table('student_admission')->where('id', $order_details->admission_id)->first();
+                $temporay_id = $this->kgadmission($order_details, $admission);
+                sms_send($admission->mobile, 'KG Admission payment for ' . env('APP_NAME') . ' is completed.Your Temporay Number is ' . $temporay_id . '. Please Collect Your Admit Card Link: ' . env('APP_URL') . '/admissionview');
+                $text = "Admission payment for " . env('APP_NAME') . " is completed. Please Collect Your Admit Card.";
+                return redirect()->route('admissionSearchByNumber', $temporay_id)->with('warging', $text);
             }
         } else if ($order_details->status == 'Processing' || $order_details->status == 'Complete') {
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
              */
-          $admission = DB::table('student_admission')->where('id', $order_details->admission_id)->first();
-                    $temporay_id = $this->kgadmission($order_details, $admission);
-                    sms_send($admission->mobile, 'KG Admission payment for '.env('APP_NAME').' is completed.Your Temporay Number is ' . $temporay_id . '. Please Collect Your Admit Card Link: '.env('APP_URL').'/admissionview');
-                    $text = "Admission payment for ".env('APP_NAME')." is completed. Please Collect Your Admit Card.";
-                    return redirect()->route('admissionSearchByNumber', $temporay_id)->with('warging', $text);
-                
+            $admission = DB::table('student_admission')->where('id', $order_details->admission_id)->first();
+            $temporay_id = $this->kgadmission($order_details, $admission);
+            sms_send($admission->mobile, 'KG Admission payment for ' . env('APP_NAME') . ' is completed.Your Temporay Number is ' . $temporay_id . '. Please Collect Your Admit Card Link: ' . env('APP_URL') . '/admissionview');
+            $text = "Admission payment for " . env('APP_NAME') . " is completed. Please Collect Your Admit Card.";
+            return redirect()->route('admissionSearchByNumber', $temporay_id)->with('warging', $text);
 
-           // return redirect()->route('sslredirect')->with('warging', $text);
+
+            // return redirect()->route('sslredirect')->with('warging', $text);
         } else {
             return redirect()->route('admissionview')->with('warging', $text);
             $tran_id = $request->input('tran_id');
@@ -448,9 +445,9 @@ class SslCommerzPaymentController extends Controller
             return redirect()->route('admissionview')->with('warging', $text);
         }
     }
-    public function success1(Request $request,$tran_id)
+    public function success1(Request $request, $tran_id)
     {
-		
+
         $text = "Admission Payment is Successful";
 
         $tran_id = $tran_id;
@@ -463,25 +460,25 @@ class SslCommerzPaymentController extends Controller
         $order_details = DB::table('student_fee_tranjection')
             ->where('id', $tran_id)
             ->select('*')->first();
-	   
+
         if ($order_details) {
             if ($order_details->class_code == 11) {
-              //  DB::table('student_fee_tranjection')
+                //  DB::table('student_fee_tranjection')
                 //    ->where('id', $tran_id)
                 //    ->update(['status' => 'Complete', 'updated_at' => date('Y-m-d H:i:s')]);
-               // return redirect()->route('studentFee')->with('success', "Payment Success");
-            }elseif($order_details->class_id==0 && $order_details->admission_id!= null && $order_details->admission_id != ''){
+                // return redirect()->route('studentFee')->with('success', "Payment Success");
+            } elseif ($order_details->class_id == 0 && $order_details->admission_id != null && $order_details->admission_id != '') {
                 DB::table('student_fee_tranjection')
-                ->where('id', $tran_id)
-                ->update(['status' => 'Complete', 'updated_at' => date('Y-m-d H:i:s')]);
+                    ->where('id', $tran_id)
+                    ->update(['status' => 'Complete', 'updated_at' => date('Y-m-d H:i:s')]);
                 $this->KgStudentCreate($order_details->admission_id);
-                $text="Payment Successfully Paid";
+                $text = "Payment Successfully Paid";
                 return redirect()->route('sslredirect')->with('warging', $text);
             }
         }
         if ($order_details->status == 'Pending') {
             $validation = 1;
-				//$sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
+            //$sslc->orderValidate($request->all(), $tran_id, $amount, $currency);
 
             if ($validation) {
                 /*
@@ -490,26 +487,26 @@ class SslCommerzPaymentController extends Controller
                 Here you can also sent sms or email for successfull transaction to customer
                 */
 
-                    $admission = DB::table('student_admission')->where('id', $order_details->admission_id)->first();
-                    $temporay_id = $this->kgadmission($order_details, $admission);
-                    sms_send($admission->mobile, 'KG Admission payment for BAF Shaheen college Dhaka is completed.Your Temporay Number is ' . $temporay_id . '. Please Collect Your Admit Card Link: '.env('APP_URL').'/admissionview');
-                    $text = "Admission payment for BAF Shaheen college Dhaka is completed. Please Collect Your Admit Card.";
-                    return redirect()->route('admissionSearchByNumber', $temporay_id)->with('warging', $text);
-                
+                $admission = DB::table('student_admission')->where('id', $order_details->admission_id)->first();
+                $temporay_id = $this->kgadmission($order_details, $admission);
+                sms_send($admission->mobile, 'KG Admission payment for BAF Shaheen college Dhaka is completed.Your Temporay Number is ' . $temporay_id . '. Please Collect Your Admit Card Link: ' . env('APP_URL') . '/admissionview');
+                $text = "Admission payment for BAF Shaheen college Dhaka is completed. Please Collect Your Admit Card.";
+                return redirect()->route('admissionSearchByNumber', $temporay_id)->with('warging', $text);
+
 
 
 
                 $admission = DB::table('admission_temporary')
                     ->where('student_code', $order_details->student_code)
                     ->first();
-				
+
 
                 $userdata = DB::table('users')
                     ->where('username', $admission->username)
                     ->select('*')->first();
 
                 if (empty($userdata)) {
-					$groupdata = DB::table('academygroups')->where('id', $admission->group_id)->first();
+                    $groupdata = DB::table('academygroups')->where('id', $admission->group_id)->first();
                     // if ($admission->class_id == 59 || $admission->class_id == 11) {
                     //     $groupdata = DB::table('academygroups')->where('group_name', $admission->group_name)->first();
 
@@ -519,7 +516,7 @@ class SslCommerzPaymentController extends Controller
                     //         ->where('class_code', 11)
                     //         ->where('group_id', $groupdata->id)
                     //         ->count();
-						
+
                     //     if ($admission->group_name == 'Science' && $admission->version_id == 1) {
                     //         $middel = 1000;
                     //     } else if ($admission->group_name == 'Science' && $admission->version_id == 2) {
@@ -542,7 +539,7 @@ class SslCommerzPaymentController extends Controller
                     $trimmed = substr($order_details->student_code, 2);        // removes the first 2 characters
                     $serial = (int)$trimmed;
                     $student_code = $order_details->student_code;
-					
+
                     $studentdata = array(
                         'student_code' => $student_code,
                         'first_name' => $admission->full_name,
@@ -558,12 +555,12 @@ class SslCommerzPaymentController extends Controller
                     );
 
                     $studentid = DB::table('students')->insertGetId($studentdata);
-                   // DB::table('admission_temporary')->where('id', $order_details->admission_id)->update(['student_code' => $student_code]);
+                    // DB::table('admission_temporary')->where('id', $order_details->admission_id)->update(['student_code' => $student_code]);
                     $student_activity = array(
                         'student_code' => $student_code,
                         'session_id' => $admission->session_id,
                         'class_id' => $admission->class_id,
-						'class_code' => 11,
+                        'class_code' => 11,
                         'version_id' => $admission->version_id,
                         'group_id' => $groupdata->id ?? '',
                         'roll' => $student_code,
@@ -582,7 +579,7 @@ class SslCommerzPaymentController extends Controller
                         'phone' => $admission->phone,
                         'ref_id' => $student_code,
                         'password' => bcrypt($password),
-						'password_text'=>$password,
+                        'password_text' => $password,
                         'group_id' => 4,
                     );
                     DB::table('users')->insert($user);
@@ -711,7 +708,7 @@ class SslCommerzPaymentController extends Controller
 
     public function ipn(Request $request)
     {
-		return 'ok';
+        return 'ok';
         #Received all the payement information from the gateway
         if ($request->input('tran_id')) #Check transation id is posted or not.
         {

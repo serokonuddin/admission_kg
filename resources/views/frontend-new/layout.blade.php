@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BAF Shaheen College Dhaka</title>
+    <title>{{ $academy_info->academy_name }}</title>
 
     <!-- Plugins css Style -->
     <link href='{{ asset('public/') }}/assets/plugins/fontawesome-5.15.2/css/all.min.css' rel='stylesheet'>
@@ -35,9 +35,7 @@
     <link href="{{ asset('public/') }}/assets/css/custom.css" id="option_style" rel="stylesheet">
 
     <!-- Favicon -->
-    <link
-        href="{{ asset('/') }}public/frontend/uploads/school_content/logo/front_fav_icon-608ff44a5fdb33.94953981.png"
-        rel="shortcut icon">
+    <link href="{{ $academy_info->icon }}" rel="shortcut icon">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -300,8 +298,7 @@
 
                                         <a href="{{ url('/') }}">
                                             <img class="d-inline-block logoicon" style="width: 65px!important;"
-                                                src="{{ asset('/') }}public/frontend/uploads/school_content/logo/front_logo-608ff44a5f8f07.35255544.png"
-                                                alt="">
+                                                src="{{ $academy_info->logo }}" alt="">
                                         </a>
 
                                     </span>
@@ -309,25 +306,19 @@
                                         class="me-lg-4 me-xl-6 text-white opacity-100 short-text"
                                         style="margin-top: 19px;line-height: 0px;"><span
                                             style=" font-family: 'broadway1'!important;font-size: 30px;"
-                                            class="bafsd">BAFSD</span>
+                                            class="bafsd">{{ $academy_info->short_name }}</span>
                                         <hr style="width: 130px" />
-                                        <span style="font-family: forte!important;font-size: 15px">DHAKA SHAHEEN</span>
+                                        <span
+                                            style="font-family: forte!important;font-size: 15px">{{ $academy_info->location }}</span>
                                     </a>
                                 </div>
-
-
                             </li>
-
-
                         </ul>
                     </div>
 
                     <div class="col-lg-5 mobile-3">
                         <ul
                             class="top-menu list-inline d-flex mt-2 justify-content-xl-end justify-content-center align-items-center me-xl-2">
-
-
-
                             <li class="text-white me-md-3 me-lg-2 me-xl-5">
                                 <span class="bg-purple icon-header me-1 me-md-2 me-lg-1 me-xl-2">
                                     <i class="fas fa-unlock-alt text-white font-size-13" aria-hidden="true"></i>
@@ -336,7 +327,6 @@
                                     data-bs-toggle="modal" data-bs-target="#modal-login">
                                     Login
                                 </a>
-
                             </li>
                             <li class="text-white me-md-3 me-lg-2 me-xl-5 ml-4 mobile" style="margin-left: 10px;">
                                 <button class="navbar-toggler py-2" type="button" data-bs-toggle="collapse"
@@ -344,21 +334,6 @@
                                     aria-label="Toggle navigation">
                                     <i class="fa fa-bars"></i>
                                 </button>
-
-                            </li>
-
-                            <li class="cart-dropdown d-none d-md-block">
-                                <div class="cart-icon" aria-haspopup="true" aria-expanded="false"
-                                    data-display="static">
-                                    <a href="https://www.facebook.com/dhakashaheen" target="_blank">
-
-                                        <span class="rounded-sm bg-pink icon-small icon-badge shopping-icon">
-                                            <i class="fab fa-facebook-f text-white" aria-hidden="true"></i>
-
-                                        </span>
-                                    </a>
-                                </div>
-
                             </li>
                         </ul>
                     </div>
@@ -372,7 +347,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}"
                     style="font-family: algerian!important;font-size:x-large;font-weight: bold;line-height: 25px;color: #00ADEF">
-                    BAF Shaheen College Dhaka<br>
+                    {{ $academy_info->academy_name }}<br>
                     <span
                         style="
         font-size: 11px;
@@ -385,7 +360,7 @@
 
 
         ">ESTD
-                        1960|EIIN-107858</span>
+                        {{ $academy_info->established_year }}|EIIN-{{ $academy_info->eiin }}</span>
                 </a>
 
                 <!-- cart-dropdown -->
@@ -632,19 +607,7 @@
             </div>
         </nav>
     </header>
-
-
-
-
-
-
-
     @yield('content')
-
-
-
-
-
     <footer class="footer-bg-img">
         <!-- Footer Color Bar -->
         <div class="color-bar">
@@ -666,169 +629,19 @@
             </div>
         </div>
 
-        <div class="pt-8 pb-7  bg-repeat"
-            style="background-image: url({{ asset('public/') }}/assets/img/background/footer-bg-img-1.png);">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-lg-3 col-xs-12">
-                        <h4 class="section-title-sm font-weight-bold text-white mb-2">Useful Links</h4>
-                        <ul class="list-unstyled">
-                            <li class="mb-4">
-                                <a href="http://xiclassadmission.gov.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> XI Class
-                                    Admission: 2023-24
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="https://dhakaeducationboard.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Dhaka Education
-                                    Board
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://bafsk.edu.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Kurmitola
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://bafspkp.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College PKP
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="http://www.bafss.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Shamshernagar
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="http://bafsj.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Jashore
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://www.bafsc.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Chattogram
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 col-xs-12">
-
-                        <ul class="list-unstyled">
-                            <li class="mb-4">
-                                <a href="http://bafsb.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Bogura
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://mopme.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Ministry of
-                                    Primary and Mass Education
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="http://www.nctb.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> National
-                                    Curriculum and Textbook Board (NCTB)
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="https://www.dpe.gov.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Directorate of
-                                    Primary Education
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="http://dshe.gov.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Directorate of
-                                    Secondary and Higher Education
-                                </a>
-                            </li>
-
-
-                            <li class="mb-4">
-                                <a href="https://moedu.portal.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Ministry of
-                                    Education
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-4 col-xs-12">
-                        <h4 class="section-title-sm font-weight-bold text-white mb-2">Contact</h4>
-                        <p style="margin-bottom: .5rem;">02-9836440</p>
-                        <h4 class="section-title-sm font-weight-bold text-white mb-2">Google Map</h4>
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.172643828997!2d90.38821047533675!3d23.776865778652436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c74302a89761%3A0xd99a5c61d56e1d6d!2sBAF%20Shaheen%20College%20Dhaka!5e0!3m2!1sen!2sbd!4v1714009795417!5m2!1sen!2sbd"
-                            width="350" height="220" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-2 col-xs-12">
-                        <!-- <h4 class="section-title-sm font-weight-bold text-white mb-3">Feedback</h4> -->
-
-                        <!-- <div class="mb-1 ">
-              <a href="http://localhost/schoolerp/page/message-of-the-principal" class="bg-success btn btn-white btn-sm text-uppercase text-hover-default">Massage Box</a>
-            </div> -->
-                        <h4 class="section-title-sm font-weight-bold text-white mb-3">Address</h4>
-                        <p>3rd Gate, Near Shaheed Jahangir Gate, Dhaka 1206</p>
-
-                        <h4 class="section-title-sm font-weight-bold text-white mb-3">Email Us</h4>
-                        <p style="margin-bottom: .5rem;">info@bafsd.edu.bd</p>
-                        <p style="margin-bottom: .5rem;">infobafsd@gmail.com</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Copy Right -->
         <div class="copyright" style="background-color: #337AB7 !important">
             <div class="container">
                 <div class="row py-4 align-items-center">
                     <div class="col-sm-7 col-xs-12 order-1 order-md-0">
-                        <p class="copyright-text"> © <span id="copy-year"></span> BAF Shaheen College Dhaka, Powered
+                        <p class="copyright-text"> © <span id="copy-year"></span> {{ $academy_info->academy_name }},
+                            Powered
                             By : Shahin TECH</p>
                     </div>
 
                     <div class="col-sm-5 col-xs-12">
                         <ul
                             class="list-inline d-flex align-items-center justify-content-md-end justify-content-center mb-md-0">
-                            <li class="me-3">
-                                <a class="icon-rounded-circle-small bg-primary"
-                                    href="https://www.facebook.com/dhakashaheen" target="_blank">
-                                    <i class="fab fa-facebook-f text-white" aria-hidden="true"></i>
-                                </a>
-                            </li>
-
-                            <!-- <li class="me-3">
-              <a class="icon-rounded-circle-small bg-danger" href="javascript:void(0)">
-                <i class="fab fa-google-plus-g text-white" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a class="icon-rounded-circle-small bg-info" href="javascript:void(0)">
-                <i class="fab fa-pinterest-p text-white" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li class="">
-              <a class="icon-rounded-circle-small bg-purple" href="javascript:void(0)">
-                <i class="fab fa-vimeo-v text-white" aria-hidden="true"></i>
-              </a>
-            </li> -->
                         </ul>
                     </div>
                 </div>

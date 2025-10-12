@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\sttings\Versions;
-use Faker\Core\Version;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 class VersionsController extends Controller
 {
     /**
@@ -13,13 +14,13 @@ class VersionsController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->group_id!=2){
+        if (Auth::user()->group_id != 2) {
             return 1;
         }
-        Session::put('activemenu','setting');
-        Session::put('activesubmenu','vr');
-        $versions=Versions::all();
-        return view('setting.version',compact('versions'));
+        Session::put('activemenu', 'setting');
+        Session::put('activesubmenu', 'vr');
+        $versions = Versions::all();
+        return view('setting.version', compact('versions'));
     }
 
     /**
@@ -35,35 +36,34 @@ class VersionsController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->group_id!=2){
+        if (Auth::user()->group_id != 2) {
             return 1;
         }
-        $id=$request->id;
+        $id = $request->id;
         try {
-           
-            if($id==0){
+
+            if ($id == 0) {
                 $validated = $request->validate([
                     'version_name' => 'required|unique:Versions,version_name',
                     'version_code' => 'required|unique:Versions,version_code',
                     'active' => 'required',
                 ]);
                 Versions::insert($validated);
-                $sms="Successfully Inserted";
-            }else{
+                $sms = "Successfully Inserted";
+            } else {
                 $validated = $request->validate([
-                    'version_name' => 'required|unique:Versions,version_name,'.$request->id,
-                    'version_code' => 'required|unique:Versions,version_code,'.$request->id,
+                    'version_name' => 'required|unique:Versions,version_name,' . $request->id,
+                    'version_code' => 'required|unique:Versions,version_code,' . $request->id,
                     'active' => 'required',
                 ]);
-                Versions::where('id',$id)->update($validated);
-                $sms="Successfully Updated";
+                Versions::where('id', $id)->update($validated);
+                $sms = "Successfully Updated";
             }
-            return redirect(route('version.index'))->with('success',$sms);
-          } catch (Exception $e) {
-            
+            return redirect(route('version.index'))->with('success', $sms);
+        } catch (Exception $e) {
+
             return redirect(route('version.index'))->with(['msg' => $e]);
-          }
-        
+        }
     }
 
     /**
@@ -95,14 +95,14 @@ class VersionsController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->group_id!=2){
+        if (Auth::user()->group_id != 2) {
             return 1;
         }
         try {
-        $versions=Versions::find($id);
-        $versions->delete();
-        return 1;
-        } catch (Exception $e) {
+            $versions = Versions::find($id);
+            $versions->delete();
+            return 1;
+        } catch (\Exception $e) {
             return $e;
         }
     }

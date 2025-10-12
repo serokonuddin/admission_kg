@@ -32,6 +32,7 @@ use App\Exports\AdmissionExportTotalFemale;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Helpers\Helpers;
 use App\Http\Requests\Admission\AdmissionStoreRequest;
+use App\Models\AcademyInfo;
 use App\Models\Employee\Employee;
 use App\Models\Employee\EmployeeActivity;
 use Illuminate\Support\Facades\Auth;
@@ -111,7 +112,7 @@ class AdmissionController extends Controller
         if ($studentdata) {
 
             if ($studentdata->mobile && $studentdata->temporary_id) {
-                $textdata = 'Your New Temporary Number is ' . $studentdata->temporary_id . '. Please Collect Your Admit Card Link: '.env('APP_URL').'/admissionview';
+                $textdata = 'Your New Temporary Number is ' . $studentdata->temporary_id . '. Please Collect Your Admit Card Link: ' . env('APP_URL') . '/admissionview';
 
                 return  sms_send($studentdata->mobile, $textdata);
             } else {
@@ -374,7 +375,7 @@ class AdmissionController extends Controller
 
     public function index(Request $request)
     {
-		//dd($request->all());
+        //dd($request->all());
         Session::put('activemenu', 'admission');
         Session::put('activesubmenu', 'al');
         $sessions = Sessions::where('active', 1)->get();
@@ -403,39 +404,39 @@ class AdmissionController extends Controller
             //->join('classes', 'classes.id', '=', 'admission_temporary.class_id')
             ->leftjoin('student_fee_tranjection', 'student_fee_tranjection.admission_id', '=', 'admission_temporary.id')
             ->join('students', 'students.student_code', '=', 'admission_temporary.student_code');
-		
-       /// $admissions = $admissions
-		//	->whereIn('admission_temporary.student_code', function ($row) use ($session_id, $version_id, $shift_id, $class_id, $section_id) {
+
+        /// $admissions = $admissions
+        //	->whereIn('admission_temporary.student_code', function ($row) use ($session_id, $version_id, $shift_id, $class_id, $section_id) {
         //    $row->select('student_code')
         //        ->from('student_activity');
-           // if ($session_id) {
-           //     $row->whereRaw('session_id = "' . $session_id . '"');
-           // }
-           // if ($version_id) {
-           //     $row->whereRaw('version_id = "' . $version_id . '"');
-          //  }
-          //  if ($shift_id) {
-          //      $row->whereRaw('shift_id = "' . $shift_id . '"');
+        // if ($session_id) {
+        //     $row->whereRaw('session_id = "' . $session_id . '"');
+        // }
+        // if ($version_id) {
+        //     $row->whereRaw('version_id = "' . $version_id . '"');
+        //  }
+        //  if ($shift_id) {
+        //      $row->whereRaw('shift_id = "' . $shift_id . '"');
         //    }
-          //  if ($class_id) {
-           //     $row->whereRaw('class_id = "' . $class_id . '"');
+        //  if ($class_id) {
+        //     $row->whereRaw('class_id = "' . $class_id . '"');
         //    }
-         //   if ($section_id) {
-         //       $row->whereRaw('section_id = "' . $section_id . '"');
-         //   }
-      //  });
+        //   if ($section_id) {
+        //       $row->whereRaw('section_id = "' . $section_id . '"');
+        //   }
+        //  });
 
         if (!empty($text_search)) {
             $admissions = $admissions->whereRaw("full_name LIKE '%" . $text_search . "%' or admission_temporary.student_code LIKE '%" . $text_search . "%' or phone LIKE '%" . $text_search . "%' or admission_temporary.email LIKE '%" . $text_search . "%' or admission_temporary.roll_number LIKE '%" . $text_search . "%'");
         }
         $admissions = $admissions->orderBy('student_fee_tranjection.id', 'asc')->get();
-		
+
         // foreach($admissions as $key=>$admission){
         //     $admissions[$key]->details=DB::table('student_fee_tranjection')
         //     //->join('student_fee_tranjection','student_fee_tranjection.id','=','payment_details.tran_id')
         //     ->where('admission_id',$admission->id)->first();
         // }
-		//dd($admissions);
+        //dd($admissions);
         if (isset($request->print)) {
             ini_set('max_execution_time', '300');
             ini_set("pcre.backtrack_limit", "5000000");
@@ -613,7 +614,7 @@ class AdmissionController extends Controller
             ->where('ref_id', $student_code)
             //->where('phone', $sms_notification)
             ->first();
-		
+
         $userdata = array('password' => bcrypt($password), 'phone' => $phone);
 
 
@@ -829,7 +830,7 @@ class AdmissionController extends Controller
         $pdf->WriteHTML('');
 
         //$view = 'admission.cardnew';
-		$view = 'student.cardD';
+        $view = 'student.cardD';
         $data = compact('studentdata');
 
         $html = view($view, $data);
@@ -1144,9 +1145,9 @@ class AdmissionController extends Controller
 
         $admissions = AdmissionOpen::where('class_id', 0)->where('is_lottery', 1)->get();
 
+        $academy_info = AcademyInfo::first();
 
-
-        return view('admission.lottery', compact('sessions', 'shifts', 'versions', 'admissions'));
+        return view('admission.lottery', compact('sessions', 'shifts', 'versions', 'admissions', 'academy_info'));
     }
     public function ajaxWinnerLottery(Request $request)
     {
@@ -1160,10 +1161,10 @@ class AdmissionController extends Controller
             ->where('shift_id', $request->shift_id)
             ->where('selected', 1)
             ->count();
-        
+
         $lottery = DB::table('lottery_rules')->first();
-       
-        if($lottery->random==1){
+
+        if ($lottery->random == 1) {
             $sql = "SELECT *
             FROM `student_admission`
             WHERE `temporary_id` IS NOT NULL
@@ -1177,7 +1178,7 @@ class AdmissionController extends Controller
             and watting!=1
             ORDER BY RAND()
             LIMIT 1";
-        }elseif($lottery->random==2){
+        } elseif ($lottery->random == 2) {
             if ($admission % 2 == 0) {
                 $gender = 1;
             } else {
@@ -1197,7 +1198,7 @@ class AdmissionController extends Controller
             and watting!=1
             ORDER BY RAND()
             LIMIT 1";
-        }else{
+        } else {
             $cycle = $admission % 3;
 
             if ($cycle == 0 || $cycle == 1) {
@@ -1220,14 +1221,16 @@ class AdmissionController extends Controller
             ORDER BY RAND()
             LIMIT 1";
         }
-        
-
-        
 
 
-        
+
+
+
+
         $result = DB::select($sql);
-      
+
+        $academy_info = AcademyInfo::first();
+
         if (count($result)) {
             DB::table('student_admission')->where('id', $result[0]->id)->update(
                 [
@@ -1238,7 +1241,7 @@ class AdmissionController extends Controller
                 ]
             );
             $result[0]->watting = $request->watting;
-            return view('admission.ajaxWinnerLottery', compact('result'));
+            return view('admission.ajaxWinnerLottery', compact('result', 'academy_info'));
         } else {
             return 0;
         }
