@@ -53,6 +53,7 @@ use App\Http\Controllers\SMSController;
 
 use App\Http\Controllers\SendMailController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,12 +66,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
 
-    return redirect('/login');
+    return redirect('/');
 })->name('logout.get');
 Route::get('/clear-cache', function () {
     // Clear all caches
@@ -105,7 +107,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 Route::post('/password-reset/verify', [ForgotPasswordController::class, 'verify'])->name('password.reset.verify');
 Route::get('/password-reset-form', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.customForm');
 Route::post('/password-reset', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset.custom');
-    Route::get('/attendanceDashboard', [DashboardController::class, 'attendanceDashboard'])->name('attendanceDashboard');
+Route::get('/attendanceDashboard', [DashboardController::class, 'attendanceDashboard'])->name('attendanceDashboard');
 
 // // Route to display change password form
 // Route::get('/change-password', [PasswordChangeController::class, 'showChangePasswordForm'])->name('password.change')->middleware('auth');
@@ -207,7 +209,7 @@ Route::post('/sslipnurl', [SslCommerzPaymentController::class, 'ipn']);
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
 
- Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/sendmail', SendMailController::class);
 
     Route::resource('users', UserController::class);
@@ -228,7 +230,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
 
 
-   
+
     Route::resource('/version', VersionsController::class);
     Route::resource('/category', CategoryController::class);
     Route::resource('/session', SessionsController::class);
@@ -238,7 +240,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('/getTypeWiseClass', [ClassesController::class, 'getTypeWiseClass'])->name('getTypeWiseClass');
     Route::post('/getClass', [ClassesController::class, 'getClass'])->name('getClass');
     Route::resource('/group', AcademySectionController::class);
-    
+
     Route::resource('/house', HouseController::class);
     Route::resource('/subject', SubjectsController::class);
     Route::resource('/subjectmapping', ClassWiseSubjectController::class);
@@ -246,13 +248,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/sectionWiseMapping', [SectionsController::class, 'sectionWiseMapping'])->name('sectionWiseMapping');
     Route::post('/sectionMappingStore', [SectionsController::class, 'sectionMappingStore'])->name('sectionMappingStore');
     Route::delete('/sectionmappingDestroy/{id}', [SectionsController::class, 'sectionmappingDestroy'])->name('sectionmappingDestroy');
-    
+
     Route::get('/sectionWiseStudent', [SectionsController::class, 'sectionWiseStudent'])->name('sectionWiseStudent');
     Route::get('/subjectWiseStudent', [SectionsController::class, 'subjectWiseStudent'])->name('subjectWiseStudent');
     Route::resource('/designation', DesignationController::class);
     Route::get('/admissionstatus', [DashboardController::class, 'admissionstatus'])->name('admissionstatus');
-    
-    
+
+
     Route::get('/studentsDashboard', [DashboardController::class, 'studentsDashboard'])->name('studentsDashboard');
     Route::get('/studentGetTypeStudent/{type}', [DashboardController::class, 'studentGetTypeStudent'])->name('studentGetTypeStudent');
     Route::get('/studentClassWise/{shift_id}/{type}/{version_id}', [DashboardController::class, 'studentClassWise'])->name('studentClassWise');
@@ -265,12 +267,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('/fees', FeeController::class);
     Route::get('/feeClassWiseUpdate/{head_id}', [FeeController::class, 'feeClassWiseUpdate'])->name('feeClassWiseUpdate');
     Route::get('/studentXLFeeUpload', [FeeController::class, 'studentXLFeeUpload'])->name('studentXLFeeUpload');
-    
+
     //Route::post('/feeCollection', [FeeController::class,'feeCollection'])->name('feeCollection');
-   
+
     Route::resource('/readmission', ReAdmissionController::class);
-    
-   
+
+
     Route::resource('/sms', SMSController::class);
 
     Route::get('/send_password', [SMSController::class, 'sendPassword'])->name('send_password');
@@ -281,20 +283,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('/getAdmissionPhoneWithClass', [SMSController::class, 'getAdmissionPhoneWithClass'])->name('getAdmissionPhoneWithClass');
     Route::resource('/ssl', SSLController::class);
     Route::post('/feeHead', [FeeController::class, 'feeHead'])->name('feeHead');
-    
-    
-   
-    
-   
+
+
+
+
+
     Route::resource('/students', StudentController::class);
-   Route::post('/student-inactive/{id}', [StudentController::class, 'studentInactive'])->name('studentInactive');
+    Route::post('/student-inactive/{id}', [StudentController::class, 'studentInactive'])->name('studentInactive');
     Route::get('/student-id-card', [StudentController::class, 'studentIDCards'])->name('studentIDCards');
     Route::get('/get-student-id-card', [StudentController::class, 'getStudentIDCards'])->name('getStudentIDCards');
     Route::post('/getLastRoll', [StudentController::class, 'getLastRoll'])->name('getLastRoll');
     Route::resource('/college-students', CollegeStudentController::class);
     // Define the route for AJAX request to fetch subjects
     Route::get('/fetch-subjects', [CollegeStudentController::class, 'getSubjectsData'])->name('fetch.subjects');
-    
+
     Route::get('/boardResult', [StudentController::class, 'boardResult'])->name('boardResult');
     Route::get('/getBoardResults', [StudentController::class, 'getBoardResults'])->name('getBoardResults');
     Route::post('/studentBasicInfoXlUploadSave', [StudentController::class, 'studentBasicInfoXlUploadSave'])->name('studentBasicInfoXlUploadSave');
@@ -320,23 +322,23 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/getidcardd', [StudentController::class, 'getidcardd'])->name('getidcardd');
     Route::post('/parentUser', [EmployeeController::class, 'parentUser'])->name('parentUser');
     Route::get('/import', [StudentController::class, 'import']);
-    
+
     // Route::post('/employeeSalary', [EmployeeController::class, 'employeeSalary'])->name('employeeSalary');
-    
+
     Route::get('/export', [StudentController::class, 'excelDownload'])->name('students.excel.export');
     Route::get('/pidformat-export', [StudentController::class, 'pidExcelFormatDownload'])->name('pidExcelFormatDownload');
     Route::get('/createStudentUser', [UserController::class, 'createStudentUser'])->name('students.createStudentUser');
     Route::get('/employee/export', [EmployeeController::class, 'excelDownload'])->name('employee.excel.export');
     Route::post('/get-students', [AttendanceController::class, 'getStudentsExamAttendence'])->name('getStudentsExamAttendence');
-    
-    
+
+
     // Attendace Reconciliation ends here
     // Attendance Report for specific student starts here
-    
 
-    
 
-    
+
+
+
     Route::post('/get-class-wise-sections', [StudentController::class, 'getClassWiseSections'])->name('class-wise-sections');
     Route::post('/get-class-wise-session', [StudentController::class, 'getClassWiseSessions'])->name('class-wise-session');
     Route::post('/getLastRollAdmission', [StudentController::class, 'getLastRollAdmission'])->name('getLastRollAdmission');
@@ -356,12 +358,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/teacherAttendanceReport', [AttendanceController::class, 'teacherAttendanceReport'])->name('teacherAttendanceReport');
     Route::get('/staffAttendance', [AttendanceController::class, 'staffAttendance'])->name('staffAttendance');
     Route::get('/staffAttendanceReport', [AttendanceController::class, 'staffAttendanceReport'])->name('staffAttendanceReport');
-    
+
     // Attendance of a specific student report
 
-    
 
-   
+
+
     // Student Academic Reports
     Route::resource('academyinfos', AcademyInfoController::class);
     Route::get('/student/academicTranscript', [AcademyInfoController::class, 'index'])->name('student.academicTranscript');
@@ -411,9 +413,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('/admission/store', [AdmissionController::class, 'storeKgAdmit'])->name('admission.store');
 
     Route::get('/sectionupdate/{class_code}', [AdmissionController::class, 'sectionupdate'])->name('sectionupdate');
-  
-
- 
 });
 
 
