@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Library\SslCommerz;
 
 abstract class AbstractSslCommerz implements SslCommerzInterface
@@ -45,12 +46,12 @@ abstract class AbstractSslCommerz implements SslCommerzInterface
      */
     public function callToApi($data, $header = [], $setLocalhost = false)
     {
-		
-		$data['success_url']='https://bafsdadmission.com/success';
-		$data['fail_url']='https://bafsdadmission.com/fail';
-		$data['cancel_url']='https://bafsdadmission.com/cancel';
-		$data['ipn_url']='https://bafsdadmission.com/ipn';
-		
+
+        $data['success_url'] = 'https://kgadmission.sems.ac/success';
+        $data['fail_url'] = 'https://kgadmission.sems.ac/fail';
+        $data['cancel_url'] = 'https://kgadmission.sems.ac/cancel';
+        $data['ipn_url'] = 'https://kgadmission.sems.ac/ipn';
+
         $curl = curl_init();
 
         if (!$setLocalhost) {
@@ -93,19 +94,19 @@ abstract class AbstractSslCommerz implements SslCommerzInterface
     public function formatResponse($response, $type = 'checkout', $pattern = 'json')
     {
         $sslcz = json_decode($response, true);
-        
+
         if ($type != 'checkout') {
             return $sslcz;
         } else {
             if (!empty($sslcz['GatewayPageURL'])) {
                 // this is important to show the popup, return or echo to send json response back
-                if(!empty($this->getApiUrl()) && $this->getApiUrl() == 'https://securepay.sslcommerz.com') {
-                   $response = json_encode(['status' => 'SUCCESS', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
+                if (!empty($this->getApiUrl()) && $this->getApiUrl() == 'https://securepay.sslcommerz.com') {
+                    $response = json_encode(['status' => 'SUCCESS', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
                 } else {
                     $response = json_encode(['status' => 'success', 'data' => $sslcz['GatewayPageURL'], 'logo' => $sslcz['storeLogo']]);
                 }
             } else {
-                if (strpos($sslcz['failedreason'],'Store Credential') === false) {
+                if (strpos($sslcz['failedreason'], 'Store Credential') === false) {
                     $message = $sslcz['failedreason'];
                 } else {
                     $message = "Check the SSLCZ_TESTMODE and SSLCZ_STORE_PASSWORD value in your .env; DO NOT USE MERCHANT PANEL PASSWORD HERE.";

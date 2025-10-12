@@ -216,7 +216,7 @@ class UserController extends Controller
     {
         Auth::logout();
         $request->session()->invalidate();
-        return redirect('/admissionview');
+        return redirect('/');
     }
 
     /**

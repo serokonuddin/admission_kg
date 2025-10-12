@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademyInfo;
 use Illuminate\Http\Request;
 use App\Models\Attendance\Attendance;
 use App\Models\Attendance\TeacherAttendance;
@@ -31,7 +32,8 @@ class DashboardController extends Controller
         Session::put('activesubmenu', '');
         //dd(Auth::user());
         if (Auth::user()->group_id == 2) {
-            return view('admin.dashboard.mainadmin');
+            $academy_info = AcademyInfo::first();
+            return view('admin.dashboard.mainadmin', compact('academy_info'));
         } elseif (Auth::user()->group_id == 3) {
             return view('admin.dashboard.teacher');
         } elseif (Auth::user()->group_id == 7) {
@@ -41,17 +43,17 @@ class DashboardController extends Controller
             return Redirect(route('StudentProfile', 0));
             //return view('admin.dashboard.student');
         } elseif (Auth::user()->group_id == 4 && Auth::user()->is_admission == 1) {
-			//dd(Auth::user()->ref_id);
-			$version_id = DB::table('student_activity')
-							->where('student_code', Auth::user()->ref_id)
-							->value('version_id');
-			//dd($version_id);
+            //dd(Auth::user()->ref_id);
+            $version_id = DB::table('student_activity')
+                ->where('student_code', Auth::user()->ref_id)
+                ->value('version_id');
+            //dd($version_id);
             //return Redirect(route('StudentProfile',0));
             return view('admin.dashboard.student', compact('version_id'));
         } elseif (Auth::user()->group_id == 4) {
-			$version_id = DB::table('student_activity')
-							->where('student_code', Auth::user()->ref_id)
-							->value('version_id');
+            $version_id = DB::table('student_activity')
+                ->where('student_code', Auth::user()->ref_id)
+                ->value('version_id');
             //return Redirect(route('StudentProfile',0));
             return view('admin.dashboard.student', compact('version_id'));
         } else {
@@ -110,12 +112,12 @@ class DashboardController extends Controller
 
         // Fetch student data
         $studentdata = getStudentByClassType($session->id);
-        
-        $studentcollege = getStudentByCollegeClassType($session->id-((date('m')>7)?0:1));
-        if(count($studentdata)>1){
-            $studentdata[2]=$studentcollege[2];
+
+        $studentcollege = getStudentByCollegeClassType($session->id - ((date('m') > 7) ? 0 : 1));
+        if (count($studentdata) > 1) {
+            $studentdata[2] = $studentcollege[2];
         }
-        
+
         // dd($studentdata);
 
         // Return view with data

@@ -53,3 +53,4 @@ yarn-error.log
 a.sql
 admission4.zip
 app.zip
+/storage/framework/views/*

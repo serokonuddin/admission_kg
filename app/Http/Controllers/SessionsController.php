@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\sttings\Sessions;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 class SessionsController extends Controller
 {
     /**
@@ -12,13 +14,13 @@ class SessionsController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->group_id!=2){
+        if (Auth::user()->group_id != 2) {
             return 1;
         }
-        Session::put('activemenu','setting');
-        Session::put('activesubmenu','se');
-        $sessions=Sessions::all();
-        return view('setting.session',compact('sessions'));
+        Session::put('activemenu', 'setting');
+        Session::put('activesubmenu', 'ss');
+        $sessions = Sessions::all();
+        return view('setting.session', compact('sessions'));
     }
 
     /**
@@ -34,42 +36,42 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::user()->group_id!=2){
+        if (Auth::user()->group_id != 2) {
             return 1;
         }
-        $id=$request->id;
+        $id = $request->id;
         try {
-           
-            if($id==0){
-               
+
+            if ($id == 0) {
+
                 $validated = $request->validate([
                     'session_name' => 'required|unique:Sessions',
                     'session_code' => 'required',
                     'active' => 'required',
                 ]);
-            }else{
+            } else {
                 $validated = $request->validate([
-                    'session_name' => 'required|unique:Sessions,session_code,'.$request->id,
+                    'session_name' => 'required|unique:Sessions,session_code,' . $request->id,
                     'session_code' => 'required',
                     'active' => 'required',
                 ]);
             }
-            
-            
-            if($id==0){
-                
+
+
+            if ($id == 0) {
+
                 Sessions::insert($validated);
-                $sms="Successfully Inserted";
-            }else{
-               
-                Sessions::where('id',$id)->update($validated);
-                $sms="Successfully Updated";
+                $sms = "Successfully Inserted";
+            } else {
+
+                Sessions::where('id', $id)->update($validated);
+                $sms = "Successfully Updated";
             }
-            return redirect(route('session.index'))->with('success',$sms);
-          } catch (Exception $e) {
-            
+            return redirect(route('session.index'))->with('success', $sms);
+        } catch (Exception $e) {
+
             return redirect(route('session.index'))->with(['msg' => $e]);
-          }
+        }
     }
 
     /**
@@ -101,14 +103,14 @@ class SessionsController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->group_id!=2){
+        if (Auth::user()->group_id != 2) {
             return 1;
         }
         try {
-            $Sessions=Sessions::find($id);
+            $Sessions = Sessions::find($id);
             $Sessions->delete();
             return 1;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return $e;
         }
     }

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BAF Shaheen College Dhaka</title>
+    <title>{{ $academy_info->academy_name }}</title>
 
     <!-- Plugins css Style -->
     <link href='{{ asset('public/') }}/assets/plugins/fontawesome-5.15.2/css/all.min.css' rel='stylesheet'>
@@ -35,9 +35,7 @@
     <link href="{{ asset('public/') }}/assets/css/custom.css" id="option_style" rel="stylesheet">
 
     <!-- Favicon -->
-    <link
-        href="{{ asset('/') }}public/frontend/uploads/school_content/logo/front_fav_icon-608ff44a5fdb33.94953981.png"
-        rel="shortcut icon">
+    <link href="{{ $academy_info->icon }}" rel="shortcut icon">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -245,6 +243,118 @@
         font-family: 'Book Antiqua';
         src: url('{{ asset('public/font/Book Antiqua.woff') }}') format('woff');
     }
+
+    /* Gradient header background */
+    /* Force visible gradient background */
+    .header-bar {
+        background: linear-gradient(90deg, #1e3a8a, #3b82f6, #6366f1);
+        background-size: 300% 300%;
+        animation: gradientShift 8s ease infinite;
+        color: #fff;
+    }
+
+    /* Smooth animated gradient */
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Fix for Bootstrap overriding */
+    .header-bar.bg-primary {
+        background: linear-gradient(90deg, #1e3a8a, #3b82f6, #6366f1) !important;
+    }
+
+    /* Button styling */
+    .login-btn:hover {
+        background-color: #f3f4f6 !important;
+        color: #1e3a8a !important;
+        transform: translateY(-1px);
+        transition: all 0.25s ease-in-out;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .header-bar img {
+            width: 55px;
+            height: 55px;
+        }
+
+        .header-bar h4 {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<style>
+    /* Modal background blur */
+    .modal-content.modern-login {
+        background: linear-gradient(135deg, rgba(33, 37, 41, 0.8), rgba(13, 110, 253, 0.7));
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        animation: fadeInScale 0.3s ease-in-out;
+    }
+
+    /* Input fields */
+    .modern-login .form-control {
+        background: transparent !important;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .modern-login .form-control::placeholder {
+        color: #999;
+    }
+
+    /* Login button with gold accent */
+    .login-btn-modern {
+        background: linear-gradient(90deg, #ffb703, #f59e0b);
+        border: none;
+        border-radius: 30px;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .login-btn-modern:hover {
+        background: linear-gradient(90deg, #f59e0b, #ffb703);
+        transform: translateY(-2px);
+    }
+
+    /* Animation for modal entry */
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Adjust spacing for small screens */
+    @media (max-width: 576px) {
+        .modern-login {
+            border-radius: 15px;
+            padding: 0.5rem;
+        }
+
+        .modern-login img {
+            width: 65px;
+            height: 65px;
+        }
+    }
 </style>
 
 <body id="body" class="boxed pattern-04">
@@ -265,386 +375,39 @@
     <!-- ====================================
   ——— HEADER
   ===================================== -->
-    <header class="header" id="pageTop">
-        <!-- Top Color Bar -->
-        <!-- <div class="color-bars">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col color-bar bg-warning d-none d-md-block"></div>
-          <div class="col color-bar bg-success d-none d-md-block"></div>
-          <div class="col color-bar bg-danger d-none d-md-block"></div>
-          <div class="col color-bar bg-info d-none d-md-block"></div>
-          <div class="col color-bar bg-purple d-none d-md-block"></div>
-          <div class="col color-bar bg-pink d-none d-md-block"></div>
-          <div class="col color-bar bg-warning"></div>
-          <div class="col color-bar bg-success"></div>
-          <div class="col color-bar bg-danger"></div>
-          <div class="col color-bar bg-info"></div>
-          <div class="col color-bar bg-purple"></div>
-          <div class="col color-bar bg-pink"></div>
-        </div>
-      </div>
-    </div> -->
-
-        <!-- Top Bar-->
-        <!-- d-none d-md-block -->
-        <div class="bg-stone navbar navbar-expand-md top-bar scroll-down-div"
-            style="background-color: #A51C30 !important;">
-            <div class="container" style=" display: block!important;">
-                <div class="row">
-                    <div class="col-lg-7 mobile-9">
-                        <ul class="list-inline d-flex justify-content-xl-start align-items-center h-100 mb-0">
-                            <li>
-                                <div class="d-flex">
-                                    <span class="  me-xl-0">
-
-                                        <a href="{{ url('/') }}">
-                                            <img class="d-inline-block logoicon" style="width: 65px!important;"
-                                                src="{{ asset('/') }}public/frontend/uploads/school_content/logo/front_logo-608ff44a5f8f07.35255544.png"
-                                                alt="">
-                                        </a>
-
-                                    </span>
-                                    <a href="{{ url('/') }}"
-                                        class="me-lg-4 me-xl-6 text-white opacity-100 short-text"
-                                        style="margin-top: 19px;line-height: 0px;"><span
-                                            style=" font-family: 'broadway1'!important;font-size: 30px;"
-                                            class="bafsd">BAFSD</span>
-                                        <hr style="width: 130px" />
-                                        <span style="font-family: forte!important;font-size: 15px">DHAKA SHAHEEN</span>
-                                    </a>
-                                </div>
-
-
-                            </li>
-
-
-                        </ul>
+    <header id="pageTop" class="header shadow-sm" style="z-index: 1000; position: relative;">
+        <div class="header-bar text-white py-3">
+            <div class="container d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Left: Logo + Academy Info -->
+                <div class="d-flex align-items-center gap-3">
+                    <a href="{{ url('/') }}">
+                        <img src="{{ $academy_info->logo }}" alt="Logo"
+                            class="rounded-circle border border-light shadow-sm"
+                            style="width: 65px; height: 65px; object-fit: cover;">
+                    </a>
+                    <div>
+                        <h4 class="fw-bold mb-1">{{ $academy_info->academy_name }}</h4>
+                        <small class="text-light opacity-90">
+                            ESTD {{ $academy_info->established_year }} | EIIN: {{ $academy_info->eiin }}
+                        </small>
                     </div>
+                </div>
 
-                    <div class="col-lg-5 mobile-3">
-                        <ul
-                            class="top-menu list-inline d-flex mt-2 justify-content-xl-end justify-content-center align-items-center me-xl-2">
-
-
-
-                            <li class="text-white me-md-3 me-lg-2 me-xl-5">
-                                <span class="bg-purple icon-header me-1 me-md-2 me-lg-1 me-xl-2">
-                                    <i class="fas fa-unlock-alt text-white font-size-13" aria-hidden="true"></i>
-                                </span>
-                                <a class="text-white font-weight-medium opacity-80" href="javascript:void(0)"
-                                    data-bs-toggle="modal" data-bs-target="#modal-login">
-                                    Login
-                                </a>
-
-                            </li>
-                            <li class="text-white me-md-3 me-lg-2 me-xl-5 ml-4 mobile" style="margin-left: 10px;">
-                                <button class="navbar-toggler py-2" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
-                                    aria-label="Toggle navigation">
-                                    <i class="fa fa-bars"></i>
-                                </button>
-
-                            </li>
-
-                            <li class="cart-dropdown d-none d-md-block">
-                                <div class="cart-icon" aria-haspopup="true" aria-expanded="false"
-                                    data-display="static">
-                                    <a href="https://www.facebook.com/dhakashaheen" target="_blank">
-
-                                        <span class="rounded-sm bg-pink icon-small icon-badge shopping-icon">
-                                            <i class="fab fa-facebook-f text-white" aria-hidden="true"></i>
-
-                                        </span>
-                                    </a>
-                                </div>
-
-                            </li>
-                        </ul>
-                    </div>
+                <!-- Right: Login Button -->
+                <div class="d-flex align-items-center mt-3 mt-md-0">
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal-login"
+                        class="btn btn-light btn-sm fw-semibold d-flex align-items-center px-3 py-2 shadow-sm login-btn">
+                        <i class="fas fa-unlock-alt me-2 text-primary"></i> Login
+                    </a>
                 </div>
             </div>
         </div>
-
-
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-md  mobile-menu  navbar-white scroll-up-div">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}"
-                    style="font-family: algerian!important;font-size:x-large;font-weight: bold;line-height: 25px;color: #00ADEF">
-                    BAF Shaheen College Dhaka<br>
-                    <span
-                        style="
-        font-size: 11px;
-        margin-top: -5px;
-        position: absolute;
-        font-family: monotype corsiva!important;
-        z-index: 1;
-        color: black!important;
-
-
-
-        ">ESTD
-                        1960|EIIN-107858</span>
-                </a>
-
-                <!-- cart-dropdown -->
-                <!-- <div class="dropdown cart-dropdown ms-auto me-5 d-md-none">
-          <div class="cart-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <a href="javascript:void(0)">
-              <span class="rounded-sm bg-pink icon-small icon-badge close-icon">
-                <i class="fas fa-times text-white" aria-hidden="true"></i>
-              </span>
-              <span class="rounded-sm bg-pink icon-small icon-badge shopping-icon">
-                <i class="fa fa-shopping-basket text-white" aria-hidden="true"></i>
-                <span class="badge bg-warning">3</span>
-              </span>
-            </a>
-          </div>
-          <div class="dropdown-menu dropdown-menu-end">
-            <ul class="bg-white list-unstyled">
-              <li class="d-flex align-items-center">
-                <i class="fa fa-shopping-basket font-size-20 me-3" aria-hidden="true"></i>
-                <h3 class="text-capitalize font-weight-bold mb-0">3 items in your cart</h3>
-              </li>
-              <hr>
-              <li>
-                <a href="product-single.html">
-                  <div class="media">
-                    <div class="image">
-                      <img class="bg-light rounded-sm px-5 py-3 me-4" src="{{ asset('public/') }}/assets/img/products/product-sm.png" alt="cart-Image">
-                    </div>
-                    <div class="media-body">
-                      <div class="d-flex justify-content-between">
-                        <h4 class="text-dark">Barbie Racing Car</h4>
-                        <span class="cancel">
-                          <i class="fas fa-times text-muted" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <div class="price">
-                        <span class="text-primary font-weight-medium">$50</span>
-                      </div>
-                      <span class="text-muted font-weight-medium text-muted">Qnt: 1</span>
-                    </div>
-                  </div>
-                </a>
-                <hr>
-              </li>
-              <li>
-                <a href="product-single.html">
-                  <div class="media">
-                    <div class="image">
-                      <img class="bg-light rounded-sm px-5 py-3 me-4" src="{{ asset('public/') }}/assets/img/products/product-sm.png" alt="cart-Image">
-                    </div>
-                    <div class="media-body">
-                      <div class="d-flex justify-content-between">
-                        <h4 class="text-dark">Barbie Racing Car</h4>
-                        <span class="cancel">
-                          <i class="fas fa-times text-muted" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <div class="price">
-                        <span class="text-primary font-weight-medium">$50</span>
-                      </div>
-                      <span class="text-muted font-weight-medium">Qnt: 1</span>
-                    </div>
-                  </div>
-                </a>
-                <hr>
-              </li>
-              <li>
-                <a href="product-single.html">
-                  <div class="media">
-                    <div class="image">
-                      <img class="bg-light rounded-sm px-5 py-3 me-4" src="{{ asset('public/') }}/assets/img/products/product-sm.png" alt="cart-Image">
-                    </div>
-                    <div class="media-body">
-                      <div class="d-flex justify-content-between">
-                        <h4 class="text-dark font-weight-bold">Barbie Racing Car</h4>
-                        <span class="cancel">
-                          <i class="fas fa-times text-muted" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <div class="price">
-                        <span class="text-primary font-weight-medium">$50</span>
-                      </div>
-                      <span class="text-muted font-weight-medium">Qnt: 1</span>
-                    </div>
-                  </div>
-                </a>
-                <hr>
-              </li>
-              <li>
-                <div class="d-flex justify-content-between mb-3">
-                  <h3 class="cart-total font-weight-bold">Subtotal</h3>
-                  <h3 class="cart-price font-weight-bold">$150</h3>
-                </div>
-                <div class="cart-button d-flex justify-content-between">
-                  <button type="button" class="btn btn-danger text-uppercase px-4 shadow-sm me-3" onclick="location.href='product-checkout-step-1.html';">Checkout</button>
-                  <button type="button" class="btn btn-danger text-uppercase px-4 shadow-sm" onclick="location.href='product-cart.html';">View
-                    Cart</button>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div> -->
-
-                <!-- <button class="navbar-toggler py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fa fa-bars"></i>
-        </button> -->
-                @php
-                    $colors = [
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                    ];
-                    $cs = ['primary', 'danger', 'success', 'info', 'purple', ' pink'];
-                    $icons = [
-                        'fas fa-home',
-                        'far fa-building',
-                        'fas fa-graduation-cap',
-                        'fas fa-balance-scale',
-                        'fa fa-bell',
-                        'fas fa-camera-retro',
-                        'fas fa-map',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                    ];
-                @endphp
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav ms-lg-auto">
-
-                        @isset($pages)
-                            @foreach ($pages as $ke => $page)
-                                <li
-                                    class="nav-item dropdown {{ $colors[$loop->index] }}  {{ $ke == 0 ? 'active' : '' }}">
-
-                                    @if (isset($page['tree']))
-                                        <a class="nav-link dropdown-toggle   " href="javascript:void(0)"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="{{ $icons[$loop->index] }} nav-icon" aria-hidden="true"></i>
-                                            <span>{{ $page['title'] }}</span>
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                            @foreach ($page['tree'] as $key => $childpage)
-                                                @if (isset($childpage['tree']) && !empty($childpage['tree']))
-                                                    <li>
-                                                        <a class="dropdown-item "
-                                                            href="#">{{ $childpage['title'] }}<i
-                                                                class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                                                        <ul class="sub-menu">
-                                                            @foreach ($childpage['tree'] as $key1 => $subchildpage)
-                                                                <li><a
-                                                                        href="{{ url('page/' . $subchildpage['slug']) }}">{{ $subchildpage['title'] }}</a>
-                                                                </li>
-                                                            @endforeach
-
-                                                        </ul>
-                                                    </li>
-                                                @else
-                                                    <li>
-                                                        <a class="dropdown-item "
-                                                            href="{{ url('page/' . $childpage['slug']) }}">{{ $childpage['title'] }}</a>
-                                                    </li>
-                                                @endif
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        @if ($page['title'] == 'Home')
-                                            <a class="nav-link    " href="{{ url('/') }}">
-                                                <i class="fas fa-home nav-icon" aria-hidden="true"></i>
-                                                <span>{{ $page['title'] }}</span>
-                                            </a>
-                                            <!-- <a class="nav-link dropdown-toggle " href="{{ url('/') }}" >{{ $page['title'] }}</a> -->
-                                        @else
-                                            <a class="nav-link  " href="{{ url('page/' . $page['slug']) }}">
-                                                <i class="fas fa-map nav-icon" aria-hidden="true"></i>
-                                                <span>{{ $page['title'] }}</span>
-                                            </a>
-                                        @endif
-                                    @endif
-                                </li>
-                            @endforeach
-                        @endisset
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
     </header>
 
 
 
 
-
-
-
     @yield('content')
-
-
-
-
-
     <footer class="footer-bg-img">
         <!-- Footer Color Bar -->
         <div class="color-bar">
@@ -666,169 +429,19 @@
             </div>
         </div>
 
-        <div class="pt-8 pb-7  bg-repeat"
-            style="background-image: url({{ asset('public/') }}/assets/img/background/footer-bg-img-1.png);">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6 col-lg-3 col-xs-12">
-                        <h4 class="section-title-sm font-weight-bold text-white mb-2">Useful Links</h4>
-                        <ul class="list-unstyled">
-                            <li class="mb-4">
-                                <a href="http://xiclassadmission.gov.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> XI Class
-                                    Admission: 2023-24
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="https://dhakaeducationboard.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Dhaka Education
-                                    Board
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://bafsk.edu.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Kurmitola
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://bafspkp.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College PKP
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="http://www.bafss.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Shamshernagar
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="http://bafsj.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Jashore
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://www.bafsc.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Chattogram
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3 col-xs-12">
-
-                        <ul class="list-unstyled">
-                            <li class="mb-4">
-                                <a href="http://bafsb.edu.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> BAF Shaheen
-                                    College Bogura
-                                </a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="https://mopme.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Ministry of
-                                    Primary and Mass Education
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="http://www.nctb.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> National
-                                    Curriculum and Textbook Board (NCTB)
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="https://www.dpe.gov.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Directorate of
-                                    Primary Education
-                                </a>
-                            </li>
-
-                            <li class="mb-4">
-                                <a href="http://dshe.gov.bd" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Directorate of
-                                    Secondary and Higher Education
-                                </a>
-                            </li>
-
-
-                            <li class="mb-4">
-                                <a href="https://moedu.portal.gov.bd/" target="_blank">
-                                    <i class="fas fa-angle-double-right me-2" aria-hidden="true"></i> Ministry of
-                                    Education
-                                </a>
-                            </li>
-
-                        </ul>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-4 col-xs-12">
-                        <h4 class="section-title-sm font-weight-bold text-white mb-2">Contact</h4>
-                        <p style="margin-bottom: .5rem;">02-9836440</p>
-                        <h4 class="section-title-sm font-weight-bold text-white mb-2">Google Map</h4>
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.172643828997!2d90.38821047533675!3d23.776865778652436!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c74302a89761%3A0xd99a5c61d56e1d6d!2sBAF%20Shaheen%20College%20Dhaka!5e0!3m2!1sen!2sbd!4v1714009795417!5m2!1sen!2sbd"
-                            width="350" height="220" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-2 col-xs-12">
-                        <!-- <h4 class="section-title-sm font-weight-bold text-white mb-3">Feedback</h4> -->
-
-                        <!-- <div class="mb-1 ">
-              <a href="http://localhost/schoolerp/page/message-of-the-principal" class="bg-success btn btn-white btn-sm text-uppercase text-hover-default">Massage Box</a>
-            </div> -->
-                        <h4 class="section-title-sm font-weight-bold text-white mb-3">Address</h4>
-                        <p>3rd Gate, Near Shaheed Jahangir Gate, Dhaka 1206</p>
-
-                        <h4 class="section-title-sm font-weight-bold text-white mb-3">Email Us</h4>
-                        <p style="margin-bottom: .5rem;">info@bafsd.edu.bd</p>
-                        <p style="margin-bottom: .5rem;">infobafsd@gmail.com</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Copy Right -->
         <div class="copyright" style="background-color: #337AB7 !important">
             <div class="container">
                 <div class="row py-4 align-items-center">
                     <div class="col-sm-7 col-xs-12 order-1 order-md-0">
-                        <p class="copyright-text"> © <span id="copy-year"></span> BAF Shaheen College Dhaka, Powered
+                        <p class="copyright-text"> © <span id="copy-year"></span> {{ $academy_info->academy_name }},
+                            Powered
                             By : Shahin TECH</p>
                     </div>
 
                     <div class="col-sm-5 col-xs-12">
                         <ul
                             class="list-inline d-flex align-items-center justify-content-md-end justify-content-center mb-md-0">
-                            <li class="me-3">
-                                <a class="icon-rounded-circle-small bg-primary"
-                                    href="https://www.facebook.com/dhakashaheen" target="_blank">
-                                    <i class="fab fa-facebook-f text-white" aria-hidden="true"></i>
-                                </a>
-                            </li>
-
-                            <!-- <li class="me-3">
-              <a class="icon-rounded-circle-small bg-danger" href="javascript:void(0)">
-                <i class="fab fa-google-plus-g text-white" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li class="me-3">
-              <a class="icon-rounded-circle-small bg-info" href="javascript:void(0)">
-                <i class="fab fa-pinterest-p text-white" aria-hidden="true"></i>
-              </a>
-            </li>
-            <li class="">
-              <a class="icon-rounded-circle-small bg-purple" href="javascript:void(0)">
-                <i class="fab fa-vimeo-v text-white" aria-hidden="true"></i>
-              </a>
-            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -872,7 +485,7 @@
 </div> --}}
 
     {{-- Modal Login New --}}
-    <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content shadow-lg"
@@ -881,12 +494,11 @@
                 <div class="app-brand justify-content-center mt-4 text-center" style="font-family: math">
                     <a href="{{ url('/') }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
-                            <img src="{{ asset('public/logo/logo.png') }}" height="80" alt="Logo" />
+                            <img src="{{ $academy_info->logo }}" height="80" alt="Logo" />
                         </span>
                     </a>
-                    <p class="text-uppercase font-weight-bold mt-2" style="font-size: 18px; color: white;">SHAHEEN
-                        SOFT</p>
-                    <h4 class="mb-3 text-center" style="color: #F0C24B;font-weight: bold">BAF SHAHEEN COLLEGE DHAKA
+                    <h4 class="mb-3 text-center" style="color: #F0C24B;font-weight: bold">
+                        {{ $academy_info->academy_name }}
                     </h4>
                 </div>
 
@@ -941,7 +553,77 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+    <div class="modal fade" id="modal-login" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" style="left: 435px; top: -150px;">
+            <div class="modal-content modern-login shadow-lg border-0">
+
+                <!-- Logo + Academy Info -->
+                <div class="text-center pt-4 pb-2">
+                    <a href="{{ url('/') }}">
+                        <img src="{{ $academy_info->logo }}" alt="Logo"
+                            class="rounded-circle border border-light shadow-sm mb-3"
+                            style="width: 80px; height: 80px; object-fit: cover;">
+                    </a>
+                    <h5 class="fw-bold mb-1 text-white">{{ $academy_info->academy_name }}</h5>
+                    <small class="text-light opacity-75">
+                        ESTD {{ $academy_info->established_year }} | EIIN: {{ $academy_info->eiin }}
+                    </small>
+                </div>
+
+                <!-- Form Section -->
+                <div class="px-4 pb-4">
+                    @if (session('login_error'))
+                        <div id="login-error" class="alert alert-danger text-center py-2 small mb-3">
+                            {{ session('login_error') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('login') }}" method="POST">
+                        @csrf
+
+                        <!-- Username -->
+                        <div class="form-group mb-3">
+                            <div class="input-group rounded-pill bg-white shadow-sm">
+                                <span class="input-group-text bg-transparent border-0">
+                                    <i class="fas fa-user text-primary"></i>
+                                </span>
+                                <input type="text" id="email" name="email" class="form-control border-0"
+                                    placeholder="Username" required value="{{ old('email') }}">
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group mb-3">
+                            <div class="input-group rounded-pill bg-white shadow-sm">
+                                <span class="input-group-text bg-transparent border-0">
+                                    <i class="fas fa-lock text-primary"></i>
+                                </span>
+                                <input type="password" id="password" name="password" class="form-control border-0"
+                                    placeholder="Password" required>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit"
+                            class="btn w-100 py-2 fw-semibold text-white text-uppercase shadow-sm login-btn-modern">
+                            Log In
+                        </button>
+
+                        <!-- Forgot -->
+                        <div class="text-center mt-3">
+                            <a href="javascript:void(0)" class="text-light small" data-bs-toggle="modal"
+                                data-bs-target="#modal-forgot-password">
+                                Forgot password?
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

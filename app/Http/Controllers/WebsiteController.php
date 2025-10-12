@@ -21,6 +21,7 @@ use App\Models\ClassCategoryHeadFee;
 use Illuminate\Http\Request;
 use App\Helpers\Helpers;
 use App\Library\SslCommerz\SslCommerzNotification;
+use App\Models\masterSttings\AcademyInfo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -104,7 +105,7 @@ class WebsiteController extends Controller
             ->where('class_id', $request->class_id)
             ->where('board', $request->board_id)
             ->where('roll_number', $request->roll_number)
-			->where('status', 1)
+            ->where('status', 1)
             ->first();
         //dd($request->all(),$checkadmission);
         $registration_number = $request->registration_number;
@@ -143,8 +144,8 @@ class WebsiteController extends Controller
     }
     public function payment(Request $request)
     {
-		
-		//dd($request->all());
+
+        //dd($request->all());
         $checkadmission = DB::table('board_list')
             ->where('session_id', $request->session_id)
             ->where('version_id', $request->version_id)
@@ -152,7 +153,7 @@ class WebsiteController extends Controller
             ->where('board', $request->board_id)
             ->where('roll_number', $request->roll_number)
             ->first();
-		
+
         if (empty($checkadmission)) {
             $text = "You Enter the wrong information. Please provide currect information.<br>আপনি ভুল তথ্য দিয়েছেন. সঠিক তথ্য প্রদান করুন.";
             return redirect()->back()->with('warning', $text);
@@ -166,19 +167,19 @@ class WebsiteController extends Controller
             ->where('class_category_wise_head_fee.fee_for', 1)
             ->where('class_category_wise_head_fee.version_id', $request->version_id)
             ->first();
-       
+
         if (empty($payment)) {
             $text = "Payment does not added for admission";
             return redirect('/admissionview')->with('warning', $text);
         }
 
-         if ($request->group_name == 'Science') {
-             $group_id = 1;
-         } elseif ($request->group_name == 'Humanities') {
-             $group_id = 2;
-         } else {
-             $group_id = 3;
-         }
+        if ($request->group_name == 'Science') {
+            $group_id = 1;
+        } elseif ($request->group_name == 'Humanities') {
+            $group_id = 2;
+        } else {
+            $group_id = 3;
+        }
 
         $admission = array(
 
@@ -192,7 +193,7 @@ class WebsiteController extends Controller
             'roll_number' => $request->roll_number,
             'group_name' => $request->group_name,
             'group_id' => $group_id,
-			'quota'=>$checkadmission->quota,
+            'quota' => $checkadmission->quota,
             'board' => $request->board_id,
             'username' => $request->username,
             'email' => $request->email,
@@ -1057,21 +1058,32 @@ class WebsiteController extends Controller
             'format' => 'A4', // Set page size to A4
             'orientation' => 'P' // 'P' for Portrait, 'L' for Landscape
         ]);
-        $mpdf->SetWatermarkImage(asset('public/frontend/uploads/school_content/logo/front_logo-608ff44a5f8f07.35255544.png'), 0.1, [75, 65]); // Image path, opacity, and size
-        $mpdf->showWatermarkImage = true;
-        $mpdf->SetHTMLHeader('
-                <div style="text-align: right;z-index: 999;margin-right: 80px;">
-                    <br/>
-                    <br/>
-                    <br/>
+        $academy_info = AcademyInfo::first();
+        // Remove the base URL (domain)
+        $logoRelativePath = str_replace(url('/'), '', $academy_info->logo);
 
-                    <img src="' . asset('public/seal.png') . '" style="max-height: 60px;">
-                </div>
-            ');
+        // Convert to local file path
+        $logoPath = public_path($logoRelativePath);
+
+        // Set watermark
+        $mpdf->SetWatermarkImage($logoPath, 0.1, [75, 65]);
+        $mpdf->showWatermarkImage = true;
+
+        // Image path, opacity, and size
+        $mpdf->showWatermarkImage = true;
+        // $mpdf->SetHTMLHeader('
+        //         <div style="text-align: right;z-index: 999;margin-right: 80px;">
+        //             <br/>
+        //             <br/>
+        //             <br/>
+
+        //             <img src="' . asset('public/seal.png') . '" style="max-height: 60px;">
+        //         </div>
+        //     ');
         $session = DB::table('sessions')->where('active', 1)->first();
         $student = StudentAdmission::where('session_id', $session->id)->where('temporary_id', $number)->where('payment_status', 1)->first();
         //return view('frontend-new.admitcard',compact('student','session'));
-        $mpdf->WriteHTML(view('frontend-new.admitcard', compact('student', 'session')));
+        $mpdf->WriteHTML(view('frontend-new.admitcard', compact('student', 'session', 'logoRelativePath', 'academy_info'))->render());
 
         // Output the PDF to the browser
         if ($is_save == 1) {
@@ -1087,7 +1099,8 @@ class WebsiteController extends Controller
         $pages = self::tree($parents, $parentall);
         $session = DB::table('sessions')->where('active', 1)->first();
         $student = StudentAdmission::where('session_id', $session->id)->where('temporary_id', $request->temporary_id)->where('payment_status', 1)->first();
-        return view('frontend-new.admit-card', compact('student', 'session', 'parentall', 'parents', 'pages'));
+        $academy_info = AcademyInfo::first();
+        return view('frontend-new.admit-card', compact('student', 'session', 'parentall', 'parents', 'pages', 'academy_info'));
     }
     public function admissionSearchByNumber($number)
     {
@@ -1096,7 +1109,8 @@ class WebsiteController extends Controller
         $pages = self::tree($parents, $parentall);
         $session = DB::table('sessions')->where('active', 1)->first();
         $student = StudentAdmission::where('session_id', $session->id)->where('temporary_id', $number)->where('payment_status', 1)->first();
-        return view('frontend-new.admit-card', compact('student', 'session', 'parentall', 'parents', 'pages'));
+        $academy_info = AcademyInfo::first();
+        return view('frontend-new.admit-card', compact('student', 'session', 'parentall', 'parents', 'pages', 'academy_info'));
     }
     public function admissionviewkgadmission(Request $request)
     {
@@ -1120,7 +1134,9 @@ class WebsiteController extends Controller
             //dd($fee);
         }
 
-        return view('frontend-new.admissionlist', compact('admissiondata', 'session', 'notices', 'pages'));
+        $academy_info = AcademyInfo::first();
+
+        return view('frontend-new.admissionlist', compact('admissiondata', 'session', 'notices', 'pages', 'academy_info'));
     }
     public function admissionview(Request $request)
     {
@@ -1153,8 +1169,9 @@ class WebsiteController extends Controller
             return view('frontend-new.admissionlistkg', compact('admissiondata','categories', 'session', 'notices', 'pages'));
         }
 
+        $academy_info = AcademyInfo::first();
 
-        return view('frontend-new.admissionlist', compact('admissiondata','categories', 'session', 'notices', 'pages'));
+        return view('frontend-new.admissionlist', compact('admissiondata', 'categories', 'session', 'notices', 'pages', 'academy_info'));
     }
     public function admissionviewkg(Request $request)
     {
@@ -1308,6 +1325,7 @@ class WebsiteController extends Controller
             'shift_id' => $request->shift_id,
             'category_id' => $request->category_id,
             'class_id' => $request->class_id,
+            'class_code' => $request->class_id,
             'payment_date' => date('Y-m-d'),
             'amount' => $admissiondata->price
         );
@@ -1450,6 +1468,4 @@ class WebsiteController extends Controller
 
         return view('frontend-new.details', compact('pages', 'article', 'articles'));
     }
-
-    
 }
