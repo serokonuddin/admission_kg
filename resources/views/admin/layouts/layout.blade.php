@@ -7,12 +7,12 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>BAF Shaheen College Dhaka</title>
+    <title>{{ $academy_info->academy_name }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description" content="BAF Shaheen College Dhaka" />
     <meta name="keywords" content="school,college,student,teacher">
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('logo/favicon.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ $academy_info->icon }}" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
@@ -191,7 +191,7 @@
                 <div class="app-brand demo ">
                     <a href="{{ route('dashboard') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{ asset('public/logo/logo.png') }}" width="50" />
+                            <img src="{{ $academy_info->logo }}" width="50" />
                         </span>
 
                     </a>
@@ -256,13 +256,10 @@
     <script src="{{ asset('public') }}/backend//assets/vendor/libs/flatpickr/flatpickr.js"></script>
     <script src="{{ asset('public') }}/backend//assets/vendor/libs/typeahead-js/typeahead.js"></script>
     <script src="{{ asset('public') }}/backend//assets/vendor/libs/tagify/tagify.js"></script>
-    <script src="{{ asset('public') }}/backend//assets/vendor/libs/@form-validation/umd/bundle/popular.min.js">
+    <script src="{{ asset('public') }}/backend//assets/vendor/libs/@form-validation/umd/bundle/popular.min.js"></script>
+    <script src="{{ asset('public') }}/backend//assets/vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js">
     </script>
-    <script
-        src="{{ asset('public') }}/backend//assets/vendor/libs/@form-validation/umd/plugin-bootstrap5/index.min.js">
-    </script>
-    <script
-        src="{{ asset('public') }}/backend//assets/vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js">
+    <script src="{{ asset('public') }}/backend//assets/vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js">
     </script>
 
     <script src="{{ asset('public') }}/backend//assets/js/main.js"></script>

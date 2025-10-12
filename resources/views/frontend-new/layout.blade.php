@@ -243,6 +243,55 @@
         font-family: 'Book Antiqua';
         src: url('{{ asset('public/font/Book Antiqua.woff') }}') format('woff');
     }
+
+    /* Gradient header background */
+    /* Force visible gradient background */
+    .header-bar {
+        background: linear-gradient(90deg, #1e3a8a, #3b82f6, #6366f1);
+        background-size: 300% 300%;
+        animation: gradientShift 8s ease infinite;
+        color: #fff;
+    }
+
+    /* Smooth animated gradient */
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Fix for Bootstrap overriding */
+    .header-bar.bg-primary {
+        background: linear-gradient(90deg, #1e3a8a, #3b82f6, #6366f1) !important;
+    }
+
+    /* Button styling */
+    .login-btn:hover {
+        background-color: #f3f4f6 !important;
+        color: #1e3a8a !important;
+        transform: translateY(-1px);
+        transition: all 0.25s ease-in-out;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .header-bar img {
+            width: 55px;
+            height: 55px;
+        }
+
+        .header-bar h4 {
+            font-size: 1.1rem;
+        }
+    }
 </style>
 
 <body id="body" class="boxed pattern-04">
@@ -263,350 +312,38 @@
     <!-- ====================================
   ——— HEADER
   ===================================== -->
-    <header class="header" id="pageTop">
-        <!-- Top Color Bar -->
-        <!-- <div class="color-bars">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col color-bar bg-warning d-none d-md-block"></div>
-          <div class="col color-bar bg-success d-none d-md-block"></div>
-          <div class="col color-bar bg-danger d-none d-md-block"></div>
-          <div class="col color-bar bg-info d-none d-md-block"></div>
-          <div class="col color-bar bg-purple d-none d-md-block"></div>
-          <div class="col color-bar bg-pink d-none d-md-block"></div>
-          <div class="col color-bar bg-warning"></div>
-          <div class="col color-bar bg-success"></div>
-          <div class="col color-bar bg-danger"></div>
-          <div class="col color-bar bg-info"></div>
-          <div class="col color-bar bg-purple"></div>
-          <div class="col color-bar bg-pink"></div>
-        </div>
-      </div>
-    </div> -->
-
-        <!-- Top Bar-->
-        <!-- d-none d-md-block -->
-        <div class="bg-stone navbar navbar-expand-md top-bar scroll-down-div"
-            style="background-color: #A51C30 !important;">
-            <div class="container" style=" display: block!important;">
-                <div class="row">
-                    <div class="col-lg-7 mobile-9">
-                        <ul class="list-inline d-flex justify-content-xl-start align-items-center h-100 mb-0">
-                            <li>
-                                <div class="d-flex">
-                                    <span class="  me-xl-0">
-
-                                        <a href="{{ url('/') }}">
-                                            <img class="d-inline-block logoicon" style="width: 65px!important;"
-                                                src="{{ $academy_info->logo }}" alt="">
-                                        </a>
-
-                                    </span>
-                                    <a href="{{ url('/') }}"
-                                        class="me-lg-4 me-xl-6 text-white opacity-100 short-text"
-                                        style="margin-top: 19px;line-height: 0px;"><span
-                                            style=" font-family: 'broadway1'!important;font-size: 30px;"
-                                            class="bafsd">{{ $academy_info->short_name }}</span>
-                                        <hr style="width: 130px" />
-                                        <span
-                                            style="font-family: forte!important;font-size: 15px">{{ $academy_info->location }}</span>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
+    <header id="pageTop" class="header shadow-sm" style="z-index: 1000; position: relative;">
+        <div class="header-bar text-white py-3">
+            <div class="container d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Left: Logo + Academy Info -->
+                <div class="d-flex align-items-center gap-3">
+                    <a href="{{ url('/') }}">
+                        <img src="{{ $academy_info->logo }}" alt="Logo"
+                            class="rounded-circle border border-light shadow-sm"
+                            style="width: 65px; height: 65px; object-fit: cover;">
+                    </a>
+                    <div>
+                        <h4 class="fw-bold mb-1">{{ $academy_info->academy_name }}</h4>
+                        <small class="text-light opacity-90">
+                            ESTD {{ $academy_info->established_year }} | EIIN: {{ $academy_info->eiin }}
+                        </small>
                     </div>
+                </div>
 
-                    <div class="col-lg-5 mobile-3">
-                        <ul
-                            class="top-menu list-inline d-flex mt-2 justify-content-xl-end justify-content-center align-items-center me-xl-2">
-                            <li class="text-white me-md-3 me-lg-2 me-xl-5">
-                                <span class="bg-purple icon-header me-1 me-md-2 me-lg-1 me-xl-2">
-                                    <i class="fas fa-unlock-alt text-white font-size-13" aria-hidden="true"></i>
-                                </span>
-                                <a class="text-white font-weight-medium opacity-80" href="javascript:void(0)"
-                                    data-bs-toggle="modal" data-bs-target="#modal-login">
-                                    Login
-                                </a>
-                            </li>
-                            <li class="text-white me-md-3 me-lg-2 me-xl-5 ml-4 mobile" style="margin-left: 10px;">
-                                <button class="navbar-toggler py-2" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false"
-                                    aria-label="Toggle navigation">
-                                    <i class="fa fa-bars"></i>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
+                <!-- Right: Login Button -->
+                <div class="d-flex align-items-center mt-3 mt-md-0">
+                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal-login"
+                        class="btn btn-light btn-sm fw-semibold d-flex align-items-center px-3 py-2 shadow-sm login-btn">
+                        <i class="fas fa-unlock-alt me-2 text-primary"></i> Login
+                    </a>
                 </div>
             </div>
         </div>
-
-
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-md  mobile-menu  navbar-white scroll-up-div">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}"
-                    style="font-family: algerian!important;font-size:x-large;font-weight: bold;line-height: 25px;color: #00ADEF">
-                    {{ $academy_info->academy_name }}<br>
-                    <span
-                        style="
-        font-size: 11px;
-        margin-top: -5px;
-        position: absolute;
-        font-family: monotype corsiva!important;
-        z-index: 1;
-        color: black!important;
-
-
-
-        ">ESTD
-                        {{ $academy_info->established_year }}|EIIN-{{ $academy_info->eiin }}</span>
-                </a>
-
-                <!-- cart-dropdown -->
-                <!-- <div class="dropdown cart-dropdown ms-auto me-5 d-md-none">
-          <div class="cart-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <a href="javascript:void(0)">
-              <span class="rounded-sm bg-pink icon-small icon-badge close-icon">
-                <i class="fas fa-times text-white" aria-hidden="true"></i>
-              </span>
-              <span class="rounded-sm bg-pink icon-small icon-badge shopping-icon">
-                <i class="fa fa-shopping-basket text-white" aria-hidden="true"></i>
-                <span class="badge bg-warning">3</span>
-              </span>
-            </a>
-          </div>
-          <div class="dropdown-menu dropdown-menu-end">
-            <ul class="bg-white list-unstyled">
-              <li class="d-flex align-items-center">
-                <i class="fa fa-shopping-basket font-size-20 me-3" aria-hidden="true"></i>
-                <h3 class="text-capitalize font-weight-bold mb-0">3 items in your cart</h3>
-              </li>
-              <hr>
-              <li>
-                <a href="product-single.html">
-                  <div class="media">
-                    <div class="image">
-                      <img class="bg-light rounded-sm px-5 py-3 me-4" src="{{ asset('public/') }}/assets/img/products/product-sm.png" alt="cart-Image">
-                    </div>
-                    <div class="media-body">
-                      <div class="d-flex justify-content-between">
-                        <h4 class="text-dark">Barbie Racing Car</h4>
-                        <span class="cancel">
-                          <i class="fas fa-times text-muted" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <div class="price">
-                        <span class="text-primary font-weight-medium">$50</span>
-                      </div>
-                      <span class="text-muted font-weight-medium text-muted">Qnt: 1</span>
-                    </div>
-                  </div>
-                </a>
-                <hr>
-              </li>
-              <li>
-                <a href="product-single.html">
-                  <div class="media">
-                    <div class="image">
-                      <img class="bg-light rounded-sm px-5 py-3 me-4" src="{{ asset('public/') }}/assets/img/products/product-sm.png" alt="cart-Image">
-                    </div>
-                    <div class="media-body">
-                      <div class="d-flex justify-content-between">
-                        <h4 class="text-dark">Barbie Racing Car</h4>
-                        <span class="cancel">
-                          <i class="fas fa-times text-muted" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <div class="price">
-                        <span class="text-primary font-weight-medium">$50</span>
-                      </div>
-                      <span class="text-muted font-weight-medium">Qnt: 1</span>
-                    </div>
-                  </div>
-                </a>
-                <hr>
-              </li>
-              <li>
-                <a href="product-single.html">
-                  <div class="media">
-                    <div class="image">
-                      <img class="bg-light rounded-sm px-5 py-3 me-4" src="{{ asset('public/') }}/assets/img/products/product-sm.png" alt="cart-Image">
-                    </div>
-                    <div class="media-body">
-                      <div class="d-flex justify-content-between">
-                        <h4 class="text-dark font-weight-bold">Barbie Racing Car</h4>
-                        <span class="cancel">
-                          <i class="fas fa-times text-muted" aria-hidden="true"></i>
-                        </span>
-                      </div>
-                      <div class="price">
-                        <span class="text-primary font-weight-medium">$50</span>
-                      </div>
-                      <span class="text-muted font-weight-medium">Qnt: 1</span>
-                    </div>
-                  </div>
-                </a>
-                <hr>
-              </li>
-              <li>
-                <div class="d-flex justify-content-between mb-3">
-                  <h3 class="cart-total font-weight-bold">Subtotal</h3>
-                  <h3 class="cart-price font-weight-bold">$150</h3>
-                </div>
-                <div class="cart-button d-flex justify-content-between">
-                  <button type="button" class="btn btn-danger text-uppercase px-4 shadow-sm me-3" onclick="location.href='product-checkout-step-1.html';">Checkout</button>
-                  <button type="button" class="btn btn-danger text-uppercase px-4 shadow-sm" onclick="location.href='product-cart.html';">View
-                    Cart</button>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div> -->
-
-                <!-- <button class="navbar-toggler py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fa fa-bars"></i>
-        </button> -->
-                @php
-                    $colors = [
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                    ];
-                    $cs = ['primary', 'danger', 'success', 'info', 'purple', ' pink'];
-                    $icons = [
-                        'fas fa-home',
-                        'far fa-building',
-                        'fas fa-graduation-cap',
-                        'fas fa-balance-scale',
-                        'fa fa-bell',
-                        'fas fa-camera-retro',
-                        'fas fa-map',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                        'bg-primary',
-                        'bg-danger',
-                        'bg-success',
-                        'bg-info',
-                        'bg-purple',
-                        ' bg-pink',
-                    ];
-                @endphp
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav ms-lg-auto">
-
-                        @isset($pages)
-                            @foreach ($pages as $ke => $page)
-                                <li
-                                    class="nav-item dropdown {{ $colors[$loop->index] }}  {{ $ke == 0 ? 'active' : '' }}">
-
-                                    @if (isset($page['tree']))
-                                        <a class="nav-link dropdown-toggle   " href="javascript:void(0)"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="{{ $icons[$loop->index] }} nav-icon" aria-hidden="true"></i>
-                                            <span>{{ $page['title'] }}</span>
-                                        </a>
-
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                            @foreach ($page['tree'] as $key => $childpage)
-                                                @if (isset($childpage['tree']) && !empty($childpage['tree']))
-                                                    <li>
-                                                        <a class="dropdown-item "
-                                                            href="#">{{ $childpage['title'] }}<i
-                                                                class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                                                        <ul class="sub-menu">
-                                                            @foreach ($childpage['tree'] as $key1 => $subchildpage)
-                                                                <li><a
-                                                                        href="{{ url('page/' . $subchildpage['slug']) }}">{{ $subchildpage['title'] }}</a>
-                                                                </li>
-                                                            @endforeach
-
-                                                        </ul>
-                                                    </li>
-                                                @else
-                                                    <li>
-                                                        <a class="dropdown-item "
-                                                            href="{{ url('page/' . $childpage['slug']) }}">{{ $childpage['title'] }}</a>
-                                                    </li>
-                                                @endif
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        @if ($page['title'] == 'Home')
-                                            <a class="nav-link    " href="{{ url('/') }}">
-                                                <i class="fas fa-home nav-icon" aria-hidden="true"></i>
-                                                <span>{{ $page['title'] }}</span>
-                                            </a>
-                                            <!-- <a class="nav-link dropdown-toggle " href="{{ url('/') }}" >{{ $page['title'] }}</a> -->
-                                        @else
-                                            <a class="nav-link  " href="{{ url('page/' . $page['slug']) }}">
-                                                <i class="fas fa-map nav-icon" aria-hidden="true"></i>
-                                                <span>{{ $page['title'] }}</span>
-                                            </a>
-                                        @endif
-                                    @endif
-                                </li>
-                            @endforeach
-                        @endisset
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
     </header>
+
+
+
+
     @yield('content')
     <footer class="footer-bg-img">
         <!-- Footer Color Bar -->

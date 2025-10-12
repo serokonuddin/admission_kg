@@ -2,12 +2,12 @@
 @section('content')
     <style>
         /* .bx {
-                                    vertical-align: middle;
-                                    font-size: 2.15rem;
-                                    line-height: 1;
-                                }
+                                        vertical-align: middle;
+                                        font-size: 2.15rem;
+                                        line-height: 1;
+                                    }
 
-                                 */
+                                     */
 
         .text-capitalize {
             text-transform: capitalize !important;
@@ -43,12 +43,12 @@
                         </a>
                     </div>
                 </div>
-               
+
 
             </div>
             <div class="row mt-4">
 
-                
+
 
                 <div class="col-sm-6 col-lg-3 mb-4">
                     <div class="card icon-card card-border-shadow-warning cursor-pointer text-center h-100">
@@ -63,7 +63,7 @@
                         </a>
                     </div>
                 </div>
-                
+
 
             </div>
 
