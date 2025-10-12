@@ -403,7 +403,7 @@ class WebsiteController extends Controller
                 ->update(['status' => 3]);
 
 
-            sms_send('01913366387', 'Your Username is ' . $student->username . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: https://bafsd.edu.bd/login');
+            sms_send($student->phone, 'Your Username is ' . $student->username . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: '.env('APP_URL').'/login');
             $text = "KG Admission payment for BAF Shaheen college Dhaka is completed. Please login and enter your admission form.";
             return 1; ///return redirect()->route('sslredirect')->with('warging', $text);
         }
@@ -1137,8 +1137,21 @@ class WebsiteController extends Controller
             $admissiondata = $admissiondata->where('class_id', 0)->where('start_date', '<=', date('Y-m-d'))->where('end_date', '>=', date('Y-m-d'))
                 ->where('session_id', $session->id)->get();
         }
-
         
+        if(count($admissiondata)==0){
+          
+            $admissiondata = AdmissionOpen::with(['class', 'version', 'session'])
+            ->where('class_id', 0)
+            ->where('admission_start_date', '<=', date('Y-m-d'))
+            ->where('admission_end_date', '>=', date('Y-m-d'))
+            ->where('session_id', $session->id)
+            ->first();
+                
+        }
+       
+        if($admissiondata->admission_start_date<=date('Y-m-d') && $admissiondata->admission_end_date>=date('Y-m-d')){
+            return view('frontend-new.admissionlistkg', compact('admissiondata','categories', 'session', 'notices', 'pages'));
+        }
 
 
         return view('frontend-new.admissionlist', compact('admissiondata','categories', 'session', 'notices', 'pages'));
