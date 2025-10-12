@@ -1058,21 +1058,32 @@ class WebsiteController extends Controller
             'format' => 'A4', // Set page size to A4
             'orientation' => 'P' // 'P' for Portrait, 'L' for Landscape
         ]);
-        $mpdf->SetWatermarkImage(asset('public/frontend/uploads/school_content/logo/front_logo-608ff44a5f8f07.35255544.png'), 0.1, [75, 65]); // Image path, opacity, and size
-        $mpdf->showWatermarkImage = true;
-        $mpdf->SetHTMLHeader('
-                <div style="text-align: right;z-index: 999;margin-right: 80px;">
-                    <br/>
-                    <br/>
-                    <br/>
+        $academy_info = AcademyInfo::first();
+        // Remove the base URL (domain)
+        $logoRelativePath = str_replace(url('/'), '', $academy_info->logo);
 
-                    <img src="' . asset('public/seal.png') . '" style="max-height: 60px;">
-                </div>
-            ');
+        // Convert to local file path
+        $logoPath = public_path($logoRelativePath);
+
+        // Set watermark
+        $mpdf->SetWatermarkImage($logoPath, 0.1, [75, 65]);
+        $mpdf->showWatermarkImage = true;
+
+        // Image path, opacity, and size
+        $mpdf->showWatermarkImage = true;
+        // $mpdf->SetHTMLHeader('
+        //         <div style="text-align: right;z-index: 999;margin-right: 80px;">
+        //             <br/>
+        //             <br/>
+        //             <br/>
+
+        //             <img src="' . asset('public/seal.png') . '" style="max-height: 60px;">
+        //         </div>
+        //     ');
         $session = DB::table('sessions')->where('active', 1)->first();
         $student = StudentAdmission::where('session_id', $session->id)->where('temporary_id', $number)->where('payment_status', 1)->first();
         //return view('frontend-new.admitcard',compact('student','session'));
-        $mpdf->WriteHTML(view('frontend-new.admitcard', compact('student', 'session')));
+        $mpdf->WriteHTML(view('frontend-new.admitcard', compact('student', 'session', 'logoRelativePath', 'academy_info'))->render());
 
         // Output the PDF to the browser
         if ($is_save == 1) {

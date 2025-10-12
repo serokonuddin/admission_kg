@@ -264,20 +264,20 @@
 
                                 </h4>
                                 <!-- <div class="table-responsive">
-                                        <table class="table " >
+                                                                <table class="table " >
 
 
-                                        <tr>
-                                         <td></td>
-                                         <td></td>
-                                        </tr>
+                                                                <tr>
+                                                                 <td></td>
+                                                                 <td></td>
+                                                                </tr>
 
 
 
 
-                                      </table>
+                                                              </table>
 
-                                      </div> -->
+                                                              </div> -->
                                 <section class=" d-sm-block ml-3" style="margin-top: 30px;">
                                     <div class="container">
                                         <div class="row wow fadeInUp"
@@ -348,11 +348,12 @@
     </div>
     <div class="modal fade mb-8" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLabel"
         style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="left: 190px;">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span style="color: #20aee5">বিএএফ শাহীন
-                            কলেজ ঢাকা</span> <br /> <span style="color: red">(শিক্ষাবর্ষ ২০২৫ কেজি শ্রেণির
+                    <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span
+                            style="color: #20aee5">{{ $academy_info->academy_name }}</span> <br /> <span
+                            style="color: red">(শিক্ষাবর্ষ ২০২৬ কেজি শ্রেণির
                             ভর্তি)</span><br /> <span style="color: rgb(46,49,146)" id="versiontext"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -571,8 +572,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span style="color: #20aee5">বিএএফ
-                            শাহিন কলেজ ঢাকা</span> <br /> <span style="color: red">(শিক্ষাবর্ষ ২০২৫ কেজি শ্রেণির
+                    <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span
+                            style="color: #20aee5">{{ $academy_info->academy_name }}</span> <br /> <span
+                            style="color: red">(শিক্ষাবর্ষ ২০২৬ কেজি শ্রেণির
                             ভর্তি)</span><br /> <span style="color: rgb(46,49,146)" id="versiontext"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -637,12 +639,12 @@
                             </div>
                         </div>
                         <!-- <div class="col-md-6 col-sm-6">
-                                               <div class="form-group">
-                                               <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
-                                                  <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
-                                                  <span class="text-danger" id="error_status_registration_number"></span>
-                                               </div>
-                                         </div> -->
+                                                                       <div class="form-group">
+                                                                       <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
+                                                                          <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
+                                                                          <span class="text-danger" id="error_status_registration_number"></span>
+                                                                       </div>
+                                                                 </div> -->
                         <div class="col-md-6 col-sm-6" style="margin-top: 5px">
                             <div class="form-group">
                                 <label>Board (বোর্ড)</label><small class="req"> *</small>
@@ -678,12 +680,12 @@
 
 
                         <!-- <div class="col-md-6 col-sm-6">
-                                               <div class="form-group">
-                                               <label>Admission Serial (এডমিশন সিরিয়াল)</label>
-                                                  <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
-                                                  <span class="text-danger" id="error_status_serial"></span>
-                                               </div>
-                                         </div> -->
+                                                                       <div class="form-group">
+                                                                       <label>Admission Serial (এডমিশন সিরিয়াল)</label>
+                                                                          <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
+                                                                          <span class="text-danger" id="error_status_serial"></span>
+                                                                       </div>
+                                                                 </div> -->
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label>Group (বিভাগ)</label><small class="req"> *</small>

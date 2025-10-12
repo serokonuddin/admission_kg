@@ -294,6 +294,69 @@
     }
 </style>
 
+<style>
+    /* Modal background blur */
+    .modal-content.modern-login {
+        background: linear-gradient(135deg, rgba(33, 37, 41, 0.8), rgba(13, 110, 253, 0.7));
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        animation: fadeInScale 0.3s ease-in-out;
+    }
+
+    /* Input fields */
+    .modern-login .form-control {
+        background: transparent !important;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .modern-login .form-control::placeholder {
+        color: #999;
+    }
+
+    /* Login button with gold accent */
+    .login-btn-modern {
+        background: linear-gradient(90deg, #ffb703, #f59e0b);
+        border: none;
+        border-radius: 30px;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+
+    .login-btn-modern:hover {
+        background: linear-gradient(90deg, #f59e0b, #ffb703);
+        transform: translateY(-2px);
+    }
+
+    /* Animation for modal entry */
+    @keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Adjust spacing for small screens */
+    @media (max-width: 576px) {
+        .modern-login {
+            border-radius: 15px;
+            padding: 0.5rem;
+        }
+
+        .modern-login img {
+            width: 65px;
+            height: 65px;
+        }
+    }
+</style>
+
 <body id="body" class="boxed pattern-04">
     <!-- ====================================
   ——— PRELOADER
@@ -422,7 +485,7 @@
 </div> --}}
 
     {{-- Modal Login New --}}
-    <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    {{-- <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content shadow-lg"
@@ -431,12 +494,11 @@
                 <div class="app-brand justify-content-center mt-4 text-center" style="font-family: math">
                     <a href="{{ url('/') }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
-                            <img src="{{ asset('public/logo/logo.png') }}" height="80" alt="Logo" />
+                            <img src="{{ $academy_info->logo }}" height="80" alt="Logo" />
                         </span>
                     </a>
-                    <p class="text-uppercase font-weight-bold mt-2" style="font-size: 18px; color: white;">SHAHEEN
-                        SOFT</p>
-                    <h4 class="mb-3 text-center" style="color: #F0C24B;font-weight: bold">BAF SHAHEEN COLLEGE DHAKA
+                    <h4 class="mb-3 text-center" style="color: #F0C24B;font-weight: bold">
+                        {{ $academy_info->academy_name }}
                     </h4>
                 </div>
 
@@ -491,7 +553,77 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+    <div class="modal fade" id="modal-login" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" style="left: 435px; top: -150px;">
+            <div class="modal-content modern-login shadow-lg border-0">
+
+                <!-- Logo + Academy Info -->
+                <div class="text-center pt-4 pb-2">
+                    <a href="{{ url('/') }}">
+                        <img src="{{ $academy_info->logo }}" alt="Logo"
+                            class="rounded-circle border border-light shadow-sm mb-3"
+                            style="width: 80px; height: 80px; object-fit: cover;">
+                    </a>
+                    <h5 class="fw-bold mb-1 text-white">{{ $academy_info->academy_name }}</h5>
+                    <small class="text-light opacity-75">
+                        ESTD {{ $academy_info->established_year }} | EIIN: {{ $academy_info->eiin }}
+                    </small>
+                </div>
+
+                <!-- Form Section -->
+                <div class="px-4 pb-4">
+                    @if (session('login_error'))
+                        <div id="login-error" class="alert alert-danger text-center py-2 small mb-3">
+                            {{ session('login_error') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('login') }}" method="POST">
+                        @csrf
+
+                        <!-- Username -->
+                        <div class="form-group mb-3">
+                            <div class="input-group rounded-pill bg-white shadow-sm">
+                                <span class="input-group-text bg-transparent border-0">
+                                    <i class="fas fa-user text-primary"></i>
+                                </span>
+                                <input type="text" id="email" name="email" class="form-control border-0"
+                                    placeholder="Username" required value="{{ old('email') }}">
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group mb-3">
+                            <div class="input-group rounded-pill bg-white shadow-sm">
+                                <span class="input-group-text bg-transparent border-0">
+                                    <i class="fas fa-lock text-primary"></i>
+                                </span>
+                                <input type="password" id="password" name="password" class="form-control border-0"
+                                    placeholder="Password" required>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <button type="submit"
+                            class="btn w-100 py-2 fw-semibold text-white text-uppercase shadow-sm login-btn-modern">
+                            Log In
+                        </button>
+
+                        <!-- Forgot -->
+                        <div class="text-center mt-3">
+                            <a href="javascript:void(0)" class="text-light small" data-bs-toggle="modal"
+                                data-bs-target="#modal-forgot-password">
+                                Forgot password?
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

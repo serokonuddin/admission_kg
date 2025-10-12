@@ -35,7 +35,7 @@
 
     </li>
     <!-- Layouts -->
-    
+
     @if (Auth::user()->group_id == 4)
         <li class="menu-item {{ Session::get('activemenu') == 'profile' ? 'active open' : '' }}">
             <a href="{{ route('StudentProfile', 0) }}" class="menu-link ">
@@ -51,10 +51,6 @@
          <div class="text-truncate" data-i18n="ID Card">ID Card</div>
       </a>
    </li> --}}
-     
-        
-        
-        
     @endif
 
 
@@ -123,7 +119,7 @@
           </li> -->
                 @endif
 
-                
+
 
                 <li class="menu-item {{ Session::get('activesubmenu') == 'ks' ? 'active open' : '' }}">
                     <a href="{{ route('showStudentCounts') }}" class="menu-link ">
@@ -144,7 +140,7 @@
 
             </ul>
         </li>
-        
+
 
         <li class="menu-item {{ Session::get('activesubmenu') == 'ul' ? 'active open' : '' }}">
             <a href="{{ route('users.index') }}" class="menu-link">
@@ -220,11 +216,11 @@
 
             </li>
         @endif
-       
 
 
 
-       
+
+
     @endif
 
 
@@ -242,7 +238,7 @@
                         </a>
                     </li>
                 @endif --}}
-                
+
                 @if (Auth::user()->getMenu('students.index', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'si' ? 'highlight blink' : '' }}">
                         <a href="{{ route('students.index') }}" class="menu-link">
@@ -250,20 +246,20 @@
                         </a>
                     </li>
                 @endif
-                
-                
-				
-                
 
-               
 
-                
+
+
+
+
+
+
 
             </ul>
         </li>
     @endif
-   
-    
+
+
     @if (Auth::user()->getMenu('Admission', 'module_name'))
         <li class="menu-item {{ Session::get('activemenu') == 'admission' ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -272,12 +268,12 @@
             </a>
             <ul class="menu-sub">
                 <!-- @if (Auth::user()->getMenu('boardList', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'bl' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'bl' ? 'highlight blink' : '' }}">
                         <a href="{{ route('boardList') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Board List">Board List</div>
                         </a>
                     </li>
-                @endif -->
+@endif -->
                 @if (Auth::user()->getMenu('kgAdmitList', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'kl' ? 'highlight blink' : '' }}">
                         <a href="{{ route('kgAdmitList') }}" class="menu-link">
@@ -291,22 +287,22 @@
                             <div class="text-truncate" data-i18n="Kg Lottery">Kg Lottery</div>
                         </a>
                     </li>
-                @endif 
+                @endif
                 @if (Auth::user()->getMenu('showStudentCounts', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'ks' ? 'highlight blink' : '' }}">
                         <a href="{{ route('showStudentCounts') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Student Statistics">Student Statistics</div>
                         </a>
                     </li>
-                @endif 
-                
+                @endif
+
                 <!-- @if (Auth::user()->getMenu('admissionlist.index', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'al' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'al' ? 'highlight blink' : '' }}">
                         <a href="{{ route('admissionlist.index') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Applicant List">Applicant List</div>
                         </a>
                     </li>
-                @endif -->
+@endif -->
                 @if (Auth::user()->getMenu('admissionOpen', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'oa' ? 'highlight blink' : '' }}">
                         <a href="{{ route('admissionOpen') }}" class="menu-link">
@@ -314,13 +310,13 @@
                         </a>
                     </li>
                 @endif
-                @if (Auth::user()->getMenu('sectionWiseStudent', 'name'))
+                {{-- @if (Auth::user()->getMenu('sectionWiseStudent', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'scws' ? 'highlight blink' : '' }}">
                         <a href="{{ route('sectionWiseStudent') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Section Wise Student">Section Wise Student</div>
                         </a>
                     </li>
-                @endif
+                @endif --}}
                 @if (Auth::user()->getMenu('admissionIdCard', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'adc' ? 'highlight blink' : '' }}">
                         <a href="{{ route('admissionIdCard') }}" class="menu-link">
@@ -329,28 +325,28 @@
                     </li>
                 @endif
                 <!-- @if (Auth::user()->getMenu('subjectWiseStudent', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'sws' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'sws' ? 'highlight blink' : '' }}">
                         <a href="{{ route('subjectWiseStudent') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Subject Wise Student">Subject Wise Student</div>
                         </a>
                     </li>
-                @endif -->
-                
-               <!--
+@endif -->
+
+                <!--
                 @if (Auth::user()->getMenu('boardResult', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'brxu' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'brxu' ? 'highlight blink' : '' }}">
                         <a href="{{ route('boardResult') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Board Result">Board Result</div>
                         </a>
                     </li>
-                @endif -->
-               
-                
+@endif -->
+
+
             </ul>
         </li>
     @endif
 
-    
+
 
     @if (Auth::user()->getMenu('Class', 'module_name') && Auth::user()->is_view_user == 0)
         <li class="menu-item {{ Session::get('activemenu') == 'class' ? 'active open' : '' }}">
@@ -360,12 +356,12 @@
             </a>
             <ul class="menu-sub">
                 <!-- @if (Auth::user()->getMenu('classes.index', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'cl' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'cl' ? 'highlight blink' : '' }}">
                         <a href="{{ route('classes.index') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Class List">Class List</div>
                         </a>
                     </li>
-                @endif -->
+@endif -->
                 @if (Auth::user()->getMenu('section.index', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'sc' ? 'highlight blink' : '' }}">
                         <a href="{{ route('section.index') }}" class="menu-link">
@@ -380,16 +376,16 @@
                 @endif
 
                 <!-- @if (Auth::user()->getMenu('subjectmapping.index', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'sm' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'sm' ? 'highlight blink' : '' }}">
                         <a href="{{ route('subjectmapping.index') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Subject Mapping">Subject Mapping</div>
                         </a>
                     </li>
-                @endif -->
+@endif -->
             </ul>
         </li>
     @endif
-    
+
 
     @if (Auth::user()->getMenu('Academy Settings', 'module_name') && Auth::user()->is_view_user == 0)
         <li class="menu-item {{ Session::get('activemenu') == 'setting' ? 'active open' : '' }}">
@@ -419,7 +415,7 @@
                         </a>
                     </li>
                 @endif
-                
+
                 @if (Auth::user()->getMenu('shift.index', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'sh' ? 'highlight blink' : '' }}">
                         <a href="{{ route('shift.index') }}" class="menu-link">
@@ -435,21 +431,21 @@
                     </li>
                 @endif
                 <!-- @if (Auth::user()->getMenu('group.index', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'gu' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'gu' ? 'highlight blink' : '' }}">
                         <a href="{{ route('group.index') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Group">Group</div>
                         </a>
                     </li>
-                @endif
+@endif
                 @if (Auth::user()->getMenu('subject.index', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'su' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'su' ? 'highlight blink' : '' }}">
                         <a href="{{ route('subject.index') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Subject">Subject</div>
                         </a>
                     </li>
-                @endif -->
-                
-               
+@endif -->
+
+
                 @if (Auth::user()->getMenu('house.index', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'ho' ? 'highlight blink' : '' }}">
                         <a href="{{ route('house.index') }}" class="menu-link">
@@ -461,17 +457,17 @@
         </li>
     @endif
 
-   
-
-   
-
-    
 
 
-   
 
 
-    
+
+
+
+
+
+
+
     @if (Auth::user()->getMenu('Users', 'module_name') && Auth::user()->is_view_user == 0)
         <li class="menu-item {{ Session::get('activemenu') == 'users' ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -494,30 +490,30 @@
                     </li>
                 @endif --}}
                 <!-- @if (Auth::user()->getMenu('roles.index', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'ur' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'ur' ? 'highlight blink' : '' }}">
                         <a href="{{ route('roles.index') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Roles List">Roles List</div>
                         </a>
                     </li>
-                @endif -->
+@endif -->
                 <!-- @if (Auth::user()->getMenu('permissions.index', 'name'))
-                    <li class="menu-item {{ Session::get('activesubmenu') == 'pr' ? 'highlight blink' : '' }}">
+<li class="menu-item {{ Session::get('activesubmenu') == 'pr' ? 'highlight blink' : '' }}">
                         <a href="{{ route('permissions.index') }}" class="menu-link">
                             <div class="text-truncate" data-i18n="Roles Permissions">Roles Permissions</div>
                         </a>
                     </li>
-                @endif -->
+@endif -->
 
             </ul>
         </li>
     @endif
-    
-
-    
 
 
-    
 
-    
+
+
+
+
+
 
 </ul>

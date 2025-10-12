@@ -18,7 +18,7 @@ class SessionsController extends Controller
             return 1;
         }
         Session::put('activemenu', 'setting');
-        Session::put('activesubmenu', 'se');
+        Session::put('activesubmenu', 'ss');
         $sessions = Sessions::all();
         return view('setting.session', compact('sessions'));
     }
