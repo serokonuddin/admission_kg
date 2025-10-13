@@ -138,21 +138,7 @@
 
                                             <select id="class_id" name="class_id" class=" form-select" required="">
                                                 <option value="">Select Class</option>
-
                                                 <option value="0">KG</option>
-                                                <option value="1">CLass I</option>
-                                                <option value="2">CLass II</option>
-                                                <option value="3">CLass III</option>
-                                                <option value="4">CLass IV</option>
-                                                <option value="5">CLass V</option>
-                                                <option value="6">CLass VI</option>
-                                                <option value="7">CLass VII</option>
-                                                <option value="8">CLass VIII</option>
-                                                <option value="9">CLass IX</option>
-                                                <option value="10">CLass X</option>
-                                                <option value="11">CLass XI</option>
-                                                <option value="12">CLass XII</option>
-
                                             </select>
                                         </label>
                                     </div>
@@ -167,7 +153,7 @@
                                     <div class="col-sm-3">
                                         <label class="form-label">
                                             <input type="text" name="text_search" class="form-control" id="text_search"
-                                                placeholder="search by name,ssc roll,mobile" />
+                                                placeholder="search by name, roll, mobile" />
                                     </div>
                                     <div class="col-sm-3">
                                         <label>
@@ -194,7 +180,7 @@
     </div>
     <script type="text/javascript">
         $(function() {
-            
+
             $(document.body).on('click', '.studentinfo', function() {
                 var student_code = $(this).data('studentcode');
                 var session_id = $('#session_id').val();

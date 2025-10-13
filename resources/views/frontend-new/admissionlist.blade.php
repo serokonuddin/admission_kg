@@ -264,20 +264,20 @@
 
                                 </h4>
                                 <!-- <div class="table-responsive">
-                                                                <table class="table " >
+                                                                            <table class="table " >
 
 
-                                                                <tr>
-                                                                 <td></td>
-                                                                 <td></td>
-                                                                </tr>
+                                                                            <tr>
+                                                                             <td></td>
+                                                                             <td></td>
+                                                                            </tr>
 
 
 
 
-                                                              </table>
+                                                                          </table>
 
-                                                              </div> -->
+                                                                          </div> -->
                                 <section class=" d-sm-block ml-3" style="margin-top: 30px;">
                                     <div class="container">
                                         <div class="row wow fadeInUp"
@@ -476,9 +476,9 @@
                                     placeholder="English Name">
                             </div>
                             <div class="col">
-                                <label for="inputEmail4">প্রার্থীর বাংলা নাম<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" required="" value="{{ old('name_bn') }}"
-                                    name="name_bn" placeholder="Bangla Name">
+                                <label for="inputEmail4">প্রার্থীর বাংলা নাম</label>
+                                <input type="text" class="form-control" value="{{ old('name_bn') }}" name="name_bn"
+                                    placeholder="Bangla Name">
                             </div>
 
 
@@ -639,12 +639,12 @@
                             </div>
                         </div>
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                       <div class="form-group">
-                                                                       <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
-                                                                          <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
-                                                                          <span class="text-danger" id="error_status_registration_number"></span>
-                                                                       </div>
-                                                                 </div> -->
+                                                                                   <div class="form-group">
+                                                                                   <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
+                                                                                      <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
+                                                                                      <span class="text-danger" id="error_status_registration_number"></span>
+                                                                                   </div>
+                                                                             </div> -->
                         <div class="col-md-6 col-sm-6" style="margin-top: 5px">
                             <div class="form-group">
                                 <label>Board (বোর্ড)</label><small class="req"> *</small>
@@ -680,12 +680,12 @@
 
 
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                       <div class="form-group">
-                                                                       <label>Admission Serial (এডমিশন সিরিয়াল)</label>
-                                                                          <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
-                                                                          <span class="text-danger" id="error_status_serial"></span>
-                                                                       </div>
-                                                                 </div> -->
+                                                                                   <div class="form-group">
+                                                                                   <label>Admission Serial (এডমিশন সিরিয়াল)</label>
+                                                                                      <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
+                                                                                      <span class="text-danger" id="error_status_serial"></span>
+                                                                                   </div>
+                                                                             </div> -->
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label>Group (বিভাগ)</label><small class="req"> *</small>

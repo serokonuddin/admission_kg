@@ -163,44 +163,6 @@
                                                 <option value="0"
                                                     {{ isset($admission) && $admission->class_id == 0 ? 'selected="selected"' : '' }}>
                                                     KG</option>
-                                                <option value="1"
-                                                    {{ isset($admission) && $admission->class_id == 1 ? 'selected="selected"' : '' }}>
-                                                    CLass I</option>
-                                                <option value="2"
-                                                    {{ isset($admission) && $admission->class_id == 2 ? 'selected="selected"' : '' }}>
-                                                    CLass II</option>
-                                                <option value="3"
-                                                    {{ isset($admission) && $admission->class_id == 3 ? 'selected="selected"' : '' }}>
-                                                    CLass III</option>
-                                                <option value="4"
-                                                    {{ isset($admission) && $admission->class_id == 4 ? 'selected="selected"' : '' }}>
-                                                    CLass IV</option>
-                                                <option value="5"
-                                                    {{ isset($admission) && $admission->class_id == 5 ? 'selected="selected"' : '' }}>
-                                                    CLass V</option>
-                                                <option value="6"
-                                                    {{ isset($admission) && $admission->class_id == 6 ? 'selected="selected"' : '' }}>
-                                                    CLass VI</option>
-                                                <option value="7"
-                                                    {{ isset($admission) && $admission->class_id == 7 ? 'selected="selected"' : '' }}>
-                                                    CLass VII</option>
-                                                <option value="8"
-                                                    {{ isset($admission) && $admission->class_id == 8 ? 'selected="selected"' : '' }}>
-                                                    CLass VIII</option>
-                                                <option value="9"
-                                                    {{ isset($admission) && $admission->class_id == 9 ? 'selected="selected"' : '' }}>
-                                                    CLass IX</option>
-                                                <option value="10"
-                                                    {{ isset($admission) && $admission->class_id == 10 ? 'selected="selected"' : '' }}>
-                                                    CLass X</option>
-                                                <option value="11"
-                                                    {{ isset($admission) && $admission->class_id == 11 ? 'selected="selected"' : '' }}>
-                                                    CLass XI</option>
-                                                <option value="12"
-                                                    {{ isset($admission) && $admission->class_id == 12 ? 'selected="selected"' : '' }}>
-                                                    CLass XII</option>
-
-
                                             </select>
                                         </label>
                                     </div>
@@ -363,8 +325,7 @@
         </div>
 
         <!-- Modal for Registration Form -->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content p-4">
                     <div class="modal-header text-center">
@@ -585,82 +546,82 @@
 
     <!-- Edit Modal -->
     <!-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                                                                                                                                <div class="modal-dialog">
-                                                                                                                                    <div class="modal-content">
-                                                                                                                                        <form id="editForm" method="POST" action="{{ route('admission.update') }}">
-                                                                                                                                            @csrf
-                                                                                                                                            <input type="hidden" name="id" id="id">
-                                                                                                                                            <div class="modal-header">
-                                                                                                                                                <h5 class="modal-title" id="editModalLabel">Edit Student Admission</h5>
-                                                                                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                                                        <div class="modal-dialog">
+                                                                                                                                            <div class="modal-content">
+                                                                                                                                                <form id="editForm" method="POST" action="{{ route('admission.update') }}">
+                                                                                                                                                    @csrf
+                                                                                                                                                    <input type="hidden" name="id" id="id">
+                                                                                                                                                    <div class="modal-header">
+                                                                                                                                                        <h5 class="modal-title" id="editModalLabel">Edit Student Admission</h5>
+                                                                                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div class="modal-body">
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="name_en" class="form-label">Name</label>
+                                                                                                                                                            <input type="text" class="form-control" id="name_en" name="name_en">
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="temporary_id" class="form-label">Temporary ID</label>
+                                                                                                                                                            <input type="text" class="form-control" id="temporary_id" name="temporary_id" disabled>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="category_id" class="form-label">Category</label>
+                                                                                                                                                            <select class="form-select" id="category_id" name="category_id">
+                                                                                                                                                                <option value="1">Civil</option>
+                                                                                                                                                                <option value="2">BAF</option>
+                                                                                                                                                                <option value="3">SD</option>
+                                                                                                                                                                <option value="4">GEN</option>
+                                                                                                                                                            </select>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="version_id" class="form-label">Version</label>
+                                                                                                                                                            <select class="form-select" id="version_id" name="version_id" disabled>
+                                                                                                                                                                <option value="1">Bangla</option>
+                                                                                                                                                                <option value="2">English</option>
+                                                                                                                                                            </select>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="shift_id" class="form-label">Shift</label>
+                                                                                                                                                            <select class="form-select" id="shift_id" name="shift_id" disabled>
+                                                                                                                                                                <option value="1">Morning</option>
+                                                                                                                                                                <option value="2">Day</option>
+                                                                                                                                                            </select>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="birth_registration_number" class="form-label">Birth ID</label>
+                                                                                                                                                            <input type="text" class="form-control" id="birth_registration_number" name="birth_registration_number">
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="dob" class="form-label">Birth Date</label>
+                                                                                                                                                            <input type="date" class="form-control" id="dob" name="dob">
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="gender" class="form-label">Gender</label>
+                                                                                                                                                            <select class="form-select" id="gender" name="gender">
+                                                                                                                                                                <option value="1">Male</option>
+                                                                                                                                                                <option value="2">Female</option>
+                                                                                                                                                            </select>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="mobile" class="form-label">Mobile</label>
+                                                                                                                                                            <input type="text" class="form-control" id="mobile" name="mobile">
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="mb-3">
+                                                                                                                                                            <label for="payment_status" class="form-label">Payment Status</label>
+                                                                                                                                                            <select class="form-select" id="payment_status" name="payment_status">
+                                                                                                                                                                <option value="1">Success</option>
+                                                                                                                                                                <option value="0">Unsuccess</option>
+                                                                                                                                                            </select>
+                                                                                                                                                        </div>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div class="modal-footer">
+                                                                                                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                                                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                                                                                                                    </div>
+                                                                                                                                                </form>
                                                                                                                                             </div>
-                                                                                                                                            <div class="modal-body">
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="name_en" class="form-label">Name</label>
-                                                                                                                                                    <input type="text" class="form-control" id="name_en" name="name_en">
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="temporary_id" class="form-label">Temporary ID</label>
-                                                                                                                                                    <input type="text" class="form-control" id="temporary_id" name="temporary_id" disabled>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="category_id" class="form-label">Category</label>
-                                                                                                                                                    <select class="form-select" id="category_id" name="category_id">
-                                                                                                                                                        <option value="1">Civil</option>
-                                                                                                                                                        <option value="2">BAF</option>
-                                                                                                                                                        <option value="3">SD</option>
-                                                                                                                                                        <option value="4">GEN</option>
-                                                                                                                                                    </select>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="version_id" class="form-label">Version</label>
-                                                                                                                                                    <select class="form-select" id="version_id" name="version_id" disabled>
-                                                                                                                                                        <option value="1">Bangla</option>
-                                                                                                                                                        <option value="2">English</option>
-                                                                                                                                                    </select>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="shift_id" class="form-label">Shift</label>
-                                                                                                                                                    <select class="form-select" id="shift_id" name="shift_id" disabled>
-                                                                                                                                                        <option value="1">Morning</option>
-                                                                                                                                                        <option value="2">Day</option>
-                                                                                                                                                    </select>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="birth_registration_number" class="form-label">Birth ID</label>
-                                                                                                                                                    <input type="text" class="form-control" id="birth_registration_number" name="birth_registration_number">
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="dob" class="form-label">Birth Date</label>
-                                                                                                                                                    <input type="date" class="form-control" id="dob" name="dob">
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="gender" class="form-label">Gender</label>
-                                                                                                                                                    <select class="form-select" id="gender" name="gender">
-                                                                                                                                                        <option value="1">Male</option>
-                                                                                                                                                        <option value="2">Female</option>
-                                                                                                                                                    </select>
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="mobile" class="form-label">Mobile</label>
-                                                                                                                                                    <input type="text" class="form-control" id="mobile" name="mobile">
-                                                                                                                                                </div>
-                                                                                                                                                <div class="mb-3">
-                                                                                                                                                    <label for="payment_status" class="form-label">Payment Status</label>
-                                                                                                                                                    <select class="form-select" id="payment_status" name="payment_status">
-                                                                                                                                                        <option value="1">Success</option>
-                                                                                                                                                        <option value="0">Unsuccess</option>
-                                                                                                                                                    </select>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                            <div class="modal-footer">
-                                                                                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                                                                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                                                                                                                            </div>
-                                                                                                                                        </form>
-                                                                                                                                    </div>
-                                                                                                                                </div>
-                                                                                                                            </div> -->
+                                                                                                                                        </div>
+                                                                                                                                    </div> -->
 
 
 

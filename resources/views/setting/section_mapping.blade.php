@@ -12,68 +12,81 @@
         <!-- Content -->
         <div class="container-xxl flex-grow-1 container-p-y">
             <h4 class="py-3 mb-4">
-                <span class="text-muted fw-light">Dashboard /</span> Section
+                <span class="text-muted fw-light">Dashboard /</span> Section Mapping
             </h4>
-            <div class="row mb-4">
-                <!-- Browser Default -->
-                <div class="col-md mb-4 mb-md-0">
-                    <div class="card">
-                        <h5 class="card-header">Section List</h5>
+
+            <div class="row g-4 mb-4">
+                <!-- Section List -->
+                <div class="col-md-7">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 text-white"><i class="bx bx-list-ul me-2 "></i>Section List</h5>
+                        </div>
+
                         <div class="table-responsive text-nowrap">
-                            <table class="table" id="headerTable">
-                                <thead>
-                                    <tr class="text-nowrap">
+                            <table class="table table-hover align-middle mb-0" id="headerTable">
+                                <thead class="table-light">
+                                    <tr class="text-nowrap text-center">
                                         <th>#</th>
                                         <th>Class Name</th>
                                         <th>Version</th>
                                         <th>Shift</th>
-                                        <th>Is Student Ratio</th>
+                                        <th>Student Ratio Type</th>
                                         <th>Ratio</th>
                                         @if (Auth::user()->is_view_user == 0)
                                             <th>Action</th>
                                         @endif
                                     </tr>
                                 </thead>
-                                <tbody class="table-border-bottom-0">
+                                <tbody class="text-center">
                                     @foreach ($classSectionMapping as $key => $section)
                                         <tr id="row{{ $section->id }}">
                                             <th scope="row">{{ $key + 1 }}</th>
                                             <td>{{ $section->classvalue->class_name ?? '' }}</td>
                                             <td>{{ $section->version->version_name ?? '' }}</td>
-                                            
-                                            <td>{{ ($section->shift_id==1)?'Morning':'Day' }}</td>
-                                           
+                                            <td>
+                                                <span class="badge bg-info text-dark px-3 py-2">
+                                                    {{ $section->shift_id == 1 ? 'Morning' : 'Day' }}
+                                                </span>
+                                            </td>
                                             <td>
                                                 @if ($section->is_male_female == 1)
-                                                    Male Female Ratio
+                                                    Female Ratio
                                                 @elseif($section->is_male_female == 2)
-                                                    Onle Male
+                                                    Only Male
                                                 @elseif($section->is_male_female == 3)
-                                                    Onle Female
+                                                    Only Female
                                                 @endif
                                             </td>
-                                            <td>{{ $section->ratio ?? '' }}</td>
+                                            <td><strong>{{ $section->ratio ?? '' }}</strong></td>
                                             @if (Auth::user()->is_view_user == 0)
                                                 <td>
                                                     <div class="dropdown">
-                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                            data-bs-toggle="dropdown" aria-expanded="false"><i
-                                                                class="bx bx-dots-vertical-rounded"></i></button>
-                                                        <div class="dropdown-menu" style="">
-                                                            <a class="dropdown-item edit" data-id="{{ $section->id }}"
-                                                                data-is_male_female="{{ $section->is_male_female }}"
-                                                                data-class_code="{{ $section->class_code }}"
-                                                                data-version_id="{{ $section->version_id }}"
-                                                                data-serial="{{ $section->ratio }}"
-                                                                data-shift_id="{{ $section->shift_id }}"
-                                                                href="javascript:void(0);"><i
-                                                                    class="bx bx-edit-alt me-1"></i>
-                                                                Edit</a>
-                                                            <a class="dropdown-item delete"
-                                                                data-url="{{ route('sectionmappingDestroy', $section->id) }}"
-                                                                data-id="{{ $section->id }}" href="javascript:void(0);"><i
-                                                                    class="bx bx-trash me-1"></i> Delete</a>
-                                                        </div>
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-light border dropdown-toggle"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <a class="dropdown-item edit" href="javascript:void(0);"
+                                                                    data-id="{{ $section->id }}"
+                                                                    data-is_male_female="{{ $section->is_male_female }}"
+                                                                    data-class_code="{{ $section->class_code }}"
+                                                                    data-version_id="{{ $section->version_id }}"
+                                                                    data-serial="{{ $section->ratio }}"
+                                                                    data-shift_id="{{ $section->shift_id }}">
+                                                                    <i class="bx bx-edit-alt me-1 text-primary"></i> Edit
+                                                                </a>
+                                                            </li>
+                                                            {{-- <li>
+                                                                <a class="dropdown-item delete" href="javascript:void(0);"
+                                                                    data-url="{{ route('sectionmappingDestroy', $section->id) }}"
+                                                                    data-id="{{ $section->id }}">
+                                                                    <i class="bx bx-trash me-1 text-danger"></i> Delete
+                                                                </a>
+                                                            </li> --}}
+                                                        </ul>
                                                     </div>
                                                 </td>
                                             @endif
@@ -82,111 +95,90 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
-                <!-- /Browser Default -->
-                <!-- Bootstrap Validation -->
-                <div class="col-md">
-                    <div class="card">
-                        <h5 class="card-header">Student Section Mapping Entry</h5>
+
+                <!-- Section Mapping Entry -->
+                <div class="col-md-5">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="bx bx-plus-circle me-2"></i>Student Section Mapping Entry</h5>
+                        </div>
                         <div class="card-body">
                             <form class="needs-validation" method="post" action="{{ route('sectionMappingStore') }}"
-                                novalidate="" id="formsubmit">
+                                novalidate id="formsubmit">
                                 @csrf
                                 <input type="hidden" name="id" id="id" value="0" />
-                               
 
                                 <div class="mb-3">
-                                    <label class="form-label" for="bs-Active">Class</label>
-                                    <select class="form-select" name="class_code" id="class_code" required="">
-                                      
+                                    <label class="form-label fw-semibold">Class</label>
+                                    <select class="form-select" name="class_code" id="class_code" required>
                                         <option value="0">KG</option>
-                                        
-
                                     </select>
-                                    <div class="valid-feedback"> Looks good! </div>
-                                    <div class="invalid-feedback"> Please select Class </div>
+                                    <div class="invalid-feedback">Please select a Class.</div>
                                 </div>
+
                                 <div class="mb-3">
-                                    <label class="form-label" for="bs-Active">Version</label>
-                                    <select class="form-select" name="version_id" id="version_id">
+                                    <label class="form-label fw-semibold">Version</label>
+                                    <select class="form-select" name="version_id" id="version_id" required>
                                         <option value="">Select Version</option>
                                         @foreach ($versions as $version)
                                             <option value="{{ $version->id }}">{{ $version->version_name }}</option>
                                         @endforeach
-
-
                                     </select>
-
+                                    <div class="invalid-feedback">Please select a Version.</div>
                                 </div>
+
                                 <div class="mb-3">
-                                    <label class="form-label" for="bs-Active">Shift</label>
-                                    <select class="form-select" name="shift_id" id="shift_id">
-                                       @foreach ($shifts as $shift)
+                                    <label class="form-label fw-semibold">Shift</label>
+                                    <select class="form-select" name="shift_id" id="shift_id" required>
+                                        @foreach ($shifts as $shift)
                                             <option value="{{ $shift->id }}">{{ $shift->shift_name }}</option>
                                         @endforeach
                                     </select>
-
+                                    <div class="invalid-feedback">Please select a Shift.</div>
                                 </div>
-                                
-                                
-                                
-                                
-                                <div class="mb-3">
-                                    <div class="col-md">
-                                            <div class="form-check mt-3">
-                                                <input name="is_male_female" class="form-check-input specialinfo"
-                                                    
-                                                    type="radio" value="1" id="defaultRadio1">
-                                                <label class="form-check-label" for="defaultRadio1">
-                                                    Male Female Ratio
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input name="is_male_female" class="form-check-input specialinfo"
-                                                    type="radio"
-                                                    
-                                                    value="2" id="defaultRadio2">
-                                                <label class="form-check-label" for="defaultRadio2">
-                                                    Male Only
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input specialinfo" name="is_male_female"
-                                                    type="radio"
-                                                    
-                                                    value="3" id="disabledRadio3">
-                                                <label class="form-check-label" for="disabledRadio3">
-                                                    Female Only
-                                                </label>
-                                            </div>
 
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold d-block">Student Type</label>
+                                    <div class="d-flex flex-wrap gap-3">
+                                        <div class="form-check">
+                                            <input name="is_male_female" class="form-check-input" type="radio"
+                                                value="1" id="ratio1" required>
+                                            <label class="form-check-label" for="ratio1">Male & Female Ratio</label>
                                         </div>
-                                    
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="bs-validation-name">Number of Female</label>
-                                    <input type="number" class="form-control" name="ratio" id="ratio"
-                                        placeholder="Ratio" required="">
-                                    <div class="valid-feedback"> Looks good! </div>
-                                    <div class="invalid-feedback"> Please enter Ratio. </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        @if (Auth::user()->is_view_user == 0)
-                                            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-                                        @endif
+                                        <div class="form-check">
+                                            <input name="is_male_female" class="form-check-input" type="radio"
+                                                value="2" id="ratio2">
+                                            <label class="form-check-label" for="ratio2">Male Only</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input name="is_male_female" class="form-check-input" type="radio"
+                                                value="3" id="ratio3">
+                                            <label class="form-check-label" for="ratio3">Female Only</label>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Number of Female</label>
+                                    <input type="number" class="form-control" name="ratio" id="ratio"
+                                        placeholder="Enter ratio" required>
+                                    <div class="invalid-feedback">Please enter ratio value.</div>
+                                </div>
+
+                                @if (Auth::user()->is_view_user == 0)
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="bx bx-save me-2"></i>Submit
+                                    </button>
+                                @endif
                             </form>
                         </div>
                     </div>
                 </div>
-                <!-- /Bootstrap Validation -->
             </div>
-
         </div>
+
         <!-- / Content -->
 
         <div class="content-backdrop fade"></div>
@@ -241,7 +233,7 @@
                 $('#version_id').val(version_id);
                 $('#ratio').val(ratio);
                 $('#shift_id').val(shift_id);
-                $('#disabledRadio'+is_male_female).prop('checked', true);
+                $('#disabledRadio' + is_male_female).prop('checked', true);
                 $('#submit').text('Update');
             });
 

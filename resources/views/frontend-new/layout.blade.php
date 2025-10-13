@@ -357,6 +357,31 @@
     }
 </style>
 
+<style>
+    .footer-modern {
+        background-color: #f9fafb;
+        /* Soft light gray */
+        font-family: "Poppins", sans-serif;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .footer-colorbar div {
+        height: 4px;
+    }
+
+    .footer-main {
+        background-color: #ffffff;
+    }
+
+    .footer-main a:hover {
+        color: #0d6efd;
+    }
+
+    .footer-main p {
+        font-size: 13px;
+    }
+</style>
+
 <body id="body" class="boxed pattern-04">
     <!-- ====================================
   ——— PRELOADER
@@ -408,46 +433,28 @@
 
 
     @yield('content')
-    <footer class="footer-bg-img">
-        <!-- Footer Color Bar -->
-        <div class="color-bar">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col color-bar bg-warning"></div>
-                    <div class="col color-bar bg-danger"></div>
-                    <div class="col color-bar bg-success"></div>
-                    <div class="col color-bar bg-info"></div>
-                    <div class="col color-bar bg-purple"></div>
-                    <div class="col color-bar bg-pink"></div>
-                    <div class="col color-bar bg-warning d-none d-md-block"></div>
-                    <div class="col color-bar bg-danger d-none d-md-block"></div>
-                    <div class="col color-bar bg-success d-none d-md-block"></div>
-                    <div class="col color-bar bg-info d-none d-md-block"></div>
-                    <div class="col color-bar bg-purple d-none d-md-block"></div>
-                    <div class="col color-bar bg-pink d-none d-md-block"></div>
-                </div>
-            </div>
+    <footer class="footer-modern">
+        <!-- Color Bar -->
+        <div class="footer-colorbar d-flex flex-wrap">
+            <div class="flex-fill bg-primary"></div>
+            <div class="flex-fill bg-success"></div>
+            <div class="flex-fill bg-warning"></div>
+            <div class="flex-fill bg-danger"></div>
+            <div class="flex-fill bg-info"></div>
         </div>
 
-        <!-- Copy Right -->
-        <div class="copyright" style="background-color: #337AB7 !important">
-            <div class="container">
-                <div class="row py-4 align-items-center">
-                    <div class="col-sm-7 col-xs-12 order-1 order-md-0">
-                        <p class="copyright-text"> © <span id="copy-year"></span> {{ $academy_info->academy_name }},
-                            Powered
-                            By : Shahin TECH</p>
-                    </div>
-
-                    <div class="col-sm-5 col-xs-12">
-                        <ul
-                            class="list-inline d-flex align-items-center justify-content-md-end justify-content-center mb-md-0">
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <!-- Footer Content -->
+        <div class="footer-main text-center text-muted small py-3">
+            <p class="mb-1">© <span id="copy-year"></span> All Rights Reserved.</p>
+            <p class="mb-0">
+                Powered by <a href="https://shahintech.org" class="fw-semibold text-decoration-none text-dark"
+                    target="_blank">
+                    Shahin TECH
+                </a>
+            </p>
         </div>
     </footer>
+
 
     <!-- Modal Login Login -->
     {{-- <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -986,7 +993,9 @@
         @endif
     </script>
     <script src='{{ asset('public/') }}/assets/js/kidz.js'></script>
-
+    <script>
+        document.getElementById("copy-year").textContent = new Date().getFullYear();
+    </script>
 
 
 </body>

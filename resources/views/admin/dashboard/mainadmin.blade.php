@@ -2,12 +2,12 @@
 @section('content')
     <style>
         /* .bx {
-                                        vertical-align: middle;
-                                        font-size: 2.15rem;
-                                        line-height: 1;
-                                    }
+                                                vertical-align: middle;
+                                                font-size: 2.15rem;
+                                                line-height: 1;
+                                            }
 
-                                     */
+                                             */
 
         .text-capitalize {
             text-transform: capitalize !important;
@@ -44,15 +44,9 @@
                     </div>
                 </div>
 
-
-            </div>
-            <div class="row mt-4">
-
-
-
                 <div class="col-sm-6 col-lg-3 mb-4">
                     <div class="card icon-card card-border-shadow-warning cursor-pointer text-center h-100">
-                        <a href="{{ route('admissionstatus') }}">
+                        <a href="{{ route('kgAdmitList') }}">
                             <div class="card-body bg-label-primary ">
                                 <div class="avatar flex-shrink-0 " style="margin: 0px auto">
                                     <img src="{{ asset('public/image/admission.png') }}" alt="cube" class="rounded">
@@ -63,6 +57,10 @@
                         </a>
                     </div>
                 </div>
+
+            </div>
+            <div class="row mt-4">
+
 
 
             </div>
