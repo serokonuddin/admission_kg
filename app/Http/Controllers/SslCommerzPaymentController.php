@@ -258,13 +258,13 @@ class SslCommerzPaymentController extends Controller
             ->where('payment_status', 1)
             ->max('temporary_id');
         if ($admission->version_id == 1 && $admission->shift_id == 1) {
-            $number = (10000 + (int)$max + 1) - 10000;
+            $number = (10000 + (int)$max + 1);
         } else if ($admission->version_id == 1 && $admission->shift_id == 2) {
-            $number = (30000 + (int)$max + 1) - 30000;
+            $number = (30000 + (int)$max + 1);
         } else if ($admission->version_id == 2 && $admission->shift_id == 1) {
-            $number = (20000 + (int)$max + 1) - 20000;
+            $number = (20000 + (int)$max + 1);
         } else if ($admission->version_id == 2 && $admission->shift_id == 2) {
-            $number = (40000 + (int)$max + 1) - 40000;
+            $number = (40000 + (int)$max + 1);
         }
         DB::table('student_admission')
             ->where('id', $admission->id)
