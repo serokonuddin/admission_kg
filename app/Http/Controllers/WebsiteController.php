@@ -1059,11 +1059,23 @@ class WebsiteController extends Controller
             'orientation' => 'P' // 'P' for Portrait, 'L' for Landscape
         ]);
         $academy_info = AcademyInfo::first();
-        // Remove the base URL (domain)
+
         $logoRelativePath = str_replace(url('/'), '', $academy_info->logo);
 
-        // Convert to local file path
-        $logoPath = public_path($logoRelativePath);
+        // Extract path from URL
+        $relativePath = parse_url($academy_info->logo, PHP_URL_PATH);
+
+        // Remove leading /public if exists
+        $relativePath = preg_replace('/^\/public\//', '', $relativePath);
+
+        // Ensure consistent directory separators
+        $relativePath = str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
+
+        // Convert to full local server path
+        $logoPath = public_path($relativePath);
+
+        // dd($logoPath);
+
 
         // Set watermark
         $mpdf->SetWatermarkImage($logoPath, 0.1, [75, 65]);
