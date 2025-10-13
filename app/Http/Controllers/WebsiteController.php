@@ -278,8 +278,13 @@ class WebsiteController extends Controller
     }
     function housenumber($param)
     {
-
-        return (($param - 1) % 4) + 1;
+        $count=DB::table('houses')->where('active',1)->count();
+        if($param % $count==0){
+           return $count;
+        }else{
+           return $param % $count;
+        }
+        
     }
     public function autoSection($count, $session_id, $class_code, $version_id, $shift_id, $gender)
     {
@@ -343,12 +348,12 @@ class WebsiteController extends Controller
                 'first_name' => $student->name_en,
                 'bangla_name' => $student->name_bn,
                 'email' => $student->email,
-                'mobile' => $student->phone,
+                'mobile' => $student->mobile,
                 'gender' => $student->gender,
                 'birthdate' => $student->dob,
                 'local_guardian_name' => $student->gurdian_name,
-                'local_guardian_mobile' => $student->phone,
-                'sms_notification' => $student->phone,
+                'local_guardian_mobile' => $student->mobile,
+                'sms_notification' => $student->mobile,
                 'photo' => $student->photo,
                 'birth_certificate' => $student->birth_image,
                 'birth_no' => $student->birth_registration_number,
@@ -391,7 +396,7 @@ class WebsiteController extends Controller
                 'name' => $student->name_en,
                 'email' => $student->email,
                 'username' => $student->username,
-                'phone' => $student->phone,
+                'phone' => $student->mobile,
                 'ref_id' => $student_code,
                 'password_text' => $password,
                 'password' => bcrypt($password),
@@ -401,12 +406,12 @@ class WebsiteController extends Controller
 
             DB::table('student_admission')
                 ->where('id', $student->id)
-                ->update(['status' => 3]);
+                ->update(['status' => 2]);
 
 
-            sms_send($student->phone, 'Your Username is ' . $student->username . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: ' . env('APP_URL') . '/login');
+            sms_send($student->mobile, 'Your Username is ' . $student->username . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: ' . env('APP_URL') . '/login');
             $text = "KG Admission payment for BAF Shaheen college Dhaka is completed. Please login and enter your admission form.";
-            return 1; ///return redirect()->route('sslredirect')->with('warging', $text);
+            return redirect()->route('sslredirect')->with('warging', $text);
         }
     }
     function generateRandomNumber()
@@ -1168,7 +1173,7 @@ class WebsiteController extends Controller
                 ->where('session_id', $session->id)->get();
         }
 
-
+        
 
         if (count($admissiondata) == 0) {
 
@@ -1179,21 +1184,21 @@ class WebsiteController extends Controller
                 ->where('session_id', $session->id)
                 ->get();
         }
-
+        
         // dd($admissiondata[0]->admission_end_date, date('Y-m-d'));
 
-        // if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_end_date < date('Y-m-d')) {
-        //     return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
-        // }
-
-        $endDate = Carbon::parse($admissiondata[0]->admission_end_date);
-        $today   = Carbon::today();
-
-        // dd($endDate, $today, $endDate->lt($today));
-
-        if (isset($admissiondata[0]->admission_start_date) && $endDate->lt($today)) {
+        if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_end_date >= date('Y-m-d')) {
             return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
         }
+
+        // $endDate = Carbon::parse($admissiondata[0]->admission_end_date);
+        // $today   = Carbon::today();
+
+        // // dd($endDate, $today, $endDate->lt($today));
+
+        // if (isset($admissiondata[0]->admission_start_date) && $endDate->lt($today)) {
+        //     return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
+        // }
 
         $academy_info = AcademyInfo::first();
 

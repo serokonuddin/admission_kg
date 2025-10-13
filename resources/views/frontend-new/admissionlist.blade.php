@@ -96,9 +96,7 @@
                 width: 800px !important;
             }
 
-            .modal-dialog {
-                margin-left: 18%;
-            }
+            
         }
 
         .background-image {
@@ -348,7 +346,7 @@
     </div>
     <div class="modal fade mb-8" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLabel"
         style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="left: 190px;">
+        <div class="modal-dialog" role="document" >
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span

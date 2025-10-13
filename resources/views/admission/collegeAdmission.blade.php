@@ -152,50 +152,14 @@
 
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4" style="display: none;">
                                         <label for="class_code" class="form-label">Class</label>
                                         <select id="class_code" name="class_code" class="form-select" required>
-                                            <option value="" {{ empty($class_code) ? 'selected' : '' }}>Select Class
-                                            </option>
+                                         
                                             <option value="0"
                                                 {{ isset($admission) && $admission->class_id == 0 ? 'selected="selected"' : '' }}>
                                                 KG</option>
-                                            <option value="1"
-                                                {{ isset($admission) && $admission->class_id == 1 ? 'selected="selected"' : '' }}>
-                                                CLass I</option>
-                                            <option value="2"
-                                                {{ isset($admission) && $admission->class_id == 2 ? 'selected="selected"' : '' }}>
-                                                CLass II</option>
-                                            <option value="3"
-                                                {{ isset($admission) && $admission->class_id == 3 ? 'selected="selected"' : '' }}>
-                                                CLass III</option>
-                                            <option value="4"
-                                                {{ isset($admission) && $admission->class_id == 4 ? 'selected="selected"' : '' }}>
-                                                CLass IV</option>
-                                            <option value="5"
-                                                {{ isset($admission) && $admission->class_id == 5 ? 'selected="selected"' : '' }}>
-                                                CLass V</option>
-                                            <option value="6"
-                                                {{ isset($admission) && $admission->class_id == 6 ? 'selected="selected"' : '' }}>
-                                                CLass VI</option>
-                                            <option value="7"
-                                                {{ isset($admission) && $admission->class_id == 7 ? 'selected="selected"' : '' }}>
-                                                CLass VII</option>
-                                            <option value="8"
-                                                {{ isset($admission) && $admission->class_id == 8 ? 'selected="selected"' : '' }}>
-                                                CLass VIII</option>
-                                            <option value="9"
-                                                {{ isset($admission) && $admission->class_id == 9 ? 'selected="selected"' : '' }}>
-                                                CLass IX</option>
-                                            <option value="10"
-                                                {{ isset($admission) && $admission->class_id == 10 ? 'selected="selected"' : '' }}>
-                                                CLass X</option>
-                                            <option value="11"
-                                                {{ isset($admission) && $admission->class_id == 11 ? 'selected="selected"' : '' }}>
-                                                CLass XI</option>
-                                            <option value="12"
-                                                {{ isset($admission) && $admission->class_id == 12 ? 'selected="selected"' : '' }}>
-                                                CLass XII</option>
+                                            
 
                                         </select>
                                     </div>

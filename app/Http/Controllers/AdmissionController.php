@@ -529,6 +529,8 @@ class AdmissionController extends Controller
                 'price' => 'required',
                 'start_date' => 'required',
                 'end_date' => 'required',
+                'admission_start_date' => 'required',
+                'admission_end_date' => 'required',
                 'status' => 'required',
             ]);
 
@@ -1173,7 +1175,7 @@ class AdmissionController extends Controller
             and shift_id=" . $request->shift_id . "
             AND `payment_status` = 1
             AND `status` = 0
-            AND `category_id` = 1
+           # AND `category_id` = 1
             and selected!=1
             and watting!=1
             ORDER BY RAND()
@@ -1192,7 +1194,7 @@ class AdmissionController extends Controller
             and shift_id=" . $request->shift_id . "
             AND `payment_status` = 1
             AND `status` = 0
-            AND `category_id` = 1
+           # AND `category_id` = 1
             AND `gender` = " . $gender . "
             and selected!=1
             and watting!=1
@@ -1214,7 +1216,7 @@ class AdmissionController extends Controller
             and shift_id=" . $request->shift_id . "
             AND `payment_status` = 1
             AND `status` = 0
-            AND `category_id` = 1
+           # AND `category_id` = 1
             AND `gender` = " . $gender . "
             and selected!=1
             and watting!=1

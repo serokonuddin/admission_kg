@@ -1399,6 +1399,9 @@ class StudentController extends Controller
             //     return redirect()->route('StudentProfile',0)->with('success',$text);
             // }
             // return redirect()->route('students.index')->with('success',$text);
+            if(isset($request->submit) && $request->submit==1){
+                return $request->student_code;
+            }
             return $stage;
         } catch (\Exception $e) {
             dd($e);
@@ -1696,7 +1699,7 @@ class StudentController extends Controller
         $classes = DB::table('classes')->where('active', 1)->get();
         $groups = DB::table('academygroups')->get();
         $houses = DB::table('houses')->get();
-        $categories = Category::where('active', 1)->where('type', 2)->get();
+        $categories = Category::where('active', 1)->where('type', 1)->get();
 
         if ($id != 0) {
 
@@ -2158,7 +2161,7 @@ class StudentController extends Controller
         //     '',
         //     [160, 10]
         // );
-        $pdf->showWatermarkImage = true;
+        // $pdf->showWatermarkImage = true;
         $view = 'student.cardD';
         $data = compact('studentdata');
         $html = view($view, $data);

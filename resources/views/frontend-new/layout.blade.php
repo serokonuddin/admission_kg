@@ -563,7 +563,7 @@
     </div> --}}
 
     <div class="modal fade" id="modal-login" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm" style="left: 435px; top: -150px;">
+        <div class="modal-dialog modal-dialog-centered modal-sm" style="margin-top: 1%;">
             <div class="modal-content modern-login shadow-lg border-0">
 
                 <!-- Logo + Academy Info -->

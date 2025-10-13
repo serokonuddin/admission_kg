@@ -260,7 +260,7 @@
                                         src="<?php echo e(asset('public/call-thumbnail.png')); ?>" style="height: 25px" /> <a
                                         href="tel:01759536622" style="color: red;font-weight: bold;">01759536622, </a><a
                                         href="tel:01777521159" style="color: red;font-weight: bold;">01777521159</a> </h4>
-                                <h4 style="text-align: center"> KG admission deadline: December 24, 2024 </h4>
+                                <h4 style="text-align: center"> KG admission deadline: December 24, 2025 </h4>
 
                                 <form action="<?php echo e(route('admissionDatakg')); ?>" method="post" enctype="multipart/form-data"
                                     class="onlineform" id="checkstatusform" style="min-height:400px">

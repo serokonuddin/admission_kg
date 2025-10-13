@@ -30,9 +30,9 @@
                   
                   <!--./col-md-12-->
                   <div class="refine-categ-header">
-                    <h3 style="text-align: center">College Admission (কলেজ ভর্তি): ({{((int)$sessions->session_name.'-'.(int)$sessions->session_name+1)}})</h3>
-                    <p style="text-align: center; font-size: 18px">Admission Payment is Completed. Check Your Email or Phone number for login information And Fill up the necessary information for admission.</p><p style="text-align: center;font-size: 16px;"><a href="{{url('login')}}" style="color: red">Login here to complete your admission application<br/><u>https://bafsdadmission/login</u></a></p>
-                    <p style="text-align: center; font-size: 18px">লগইন তথ্যের জন্য আপনার ইমেল বা ফোন নম্বর চেক করুন এবং ভর্তির জন্য প্রয়োজনীয় তথ্য পূরণ করুন।</p><p style="text-align: center;font-size: 16px;"><a href="{{url('login')}}" style="color: red">আপনার ভর্তির আবেদন সম্পূর্ণ করতে এখানে লগইন করুন<br/><u>https://bafsdadmission/login</u><span></a></p>
+                    <h3 style="text-align: center">KG Admission (কেজি ভর্তি): ({{((int)$sessions->session_name+1)}})</h3>
+                    <p style="text-align: center; font-size: 18px">Admission is Completed. Check Your Email or Phone number for login information And Fill up the necessary information for admission.</p><p style="text-align: center;font-size: 16px;"><a href="{{url('login')}}" style="color: red">Login here to complete your admission application<br/><u>{{env('APP_URL')}}/login</u></a></p>
+                    <p style="text-align: center; font-size: 18px">লগইন তথ্যের জন্য আপনার ইমেল বা ফোন নম্বর চেক করুন এবং ভর্তির জন্য প্রয়োজনীয় তথ্য পূরণ করুন।</p><p style="text-align: center;font-size: 16px;"><a href="{{url('login')}}" style="color: red">আপনার ভর্তির আবেদন সম্পূর্ণ করতে এখানে লগইন করুন<br/><u>{{env('APP_URL')}}/login</u><span></a></p>
                   </div>
                   <!--./refine-categ-header--> 
                </div>
