@@ -417,6 +417,8 @@ class WebsiteController extends Controller
     public function admissionDatakg(Request $request)
     {
 
+        // dd($request->all());
+
         $sessions = Sessions::where('id', date('Y'))->first();
         $class = Classes::where('active', 1)->where('class_code', 0)->first();
 
@@ -443,7 +445,7 @@ class WebsiteController extends Controller
         //dd($request->all());
 
         $student = DB::table('student_admission')
-            ->where('session_id', ((int)$request->session_id - 1))
+            ->where('session_id', ((int)$request->session_id))
             ->where('version_id', $request->version_id)
             ->where('shift_id', $request->shift_id)
             ->where('temporary_id', $request->temporary_id)
@@ -1178,13 +1180,22 @@ class WebsiteController extends Controller
                 ->get();
         }
 
-        if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_start_date <= date('Y-m-d') && $admissiondata[0]->admission_end_date >= date('Y-m-d')) {
+        // dd($admissiondata[0]->admission_end_date, date('Y-m-d'));
+
+        // if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_end_date < date('Y-m-d')) {
+        //     return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
+        // }
+
+        $endDate = Carbon::parse($admissiondata[0]->admission_end_date);
+        $today   = Carbon::today();
+
+        // dd($endDate, $today, $endDate->lt($today));
+
+        if (isset($admissiondata[0]->admission_start_date) && $endDate->lt($today)) {
             return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
         }
 
         $academy_info = AcademyInfo::first();
-
-        return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
 
         return view('frontend-new.admissionlist', compact('admissiondata', 'categories', 'session', 'notices', 'pages', 'academy_info'));
     }

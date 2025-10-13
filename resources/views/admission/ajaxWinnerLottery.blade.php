@@ -42,11 +42,12 @@
 
             <tr>
                 <td colspan="2" style="width: 60%;color:red;font-size: 16px"> Name:
-                    @if ($result[0]->version_id == 2)
+                    {{-- @if ($result[0]->version_id == 2)
                         {{ $result[0]->name_en ?? '' }}
                     @else
                         {{ $result[0]->name_bn ?? '' }}
-                    @endif
+                    @endif --}}
+                    {{ $result[0]->name_en ?? '' }}
                 </td>
                 <td rowspan="3" style="width: 120px;text-align: center"><img
                         src="{{ asset($result[0]->photo ?? '') }}" alt="girl-unlock-password-light"
