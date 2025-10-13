@@ -179,8 +179,9 @@ class StudentController extends Controller
 
         return view('student.student', compact('students', 'sessions', 'versions', 'shifts', 'classes', 'sections', 'createdBy', 'version_for', 'shift_for'));
     }
-    public function saveDisciplinaryIssues(Request $request){
-         $request->validate([
+    public function saveDisciplinaryIssues(Request $request)
+    {
+        $request->validate([
             'photo' => 'required|mimes:jpg,jpeg,pdf|max:2000', // max size in KB
             'details' => 'required|string',
             'student_code' => 'required|exists:students,id',
@@ -188,42 +189,42 @@ class StudentController extends Controller
 
         // Handle file upload
         if ($request->hasFile('photo')) {
-                // Define the destination path
-                $destinationPath = 'disciplinary/';
-                $imageDirectory = public_path($destinationPath);
+            // Define the destination path
+            $destinationPath = 'disciplinary/';
+            $imageDirectory = public_path($destinationPath);
 
-                // Ensure the directory exists, create it if not
-                if (!File::exists($imageDirectory)) {
-                    File::makeDirectory($imageDirectory, 0755, true);
-                }
+            // Ensure the directory exists, create it if not
+            if (!File::exists($imageDirectory)) {
+                File::makeDirectory($imageDirectory, 0755, true);
+            }
 
-                // Define the image filename
-                $myimage = time().$request->student_code. $request->photo->getClientOriginalName();
-                $imagePath = $imageDirectory . '/' . $myimage;
+            // Define the image filename
+            $myimage = time() . $request->student_code . $request->photo->getClientOriginalName();
+            $imagePath = $imageDirectory . '/' . $myimage;
 
-                try {
-                    // Load the image
-                    $image = Image::make($request->photo);
+            try {
+                // Load the image
+                $image = Image::make($request->photo);
 
-                    // Resize and crop to ensure 600x600 dimension (passport size)
-                    // $image->fit(600, 600); // Fit the image to 600x600, cropping excess
-                    // $image->fit(600, 600, function ($constraint) {
-                    //     $constraint->upsize(); // Prevent upscaling
-                    // }, 'top'); // Fit the image to 600x600, cropping excess from center
+                // Resize and crop to ensure 600x600 dimension (passport size)
+                // $image->fit(600, 600); // Fit the image to 600x600, cropping excess
+                // $image->fit(600, 600, function ($constraint) {
+                //     $constraint->upsize(); // Prevent upscaling
+                // }, 'top'); // Fit the image to 600x600, cropping excess from center
 
-                    // Compress the image to reduce file size (80% quality)
-                    $image->save($imagePath); // Save with 80% quality for compression
+                // Compress the image to reduce file size (80% quality)
+                $image->save($imagePath); // Save with 80% quality for compression
 
-                    // Get the asset URL for the photo
-                    $photo = $destinationPath . '/' . $myimage;
-                } catch (Exception $e) {
-                   
-                    $photo = ''; // Fallback to the old photo
-                    return response()->json(['message' => 'Disciplinary issue file not found'], 404);
-                }
-            } else {
+                // Get the asset URL for the photo
+                $photo = $destinationPath . '/' . $myimage;
+            } catch (Exception $e) {
+
+                $photo = ''; // Fallback to the old photo
                 return response()->json(['message' => 'Disciplinary issue file not found'], 404);
             }
+        } else {
+            return response()->json(['message' => 'Disciplinary issue file not found'], 404);
+        }
 
         // Save to database (example model: DisciplinaryIssue)
         \App\Models\DisciplinaryIssue::create([
@@ -234,7 +235,6 @@ class StudentController extends Controller
             'created_by' => Auth::user(),
         ]);
         return response()->json(['message' => 'Disciplinary issue saved successfully'], 200);
-        
     }
     public function studentSearchByClass(Request $request)
     {
@@ -347,10 +347,10 @@ class StudentController extends Controller
         foreach ($fourthsubjectdata as $subject) {
             $fourthsubject[$i++] = $subject;
         }
-		//if($fourthsubject[0]==70){
-		//	$fourthsubject[0]=69;
-		//	$fourthsubject[1]=70;
-		//}
+        //if($fourthsubject[0]==70){
+        //	$fourthsubject[0]=69;
+        //	$fourthsubject[1]=70;
+        //}
         $section_id = 0;
         if ($version_id == 1) {
 
@@ -372,7 +372,7 @@ class StudentController extends Controller
                 $section_id = 178;
             } elseif ($fourthsubject[0] == 82) {
                 $section_id = 173;
-			} elseif ($thirdsubject[0] == 68 && $fourthsubject[0] == 71) {
+            } elseif ($thirdsubject[0] == 68 && $fourthsubject[0] == 71) {
                 $section_id = 173;
             } else {
                 if ($section) {
@@ -609,7 +609,7 @@ class StudentController extends Controller
     }
     public function checksection(Request $request)
     {
-		
+
         $third_subject = $request->third_subject;
         $fourth_subject = $request->fourth_subject;
         $class_id = $request->class_id;
@@ -939,10 +939,10 @@ class StudentController extends Controller
         return $request->$oldFieldName;
     }
 
-	/*
+    /*
     public function uploadimage(Request $request)
     {
-       
+
         //dd($request->session_id);
         $classdata = Classes::where('class_code', $request->class_code)->first();
         $sessiondata = Sessions::where('id', $request->session_id)->first();
@@ -963,161 +963,158 @@ class StudentController extends Controller
         return 1;
     }
 	*/
-	public function uploadimage(Request $request)
-{
-		//dd( $request->all());
-    // Validate file type & size (200KB = 200 * 1024 = 204800 bytes)
-    $request->validate([
-        'photo' => 'mimes:jpg,jpeg|max:200', // size in KB
-		'academic_transcript' => 'mimes:jpg,jpeg,pdf|max:200', // size in KB
-		'admit_card' => 'mimes:jpg,jpeg,pdf|max:200', // size in KB
-		'testimonial' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
-		'birth_certificate' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
-		'father_nid' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
-		'mother_nid' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
-		'arm_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
-		'staff_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
-    ]);
+    public function uploadimage(Request $request)
+    {
+        //dd( $request->all());
+        // Validate file type & size (200KB = 200 * 1024 = 204800 bytes)
+        $request->validate([
+            'photo' => 'mimes:jpg,jpeg|max:200', // size in KB
+            'academic_transcript' => 'mimes:jpg,jpeg,pdf|max:200', // size in KB
+            'admit_card' => 'mimes:jpg,jpeg,pdf|max:200', // size in KB
+            'testimonial' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
+            'birth_certificate' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
+            'father_nid' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
+            'mother_nid' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
+            'arm_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
+            'staff_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // size in KB
+        ]);
 
-    $classdata = Classes::where('class_code', $request->class_code)->first();
-    $sessiondata = Sessions::where('id', $request->session_id)->first();
+        $classdata = Classes::where('class_code', $request->class_code)->first();
+        $sessiondata = Sessions::where('id', $request->session_id)->first();
 
-    if ($request->hasFile('photo')) {
-        // Delete old file if exists
-        if ($request->photo_old && file_exists(public_path(str_replace(asset(''), '', $request->photo_old)))) {
-            // unlink(public_path(str_replace(asset(''), '', $request->photo_old)));
+        if ($request->hasFile('photo')) {
+            // Delete old file if exists
+            if ($request->photo_old && file_exists(public_path(str_replace(asset(''), '', $request->photo_old)))) {
+                // unlink(public_path(str_replace(asset(''), '', $request->photo_old)));
+            }
+
+            $destinationPath = 'sutdent/' . $sessiondata->session_name . '/' . $classdata->class_code;
+
+            // Safe unique filename
+            $extension = $request->photo->getClientOriginalExtension();
+            $myimage = $request->student_code . '_photo_' . time() . '.' . $extension;
+
+            $request->photo->move(public_path($destinationPath), $myimage);
+
+            $photo = asset('public/' . $destinationPath . '/' . $myimage);
+        } else {
+            $photo = $request->photo_old;
         }
 
-        $destinationPath = 'sutdent/' . $sessiondata->session_name . '/' . $classdata->class_code;
+        $student['photo'] = $photo;
 
-        // Safe unique filename
-        $extension = $request->photo->getClientOriginalExtension();
-        $myimage = $request->student_code . '_photo_' . time() . '.' . $extension;
+        DB::table('students')->where('id', $request->id)->update($student);
+        DB::table('users')->where('group_id', 4)->where('ref_id', $request->student_code)->update($student);
 
-        $request->photo->move(public_path($destinationPath), $myimage);
-
-        $photo = asset('public/' . $destinationPath . '/' . $myimage);
-    } else {
-        $photo = $request->photo_old;
+        return 1;
     }
 
-    $student['photo'] = $photo;
+    public function stagevalidationcheck($request)
+    {
+        $rules = [];
+        if ($request->stage == 1) {
+            $request->validate([
+                'student_code' => 'required',
+                'id' => 'required',
+                'first_name' => 'required',
+                'religion' => 'required',
+                'nationality' => 'required',
+                'mobile' => 'required',
+                'gender' => 'required',
+                'father_name' => 'required',
+                'mother_name' => 'required',
+                'local_guardian_name' => 'required',
+                'local_guardian_mobile' => 'required',
+                'student_relation' => 'required',
+                'sms_notification' => 'required',
 
-    DB::table('students')->where('id', $request->id)->update($student);
-    DB::table('users')->where('group_id', 4)->where('ref_id', $request->student_code)->update($student);
+            ], [
+                'required' => ':attribute is required.',
+            ]);
+        } else if ($request->stage == 2) {
+            $request->validate([
+                'mainsubject'     => 'required|array',
+                'third_subject'   => 'required|array',
+                'fourth_subject'  => 'required|array',
+            ], [
+                'required' => ':attribute is required.',
+            ]);
+        } else if ($request->stage == 3) {
+            if (empty($request->academic_transcript_old)) {
+                $rules['academic_transcript'] = 'required';
+            }
 
-    return 1;
-}
+            // Admit Card check
+            if (empty($request->admit_card_old)) {
+                $rules['admit_card'] = 'required';
+            }
+            if (empty($request->registration_number)) {
+                $rules['registration_number'] = 'required';
+            }
 
-	public function stagevalidationcheck($request){
-		$rules=[];
-		if($request->stage==1){
-			$request->validate([
-				'student_code' => 'required',
-				'id' => 'required',
-				'first_name' => 'required',
-				'religion' => 'required',
-				'nationality' => 'required',
-				'mobile' => 'required',
-				'gender' => 'required',
-				'father_name' => 'required',
-				'mother_name' => 'required',
-				'local_guardian_name' => 'required',
-				'local_guardian_mobile' => 'required',
-				'student_relation' => 'required',
-				'sms_notification' => 'required',
-				
-			], [
-				'required' => ':attribute is required.',
-			]);
-		}else if($request->stage==2){
-			$request->validate([
-				'mainsubject'     => 'required|array',
-				'third_subject'   => 'required|array',
-				'fourth_subject'  => 'required|array',
-			], [
-					'required' => ':attribute is required.',
-				]);
-			
-		}else if($request->stage==3){
-			if (empty($request->academic_transcript_old)) {
-				$rules['academic_transcript'] = 'required';
-			}
+            $request->validate($rules, [
+                'academic_transcript.required' => 'SSC Academic transcript is required.',
+                'admit_card.required' => 'SSC Admit card is required.',
+                'registration_number.required' => 'Registration number is required.',
+            ]);
+        } else if ($request->stage == 4 && $request->categoryid == 1) {
+        } else if ($request->stage == 4 && $request->categoryid == 2) {
 
-			// Admit Card check
-			if (empty($request->admit_card_old)) {
-				$rules['admit_card'] = 'required';
-			}
-			if (empty($request->registration_number)) {
-				$rules['registration_number'] = 'required';
-			}
+            if (empty($request->name)) {
+                $rules['name'] = 'required';
+            }
+            if (empty($request->designation)) {
+                $rules['designation'] = 'required';
+            }
+            if (empty($request->service_number)) {
+                $rules['service_number'] = 'required';
+            }
+            if (empty($request->arms_name)) {
+                $rules['arms_name'] = 'required';
+            }
+            if (empty($request->name)) {
+                $rules['is_service'] = 'required';
+            }
+            if (empty($request->arm_certification_old)) {
+                $rules['arm_certification'] = 'required';
+            }
+            $request->validate($rules, [
+                'name.required' => 'Name of Service Holder is required.',
+                'designation.required' => 'Rank/Designation is required.',
+                'service_number.required' => 'Service number is required.',
+                'arms_name.required' => 'Name of Service is required.',
+                'is_service.required' => 'Service/Retired is required.',
+                'office_address.required' => 'Present Office Address is required.',
+                'arm_certification.required' => 'Certification/Testimonial from office is required.',
+            ]);
+        } else if ($request->stage == 4 && $request->categoryid == 3) {
+            if (empty($request->name)) {
+                $rules['name_of_staff'] = 'required';
+            }
+            if (empty($request->designation)) {
+                $rules['staff_designation'] = 'required';
+            }
+            if (empty($request->service_number)) {
+                $rules['staff_id'] = 'required';
+            }
 
-			$request->validate($rules, [
-				'academic_transcript.required' => 'SSC Academic transcript is required.',
-				'admit_card.required' => 'SSC Admit card is required.',
-				'registration_number.required' => 'Registration number is required.',
-			]);
-
-			
-		}else if($request->stage==4 && $request->categoryid==1){
-			
-		}else if($request->stage==4 && $request->categoryid==2){
-			
-			if (empty($request->name)) {
-				$rules['name'] = 'required';
-			}
-			if (empty($request->designation)) {
-				$rules['designation'] = 'required';
-			}
-			if (empty($request->service_number)) {
-				$rules['service_number'] = 'required';
-			}
-			if (empty($request->arms_name)) {
-				$rules['arms_name'] = 'required';
-			}
-			if (empty($request->name)) {
-				$rules['is_service'] = 'required';
-			}
-			if (empty($request->arm_certification_old)) {
-				$rules['arm_certification'] = 'required';
-			}
-			$request->validate($rules, [
-				'name.required' => 'Name of Service Holder is required.',
-				'designation.required' => 'Rank/Designation is required.',
-				'service_number.required' => 'Service number is required.',
-				'arms_name.required' => 'Name of Service is required.',
-				'is_service.required' => 'Service/Retired is required.',
-				'office_address.required' => 'Present Office Address is required.',
-				'arm_certification.required' => 'Certification/Testimonial from office is required.',
-			]);
-		}else if($request->stage==4 && $request->categoryid==3){
-			if (empty($request->name)) {
-				$rules['name_of_staff'] = 'required';
-			}
-			if (empty($request->designation)) {
-				$rules['staff_designation'] = 'required';
-			}
-			if (empty($request->service_number)) {
-				$rules['staff_id'] = 'required';
-			}
-			
-			if (empty($request->staff_certification_old)) {
-				$rules['staff_certification'] = 'required';
-			}
-			$request->validate($rules, [
-				'name_of_staff.required' => 'Name of the Staff is required.',
-				'staff_designation.required' => 'Designation is required.',
-				'staff_id.required' => 'Staff ID is required.',
-				'staff_certification.required' => 'Staff certification/Testimonial from BAFSD is required.',
-			]);
-		}
-		return (($request->stage==5)?5:($request->stage+1));
-	}
+            if (empty($request->staff_certification_old)) {
+                $rules['staff_certification'] = 'required';
+            }
+            $request->validate($rules, [
+                'name_of_staff.required' => 'Name of the Staff is required.',
+                'staff_designation.required' => 'Designation is required.',
+                'staff_id.required' => 'Staff ID is required.',
+                'staff_certification.required' => 'Staff certification/Testimonial from BAFSD is required.',
+            ]);
+        }
+        return (($request->stage == 5) ? 5 : ($request->stage + 1));
+    }
     public function admissionSave(StudentStoreRequest $request)
     {
         // dd($request->all());
-		
-		$stage=$this->stagevalidationcheck($request);
+
+        $stage = $this->stagevalidationcheck($request);
         try {
             $classdata = Classes::where('class_code', $request->class_code)->first();
 
@@ -1267,9 +1264,9 @@ class StudentController extends Controller
 
             if ($request->id != 0) {
 
-                $activity = StudentActivity::where('student_code', $request->student_code)->where('session_id', 2025)->where('active', 1)->first();
+                $activity = StudentActivity::where('student_code', $request->student_code)->where('session_id', 2026)->where('active', 1)->first();
 
-                
+
                 $sessions = Sessions::where('active', 1)->first();
 
                 //DB::table('admission_temporary')->where('session_id',$sessions->id)->where('student_code',$request->student_code)->update(['section_id'=>$activity->section_id]);
@@ -1305,21 +1302,21 @@ class StudentController extends Controller
                 $student_code = $request->student_code;
                 $student = [];
                 if (Auth::user()->group_id == 2 || Auth::user()->group_id == 7) {
-                    $student = $request->except(['_token', 'house_id', 'roll', 'group_id', 'section_id', 'category_id', 'class_code', 'shift_id', 'class_id', 'session_id', 'version_id', 'staff_certification_old', 'arm_certification_old', 'admit_card_old', 'student_code', 'father_nid_old', 'birth_certificate_old', 'mother_nid_old', 'photo_old', 'testimonial_old', 'academic_transcript_old', 'house_id', 'roll', 'mainsubject', 'third_subject', 'fourth_subject', '_method', 'session_id', 'version_id', 'shift_id', 'class_id', 'group_id', 'category_id', 'section_id', 'old_photo', 'old_birth_certificate', 'present_district_id', 'permanent_district_id','stage']);
+                    $student = $request->except(['_token', 'house_id', 'roll', 'group_id', 'section_id', 'category_id', 'class_code', 'shift_id', 'class_id', 'session_id', 'version_id', 'staff_certification_old', 'arm_certification_old', 'admit_card_old', 'student_code', 'father_nid_old', 'birth_certificate_old', 'mother_nid_old', 'photo_old', 'testimonial_old', 'academic_transcript_old', 'house_id', 'roll', 'mainsubject', 'third_subject', 'fourth_subject', '_method', 'session_id', 'version_id', 'shift_id', 'class_id', 'group_id', 'category_id', 'section_id', 'old_photo', 'old_birth_certificate', 'present_district_id', 'permanent_district_id', 'stage']);
                 } else {
-                    $student = $request->except(['_token', 'staff_certification_old', 'arm_certification_old', 'admit_card_old', 'student_code', 'father_nid_old', 'birth_certificate_old', 'mother_nid_old', 'photo_old', 'testimonial_old', 'academic_transcript_old', 'roll', 'mainsubject', 'third_subject', 'fourth_subject', '_method', 'session_id', 'version_id', 'shift_id', 'class_code', 'house_id', 'class_id', 'group_id', 'category_id', 'section_id', 'old_photo', 'old_birth_certificate', 'present_district_id', 'permanent_district_id','stage']);
+                    $student = $request->except(['_token', 'staff_certification_old', 'arm_certification_old', 'admit_card_old', 'student_code', 'father_nid_old', 'birth_certificate_old', 'mother_nid_old', 'photo_old', 'testimonial_old', 'academic_transcript_old', 'roll', 'mainsubject', 'third_subject', 'fourth_subject', '_method', 'session_id', 'version_id', 'shift_id', 'class_code', 'house_id', 'class_id', 'group_id', 'category_id', 'section_id', 'old_photo', 'old_birth_certificate', 'present_district_id', 'permanent_district_id', 'stage']);
                 }
                 $student['active'] = 1;
                 $activity->updated_by = Auth::user()->id;
                 $student['updated_by'] = Auth::user()->id;
                 $student['photo'] = $photo;
-				$student['stage'] = $stage;
+                $student['stage'] = $stage;
                 $student['testimonial'] = $testimonial;
                 $student['student_relation'] = $request->student_relation;
                 $student['academic_transcript'] = $academic_transcript;
                 $student['birth_certificate'] = $birth_certificate;
                 $student['arm_certification'] = $arm_certification;
-				$student['staff_certification'] = $staff_certification;
+                $student['staff_certification'] = $staff_certification;
                 $student['admit_card'] = $admit_card;
                 $student['father_nid'] = $father_nid;
                 $student['mother_nid'] = $mother_nid;
@@ -1361,7 +1358,7 @@ class StudentController extends Controller
                 $student['academic_transcript'] = $academic_transcript;
                 $student['birth_certificate'] = $birth_certificate;
                 $student['arm_certification'] = $arm_certification;
-				$student['staff_certification'] = $staff_certification;
+                $student['staff_certification'] = $staff_certification;
                 $student['admit_card'] = $admit_card;
                 $student['father_nid'] = $father_nid;
                 $student['mother_nid'] = $mother_nid;
@@ -1565,7 +1562,7 @@ class StudentController extends Controller
             foreach ($multisubject as $subject) {
                 $student_subject[$i++] = array(
                     'class_id' => $activity->class_id,
-					'class_code' => $activity->class_code,
+                    'class_code' => $activity->class_code,
                     'version_id' => $activity->version_id,
                     'session_id' => $activity->session_id,
                     'subject_id' => $subject,
@@ -1581,7 +1578,7 @@ class StudentController extends Controller
             foreach ($multisubject as $subject) {
                 $student_subject[$i++] = array(
                     'class_id' => $activity->class_id,
-					'class_code' => $activity->class_code,
+                    'class_code' => $activity->class_code,
                     'version_id' => $activity->version_id,
                     'session_id' => $activity->session_id,
                     'subject_id' => $subject,
@@ -1597,7 +1594,7 @@ class StudentController extends Controller
             foreach ($multisubject as $subject) {
                 $student_subject[$i++] = array(
                     'class_id' => $activity->class_id,
-					'class_code' => $activity->class_code,
+                    'class_code' => $activity->class_code,
                     'version_id' => $activity->version_id,
                     'session_id' => $activity->session_id,
                     'subject_id' => $subject,
@@ -1687,7 +1684,7 @@ class StudentController extends Controller
     }
     public function StudentProfile($id)
     {
-	
+
         Session::put('activemenu', 'profile');
         Session::put('activesubmenu', 'sc');
         // $sessions = Sessions::where('active', 0)->get();
@@ -1704,7 +1701,7 @@ class StudentController extends Controller
         if ($id != 0) {
 
             $studentdata = Student::where('id', $id)->first();
-            
+
             $activity = StudentActivity::with('classes')->where('student_code', $studentdata->student_code)->orderBy('id', 'desc')->first();
             // dd($activity);
             $sections = Sections::where('class_code', $activity->class_code)
@@ -1719,9 +1716,9 @@ class StudentController extends Controller
         } else {
 
             $studentdata = DB::select('SELECT * FROM `students` WHERE `student_code` LIKE "' . Auth::user()->ref_id . '" order by id desc LIMIT 1');
-            if($studentdata[0]->submit==2 && $studentdata[0]->is_idcard_download==0){
-				return redirect()->route('dashboard')->with('warning', 'Print Your ID CARD First');
-			}
+            if ($studentdata[0]->submit == 2 && $studentdata[0]->is_idcard_download == 0) {
+                return redirect()->route('dashboard')->with('warning', 'Print Your ID CARD First');
+            }
             if (count($studentdata) > 1) {
                 $student = $studentdata;
             } else {
@@ -1754,31 +1751,31 @@ class StudentController extends Controller
                 ->where('subject_type', 1)->with('subject')->where('class_wise_subject.class_code', $activity->classes->class_code)->orderBy('class_wise_subject.subject_code', 'asc')->get();
             $comsubjects = collect($comsubjects->groupBy('parent_subject'));
             $groupsubjects = ClassWiseSubject::where('class_wise_subject.active', 1)
-                
+
                 ->join('subjects', 'subjects.id', '=', 'class_wise_subject.subject_id')
                 ->where('group_id', $activity->group_id)
                 ->select('subjects.*', 'class_wise_subject.subject_code')
                 ->where('subject_type', 2)->where('class_wise_subject.class_code', $activity->classes->class_code)->orderBy('class_wise_subject.subject_code', 'asc')->get();
 
             $groupsubjects = collect($groupsubjects->groupBy('parent_subject'));
-            
+
             $optionalsubjects = ClassWiseSubject::where('class_wise_subject.active', 1)
                 ->join('classes', 'classes.class_code', '=', 'class_wise_subject.class_code')
                 ->join('subjects', 'subjects.id', '=', 'class_wise_subject.subject_id')
                 ->where('group_id', $activity->group_id)
                 ->select('subjects.*', 'class_wise_subject.subject_code')
                 ->where('subject_type', 3)->where('class_wise_subject.class_code', $activity->classes->class_code)->orderBy('class_wise_subject.serial', 'asc')->get();
-            
+
             $optionalsubjects = collect($optionalsubjects->groupBy('parent_subject'));
-			
+
             $fourthsubjects = ClassWiseSubject::where('class_wise_subject.active', 1)
                 ->join('classes', 'classes.class_code', '=', 'class_wise_subject.class_code')
                 ->join('subjects', 'subjects.id', '=', 'class_wise_subject.subject_id')
                 ->where('group_id', $activity->group_id)
                 ->select('subjects.*', 'class_wise_subject.subject_code');
-			if($activity->version_id == 2 && $activity->group_id==3){
-				$fourthsubjects = $fourthsubjects->whereNotIn('subject_id', [73, 74]);
-			}elseif ($activity->version_id == 2) {
+            if ($activity->version_id == 2 && $activity->group_id == 3) {
+                $fourthsubjects = $fourthsubjects->whereNotIn('subject_id', [73, 74]);
+            } elseif ($activity->version_id == 2) {
                 $fourthsubjects = $fourthsubjects->whereNotIn('subject_code', [123, 124]);
             }
 
@@ -1795,7 +1792,7 @@ class StudentController extends Controller
                 ->select('subjects.*', 'class_wise_subject.subject_code')
                 ->get();
             $student_third_subject = collect($student_third_subject->groupBy('parent_subject'));
-			
+
             $student_fourth_subject = DB::table('student_subject')
                 ->join('subjects', 'subjects.id', '=', 'student_subject.subject_id')
                 ->join('class_wise_subject', 'class_wise_subject.subject_id', '=', 'student_subject.subject_id')
@@ -2000,9 +1997,9 @@ class StudentController extends Controller
             // dd($id);
 
             $student = Student::where('id', $id)->first();
-			if(empty($student)){
-				$student = Student::where('student_code', $id)->first();
-			}
+            if (empty($student)) {
+                $student = Student::where('student_code', $id)->first();
+            }
             $activity = StudentActivity::with(['classes', 'session', 'version', 'shift', 'group', 'section', 'category', 'house'])->where('student_code', $student->student_code)->orderBy('id', 'desc')->first();
             $studentdata = array();
             $classes = Classes::where('session_id', $activity->session_id)
@@ -2120,20 +2117,20 @@ class StudentController extends Controller
     }
     public function getidcardd()
     {
-        $student = Student::where('student_code',Auth::user()->ref_id)->first();
-		//	DB::select('SELECT * FROM `students` WHERE `student_code` = "' . Auth::user()->ref_id . '"');
-		if($student->submit!=2){
-			return response()->json(['message' => 'Please Submit Your Admission Form First'], 404);
-		}
-		Student::where('id',$student->id)->update(['is_idcard_download'=>1]);
+        $student = Student::where('student_code', Auth::user()->ref_id)->first();
+        //	DB::select('SELECT * FROM `students` WHERE `student_code` = "' . Auth::user()->ref_id . '"');
+        if ($student->submit != 2) {
+            return response()->json(['message' => 'Please Submit Your Admission Form First'], 404);
+        }
+        Student::where('id', $student->id)->update(['is_idcard_download' => 1]);
         // dd($studentdata);
-		$studentdata[0]=$student;
-		$key=0;
+        $studentdata[0] = $student;
+        $key = 0;
         //foreach ($studentdata as $key => $student) {
-            $studentdata[$key]->activity = StudentActivity::where('student_code', $student->student_code)
-                ->with(['session', 'version', 'classes', 'section', 'group'])
-                ->where('active', 1)->first();
-            $studentdata[$key]->qrCode   = QrCode::size(100)->style('round')->generate($student->student_code . '-' . $student->first_name);
+        $studentdata[$key]->activity = StudentActivity::where('student_code', $student->student_code)
+            ->with(['session', 'version', 'classes', 'section', 'group'])
+            ->where('active', 1)->first();
+        $studentdata[$key]->qrCode   = QrCode::size(100)->style('round')->generate($student->student_code . '-' . $student->first_name);
         //}
 
         //dd($studentdata[0]->activity->version->version_name);

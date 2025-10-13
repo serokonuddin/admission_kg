@@ -202,9 +202,9 @@
 
                                         </div>
                                         <!-- <div class="mb-3 col-md-4">
-                                                                                                                                                                                                                    <label for="last_name" class="form-label">Last Name</label>
-                                                                                                                                                                                                                    <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="Last Name" value="{{ $student->last_name ?? '' }}">
-                                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                            <label for="last_name" class="form-label">Last Name</label>
+                                                                                                                                                                                                                            <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="Last Name" value="{{ $student->last_name ?? '' }}">
+                                                                                                                                                                                                                        </div> -->
                                         <div class="mb-3 col-md-6">
                                             <label for="last_name" class="form-label">Student's Name (Bangla)</label>
                                             <input class="form-control" type="text" name="bangla_name" id="bangla_name"
@@ -653,39 +653,45 @@
                                     <div class="content-header mb-3" id="armedforce">
                                         <h6 class="mb-0" style="color: #da45dc;font-weight: bold;font-size: 19px;">
                                             Select Your Category</h6>
-                                        
+
                                         <div class="col-md">
-                                            @if(isset($categories[0]->id))
-                                            <div class="form-check mt-3">
-                                                <input name="categoryid" class="form-check-input specialinfo"
-                                                    {{ isset($student) && $student->categoryid == 1 ? 'checked="checked"' : '' }}
-                                                    type="radio" value="{{$categories[0]->id}}" id="defaultRadio{{$categories[0]->id}}">
-                                                <label class="form-check-label" for="defaultRadio{{$categories[0]->id}}">
-                                                    {{$categories[0]->category_name}}
-                                                </label>
-                                            </div>
+                                            @if (isset($categories[0]->id))
+                                                <div class="form-check mt-3">
+                                                    <input name="categoryid" class="form-check-input specialinfo"
+                                                        {{ isset($student) && $student->categoryid == 1 ? 'checked="checked"' : '' }}
+                                                        type="radio" value="{{ $categories[0]->id }}"
+                                                        id="defaultRadio{{ $categories[0]->id }}">
+                                                    <label class="form-check-label"
+                                                        for="defaultRadio{{ $categories[0]->id }}">
+                                                        {{ $categories[0]->category_name }}
+                                                    </label>
+                                                </div>
                                             @endif
-                                            @if(isset($categories[1]->id))
-                                            <div class="form-check">
-                                                <input name="categoryid" class="form-check-input specialinfo"
-                                                    type="radio"
-                                                    {{ isset($student) && $student->categoryid == 2 ? 'checked="checked"' : '' }}
-                                                    value="{{$categories[1]->id}}" id="defaultRadio{{$categories[1]->id}}">
-                                                <label class="form-check-label" for="defaultRadio{{$categories[1]->id}}">
-                                                    {{$categories[1]->category_name}}
-                                                </label>
-                                            </div>
+                                            @if (isset($categories[1]->id))
+                                                <div class="form-check">
+                                                    <input name="categoryid" class="form-check-input specialinfo"
+                                                        type="radio"
+                                                        {{ isset($student) && $student->categoryid == 2 ? 'checked="checked"' : '' }}
+                                                        value="{{ $categories[1]->id }}"
+                                                        id="defaultRadio{{ $categories[1]->id }}">
+                                                    <label class="form-check-label"
+                                                        for="defaultRadio{{ $categories[1]->id }}">
+                                                        {{ $categories[1]->category_name }}
+                                                    </label>
+                                                </div>
                                             @endif
-                                            @if(isset($categories[2]->id))
-                                            <div class="form-check">
-                                                <input name="categoryid" class="form-check-input specialinfo"
-                                                    type="radio"
-                                                    {{ isset($student) && $student->categoryid == 3 ? 'checked="checked"' : '' }}
-                                                    value="{{$categories[2]->id}}" id="defaultRadio{{$categories[2]->id}}">
-                                                <label class="form-check-label" for="defaultRadio{{$categories[2]->id}}">
-                                                    {{$categories[2]->category_name}}
-                                                </label>
-                                            </div>
+                                            @if (isset($categories[2]->id))
+                                                <div class="form-check">
+                                                    <input name="categoryid" class="form-check-input specialinfo"
+                                                        type="radio"
+                                                        {{ isset($student) && $student->categoryid == 3 ? 'checked="checked"' : '' }}
+                                                        value="{{ $categories[2]->id }}"
+                                                        id="defaultRadio{{ $categories[2]->id }}">
+                                                    <label class="form-check-label"
+                                                        for="defaultRadio{{ $categories[2]->id }}">
+                                                        {{ $categories[2]->category_name }}
+                                                    </label>
+                                                </div>
                                             @endif
                                         </div>
 
@@ -978,7 +984,7 @@
                                                 <option value="0"
                                                     {{ isset($activity) && $activity->class_code == 0 ? 'selected="selected"' : '' }}>
                                                     KG</option>
-                                                
+
 
 
                                             </select>
@@ -1055,9 +1061,9 @@
                                                     Preview</button>
                                         </div>
                                         <!-- <input type="hidden" class="btn btn-warning me-2" name="submit" id="submit"  value="1">
-                                                                                                                                                                                                            <button type="button" class="btn btn-outline-warning" id="final_submit">Final Submit</button>
-                                                                                                                                                                                                            <button type="submit" class="btn btn-outline-primary" id="savebuuton">Save</button>
-                                                                                                                                                                                                            <button type="reset" class="btn btn-outline-secondary">Cancel</button> -->
+                                                                                                                                                                                                                    <button type="button" class="btn btn-outline-warning" id="final_submit">Final Submit</button>
+                                                                                                                                                                                                                    <button type="submit" class="btn btn-outline-primary" id="savebuuton">Save</button>
+                                                                                                                                                                                                                    <button type="reset" class="btn btn-outline-secondary">Cancel</button> -->
                                     @else
                                         <a href="{{ url('admin/studentPrint/' . $student->id) }}" target="_blank"
                                             class="btn btn-outline-primary">Print</a>
