@@ -111,7 +111,7 @@
     <div class="content-wrapper">
         <!-- Content -->
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> KG Lottery (2025)</h4>
+            <h4 class="py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> KG Lottery (2026)</h4>
             <div class="card">
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
@@ -158,7 +158,7 @@
                                                 <input name="watting" id="watting" class="form-check-input"
                                                     type="checkbox" value="1">
                                                 <label class="form-check-label" for="watting">
-                                                    Is Watting Selection?
+                                                    Is Waiting Selection?
                                                 </label>
                                             </div>
                                         </div>
@@ -355,7 +355,7 @@
                         months--;
                         // Get the last day of the previous month
                         var lastDayOfPrevMonth = new Date(today.getFullYear(), today.getMonth(), 0)
-                        .getDate();
+                            .getDate();
                         days += lastDayOfPrevMonth;
                     }
 
