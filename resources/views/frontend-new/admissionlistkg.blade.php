@@ -254,14 +254,14 @@
                             <div class="refine-categ-header " style="margin-top: 10px;">
 
                                 <h3 style="text-align: center">Online Admission (অনলাইন ভর্তি) </h3>
-                                <h4 style="text-align: center"> <a
+                                {{-- <h4 style="text-align: center"> <a
                                         href="{{ asset('public/admissionpdf/Onine Admission.pdf') }}"
-                                        target="_blank">Admission Instruction (ভর্তির নির্দেশনা)</a> </h4>
+                                        target="_blank">Admission Instruction (ভর্তির নির্দেশনা)</a> </h4> --}}
                                 <h4 style="text-align: center"> <img title="Hotline Number"
                                         src="{{ asset('public/call-thumbnail.png') }}" style="height: 25px" /> <a
-                                        href="tel:01759536622" style="color: red;font-weight: bold;">01759536622, </a><a
-                                        href="tel:01777521159" style="color: red;font-weight: bold;">01777521159</a> </h4>
-                                <h4 style="text-align: center"> KG admission deadline: December 24, 2025 </h4>
+                                        href="tel:{{ $academy_info->helpline_number }}"
+                                        style="color: red;font-weight: bold;">{{ $academy_info->helpline_number }}</a> </h4>
+                                <h4 style="text-align: center"> KG admission deadline: December 24, 2026 </h4>
 
                                 <form action="{{ route('admissionDatakg') }}" method="post" enctype="multipart/form-data"
                                     class="onlineform" id="checkstatusform" style="min-height:400px">

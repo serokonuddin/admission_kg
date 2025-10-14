@@ -202,9 +202,9 @@
 
                                         </div>
                                         <!-- <div class="mb-3 col-md-4">
-                                                                                                                                                                                                                            <label for="last_name" class="form-label">Last Name</label>
-                                                                                                                                                                                                                            <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="Last Name" value="{{ $student->last_name ?? '' }}">
-                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                <label for="last_name" class="form-label">Last Name</label>
+                                                                                                                                                                                                                                <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="Last Name" value="{{ $student->last_name ?? '' }}">
+                                                                                                                                                                                                                            </div> -->
                                         <div class="mb-3 col-md-6">
                                             <label for="last_name" class="form-label">Student's Name (Bangla)</label>
                                             <input class="form-control" type="text" name="bangla_name" id="bangla_name"
@@ -1061,9 +1061,9 @@
                                                     Preview</button>
                                         </div>
                                         <!-- <input type="hidden" class="btn btn-warning me-2" name="submit" id="submit"  value="1">
-                                                                                                                                                                                                                    <button type="button" class="btn btn-outline-warning" id="final_submit">Final Submit</button>
-                                                                                                                                                                                                                    <button type="submit" class="btn btn-outline-primary" id="savebuuton">Save</button>
-                                                                                                                                                                                                                    <button type="reset" class="btn btn-outline-secondary">Cancel</button> -->
+                                                                                                                                                                                                                        <button type="button" class="btn btn-outline-warning" id="final_submit">Final Submit</button>
+                                                                                                                                                                                                                        <button type="submit" class="btn btn-outline-primary" id="savebuuton">Save</button>
+                                                                                                                                                                                                                        <button type="reset" class="btn btn-outline-secondary">Cancel</button> -->
                                     @else
                                         <a href="{{ url('admin/studentPrint/' . $student->id) }}" target="_blank"
                                             class="btn btn-outline-primary">Print</a>
@@ -1096,7 +1096,8 @@
                 <input type="hidden" name="id" value="{{ $student->id ?? '' }}" />
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalFullTitle" style="margin-left:33%;">BAF SHAHEEN COLLEGE DHAKA
+                        <h5 class="modal-title" id="modalFullTitle" style="margin-left:33%;">
+                            {{ $academy_info->academy_name ?? '' }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>

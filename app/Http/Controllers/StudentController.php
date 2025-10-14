@@ -32,6 +32,7 @@ use App\Models\sttings\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Imports\StudentsImports;
+use App\Models\AcademyInfo;
 use App\Models\Employee\Employee;
 use App\Models\Student\BoardResult;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -1399,7 +1400,7 @@ class StudentController extends Controller
             //     return redirect()->route('StudentProfile',0)->with('success',$text);
             // }
             // return redirect()->route('students.index')->with('success',$text);
-            if(isset($request->submit) && $request->submit==1){
+            if (isset($request->submit) && $request->submit == 1) {
                 return $request->student_code;
             }
             return $stage;
@@ -1848,7 +1849,7 @@ class StudentController extends Controller
             }
         } else {
             if (Auth::user()->group_id == 4) {
-                return view('student.student_update', compact('sessions', 'houses', 'fourthsubjects', 'student_third_subject', 'student_fourth_subject', 'comsubjects', 'groupsubjects', 'optionalsubjects', 'studentdata', 'groups', 'versions', 'shifts', 'categories', 'districts', 'sections', 'classes', 'student', 'activity', 'id'));
+                return view('student.student_update_kg', compact('sessions', 'houses', 'fourthsubjects', 'student_third_subject', 'student_fourth_subject', 'comsubjects', 'groupsubjects', 'optionalsubjects', 'studentdata', 'groups', 'versions', 'shifts', 'categories', 'districts', 'sections', 'classes', 'student', 'activity', 'id'));
             } else {
                 return view('student.student_update_admin', compact('sessions', 'houses', 'fourthsubjects', 'student_third_subject', 'student_fourth_subject', 'comsubjects', 'groupsubjects', 'optionalsubjects', 'studentdata', 'groups', 'versions', 'shifts', 'categories', 'districts', 'sections', 'classes', 'student', 'activity', 'id'));
             }
@@ -2131,10 +2132,14 @@ class StudentController extends Controller
         $key = 0;
         //foreach ($studentdata as $key => $student) {
         $studentdata[$key]->activity = StudentActivity::where('student_code', $student->student_code)
-            ->with(['session', 'version', 'classes', 'section', 'group'])
+            ->with(['session', 'version', 'classes', 'section', 'group', 'house'])
             ->where('active', 1)->first();
         $studentdata[$key]->qrCode   = QrCode::size(100)->style('round')->generate($student->student_code . '-' . $student->first_name);
         //}
+
+        $academy_info = AcademyInfo::first();
+
+        $logoRelativePath = str_replace(url('/'), '', $academy_info->logo);
 
         //dd($studentdata[0]->activity->version->version_name);
 
@@ -2163,7 +2168,7 @@ class StudentController extends Controller
         // );
         // $pdf->showWatermarkImage = true;
         $view = 'student.cardD';
-        $data = compact('studentdata');
+        $data = compact('studentdata', 'academy_info', 'logoRelativePath');
         $html = view($view, $data);
         $pdf->WriteHTML($html);
         $pdf->Output($student->first_name . '.pdf', 'D');

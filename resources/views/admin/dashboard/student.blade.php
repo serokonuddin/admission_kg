@@ -2,10 +2,10 @@
 @section('content')
     <style>
         /* .bx {
-                        vertical-align: middle;
-                        font-size: 2.15rem;
-                        line-height: 1;
-                    } */
+                                    vertical-align: middle;
+                                    font-size: 2.15rem;
+                                    line-height: 1;
+                                } */
 
         .text-capitalize {
             text-transform: capitalize !important;
@@ -61,23 +61,22 @@
                         </a>
                     </div>
                 </div>
-                
-				<div class="col-sm-6 col-lg-4">
+
+                <div class="col-sm-6 col-lg-4">
                     <div class="card icon-card card-border-shadow-primary cursor-pointer text-center">
                         <a href="{{ route('getidcardd') }}" target="_blank">
                             <div class="card-body bg-label-info">
                                 <div class="avatar flex-shrink-0 " style="margin: 0px auto">
-                                    <img src="{{ asset('public/dashboard/student.jpg') }}" alt="form"
-                                        class="rounded">
+                                    <img src="{{ asset('public/dashboard/student.jpg') }}" alt="form" class="rounded">
                                 </div>
-                                <p class="icon-name text-capitalize text-truncate mb-0"><a href="{{ url('admin/studentPrint/' . Auth::user()->ref_id) }}" target="_blank"
-																						   >Print Admission Form</a></p>
+                                <p class="icon-name text-capitalize text-truncate mb-0">Print
+                                    Temporary ID Card</p>
                             </div>
                         </a>
                     </div>
-                </div> 
-				
-				
+                </div>
+
+
 
             </div>
         </div>
@@ -87,7 +86,7 @@
     <div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <img class="demo-bg" src="{{ asset('public/popsheen.png') }}" alt="">
+                <img class="demo-bg" src="{{ asset('public/congratulation.png') }}" alt="">
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
