@@ -338,10 +338,12 @@ function getPercentage($total, $getdata)
 }
 function sms_send($numbers, $smsbody)
 {
-    
+
     $url = "http://bulksmsbd.net/api/smsapi";
     $api_key = "Jq3ZgLavRja3zxl85kby";
     $senderid = "BAFSD";
+    // $api_key = "S3uRX1FcgiGAo4JeLTKH";
+    // $senderid = "SHAHIN TECH";
     $number = $numbers;
     $message = $smsbody;
 
