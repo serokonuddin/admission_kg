@@ -340,6 +340,7 @@ class WebsiteController extends Controller
             }
             $serial = $middel + $count + 1;
             $student_code = $session_id . '' . ($serial);
+            $roll = $serial;
             $section = $this->autoSection($count, $session_id, 0, $student->version_id, $student->shift_id, $student->gender);
             //dd($section);
             $studentdata = array(
@@ -383,7 +384,7 @@ class WebsiteController extends Controller
                 'shift_id' => $student->shift_id,
                 'section_id' => $section,
                 'group_id' => null,
-                'roll' => $student_code,
+                'roll' => $roll,
                 'house_id' => $this->housenumber($serial),
                 'category_id' => $student->category_id,
                 'active' => 1,
@@ -394,7 +395,7 @@ class WebsiteController extends Controller
             $user = array(
                 'name' => $student->name_en,
                 'email' => $student->email,
-                'username' => $student->username,
+                'username' => $student_code,
                 'phone' => $student->mobile,
                 'ref_id' => $student_code,
                 'password_text' => $password,
@@ -408,7 +409,7 @@ class WebsiteController extends Controller
                 ->update(['status' => 2]);
 
 
-            sms_send($student->mobile, 'Your Username is ' . $student->username . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: ' . env('APP_URL') . '/login');
+            sms_send($student->mobile, 'Your Username is ' . $student_code . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: ' . env('APP_URL') . '/login');
             $text = "KG Admission payment for BAF Shaheen college Dhaka is completed. Please login and enter your admission form.";
             return redirect()->route('sslredirect')->with('warging', $text);
         }
@@ -1431,6 +1432,7 @@ class WebsiteController extends Controller
             ->first();
 
         //$admissiondata=$admissiondata->first();
+        dd($admissiondata->status);
         if ($admissiondata) {
 
             if ($admissiondata->status == 2) {

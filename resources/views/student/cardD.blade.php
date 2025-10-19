@@ -165,15 +165,17 @@
                 <div class="header" style="margin-top:  <?= $headerMarginTop ?>; padding-left: 2px;">
                     <table>
                         <tr>
-                            <td><img src="{{ $logoRelativePath }}" alt="{{ $academy_info->short_name }}" class="logo"
-                                    style="width: 35px; height: auto;"></td>
+                            <td><img src="{{ public_path('logo/logo.png') }}" alt="BAF Shaheen College Logo"
+                                    class="logo" style="width: 30px; height: auto;"></td>
                             <td>
                                 <div class="college-info" style="text-align: center;  font-family: freeserif">
                                     <p style="text-align: center;font-size:12.5px;">
-                                        <strong>{{ $academy_info->academy_name }}</strong>
+                                        <strong>BAF Shaheen College Dhaka</strong>
                                     </p>
                                     <p class="text-center" style="color: #000; font-size: 9.5px;font-weight:bold">
-                                        &nbsp;&nbsp;&nbsp;{{ $academy_info->address }}</p>
+                                        &nbsp;&nbsp;&nbsp;Dhaka
+                                        Cantonment,
+                                        Dhaka&#8209;1206</p>
                                 </div>
                             </td>
                         </tr>
