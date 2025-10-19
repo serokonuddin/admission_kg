@@ -289,7 +289,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
 
     Route::resource('/students', StudentController::class);
+    Route::post('saveDisciplinaryIssues', [StudentController::class, 'saveDisciplinaryIssues'])->name('saveDisciplinaryIssues');
+    Route::post('/getAttendanceByDate', [AttendanceController::class, 'getAttendanceByDate'])->name('getAttendanceByDate');
     Route::post('/student-inactive/{id}', [StudentController::class, 'studentInactive'])->name('studentInactive');
+    Route::post('/student-pid/{id}', [StudentController::class, 'studentPid'])->name('studentPid');
     Route::get('/student-id-card', [StudentController::class, 'studentIDCards'])->name('studentIDCards');
     Route::get('/get-student-id-card', [StudentController::class, 'getStudentIDCards'])->name('getStudentIDCards');
     Route::post('/getLastRoll', [StudentController::class, 'getLastRoll'])->name('getLastRoll');
