@@ -202,9 +202,9 @@
 
                                         </div>
                                         <!-- <div class="mb-3 col-md-4">
-                                                                                                                                                                                                                                <label for="last_name" class="form-label">Last Name</label>
-                                                                                                                                                                                                                                <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="Last Name" value="{{ $student->last_name ?? '' }}">
-                                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                                                            <label for="last_name" class="form-label">Last Name</label>
+                                                                                                                                                                                                                                                            <input class="form-control" type="text" name="last_name" id="last_name" required placeholder="Last Name" value="{{ $student->last_name ?? '' }}">
+                                                                                                                                                                                                                                                        </div> -->
                                         <div class="mb-3 col-md-6">
                                             <label for="last_name" class="form-label">Student's Name (Bangla)</label>
                                             <input class="form-control" type="text" name="bangla_name" id="bangla_name"
@@ -397,9 +397,9 @@
                                                 value="{{ $student->mother_nid_number ?? '' }}">
                                         </div>
                                         <div class="mb-3 col-md-6">
-                                            <label for="father_nid" class="form-label">Father's NID (jpg,jpeg,png
+                                            <label for="father_nid" class="form-label">Father's NID (jpg,jpeg,pdf
                                                 format)</label>
-                                            <input class="form-control" type="file"
+                                            <input class="form-control" type="file" accept=".pdf, .jpg, .jpeg"
                                                 onchange="loadFile(event,'father_nid_preview')" id="father_nid"
                                                 name="father_nid">
                                             <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
@@ -411,9 +411,9 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 col-md-6">
-                                            <label for="mother_nid" class="form-label">Mother's NID (jpg,jpeg,png
+                                            <label for="mother_nid" class="form-label">Mother's NID (jpg,jpeg,pdf
                                                 format)</label>
-                                            <input class="form-control" type="file"
+                                            <input class="form-control" type="file" accept=".pdf, .jpg, .jpeg"
                                                 onchange="loadFile(event,'mother_nid_preview')" id="mother_nid"
                                                 name="mother_nid">
                                             <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
@@ -587,9 +587,10 @@
                                         </div>
                                         <div class="mb-3 col-md-6">
                                             <label for="photo" class="form-label">Student's Recent Passport Size Photo
-                                                (jpg,jpeg,png format)<span class="text-danger">*</span></label>
+                                                (jpg,jpeg format)<span class="text-danger">*</span></label>
                                             <input class="form-control" type="file" id="photo"
-                                                onchange="loadFile(event,'photo_preview')" name="photo"
+                                                accept=".jpg, .jpeg" onchange="loadFile(event,'photo_preview')"
+                                                name="photo"
                                                 {{ empty($student->photo) && !(Auth::user()->group_id == 2 || Auth::user()->group_id == 7) ? 'required=""' : '' }}>
                                             <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
                                             <input class="form-control" type="hidden" id="photo_old"
@@ -605,8 +606,8 @@
 
                                         <div class="mb-3 col-md-6">
                                             <label for="academic_transcript" class="form-label">BIRTH
-                                                Certificate/Registration (jpg,jpeg,png format)</label>
-                                            <input class="form-control" type="file"
+                                                Certificate/Registration (jpg,jpeg,pdf format)</label>
+                                            <input class="form-control" type="file" accept=".pdf, .jpg, .jpeg"
                                                 onchange="loadFile(event,'birth_certificate_preview')"
                                                 id="birth_certificate" name="birth_certificate">
                                             <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
@@ -1061,9 +1062,9 @@
                                                     Preview</button>
                                         </div>
                                         <!-- <input type="hidden" class="btn btn-warning me-2" name="submit" id="submit"  value="1">
-                                                                                                                                                                                                                        <button type="button" class="btn btn-outline-warning" id="final_submit">Final Submit</button>
-                                                                                                                                                                                                                        <button type="submit" class="btn btn-outline-primary" id="savebuuton">Save</button>
-                                                                                                                                                                                                                        <button type="reset" class="btn btn-outline-secondary">Cancel</button> -->
+                                                                                                                                                                                                                                                    <button type="button" class="btn btn-outline-warning" id="final_submit">Final Submit</button>
+                                                                                                                                                                                                                                                    <button type="submit" class="btn btn-outline-primary" id="savebuuton">Save</button>
+                                                                                                                                                                                                                                                    <button type="reset" class="btn btn-outline-secondary">Cancel</button> -->
                                     @else
                                         <a href="{{ url('admin/studentPrint/' . $student->id) }}" target="_blank"
                                             class="btn btn-outline-primary">Print</a>
@@ -1121,39 +1122,69 @@
     <script src="{{ asset('/') }}public/backend/assets/js/ui-modals.js"></script>
 
     <script>
-        var loadFile = function(event, preview) {
-            var file = event.target.files[0];
+        const loadFile = function(event, preview) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-            if (!file) return; // If no file selected, exit function
+            const fileType = file.type;
+            const fileSize = file.size;
+            const maxSize = 200 * 1024; // 200 KB
 
-            var sizeValue = file.size;
-            var fileType = file.type;
+            // Determine allowed types based on input name
+            const inputName = event.target.name;
+            let allowedTypes = [];
 
-            // Allowed file types
-            var allowedTypes = ["image/jpeg", "image/jpg"];
+            if (inputName === "photo") {
+                // For student's photo: jpg, jpeg, png
+                allowedTypes = ["image/jpeg", "image/jpg"];
+            } else {
+                // For other docs: jpg, jpeg, pdf
+                allowedTypes = ["image/jpeg", "image/jpg", "application/pdf"];
+            }
 
+            // ✅ Check file type
             if (!allowedTypes.includes(fileType)) {
                 Swal.fire({
                     title: "Warning!",
-                    text: "Only JPG or JPEG files are allowed",
+                    html: inputName === "photo" ?
+                        "Only JPG, JPEG files are allowed for the photo." :
+                        "Only PDF, JPG, or JPEG files are allowed for this document.",
                     icon: "warning"
                 });
                 resetInput(event.target, preview);
-                return false;
+                return;
             }
 
-            var output = document.getElementById(preview);
-            output.src = URL.createObjectURL(file);
-            output.onload = function() {
-                URL.revokeObjectURL(output.src); // Free memory
-            };
+            // ✅ Check file size
+            if (fileSize > maxSize) {
+                Swal.fire({
+                    title: "Warning!",
+                    html: "File size must not exceed <b>200 KB</b>.",
+                    icon: "warning"
+                });
+                resetInput(event.target, preview);
+                return;
+            }
+
+            // ✅ Preview only if it's an image
+            if (fileType.startsWith("image/")) {
+                const output = document.getElementById(preview);
+                output.src = URL.createObjectURL(file);
+                output.onload = function() {
+                    URL.revokeObjectURL(output.src); // Free memory
+                };
+            }
         };
 
-        // Helper function to reset the file input
+        // Helper function to reset input and preview
         function resetInput(inputElement, preview) {
-            var idvalue = preview.slice(0, -8);
-            $('#' + idvalue).val('');
-            inputElement.value = ''; // Reset input field
+            const idValue = preview.replace('_preview', '');
+            document.getElementById(idValue).value = '';
+            inputElement.value = ''; // Reset file input
+            const previewImg = document.getElementById(preview);
+            if (previewImg && previewImg.tagName === "IMG") {
+                previewImg.src = ''; // Clear preview image
+            }
         }
     </script>
     <script>

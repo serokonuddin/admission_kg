@@ -1242,10 +1242,10 @@ class WebsiteController extends Controller
     public function admissionstore(Request $request)
     {
         $request->validate([
-            'staff_certification' => 'nullable|mimes:jpg,jpeg,png,pdf,webp|max:1024', // Optional file with allowed types and max size 2MB
-            'arm_certification' => 'nullable|mimes:jpg,jpeg,png,pdf,webp|max:1024', // Optional file with allowed types and max size 2MB
-            'birth_image' => 'nullable|mimes:jpg,jpeg,pdf,png,webp|max:1024', // Optional file with allowed types and max size 2MB
-            'photo' => 'nullable|mimes:jpg,jpeg,png,pdf,webp|max:1024', // Optional file with allowed types and max size 2MB
+            'staff_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
+            'arm_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
+            'birth_image' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
+            'photo' => 'nullable|mimes:jpg,jpeg|max:200', // Optional file with allowed types and max size 200KB
         ]);
         $sessions = Sessions::where('id', $request->session_id)->first();
 
@@ -1256,7 +1256,7 @@ class WebsiteController extends Controller
 
         if (empty($admissiondata)) {
             $text = "Payment does not added for admission";
-            return redirect('/admissionview')->with('warning', $text);
+            return redirect('/')->with('warning', $text);
         }
 
         if ($request->hasFile('staff_certification')) {
@@ -1332,7 +1332,7 @@ class WebsiteController extends Controller
             ->first();
         if ($admissionapplied) {
             $text = "Already Applied";
-            return redirect('/admissionview')->with('warning', $text);
+            return redirect('/')->with('warning', $text);
         }
         $studentadmission = StudentAdmission::updateOrCreate(
             [

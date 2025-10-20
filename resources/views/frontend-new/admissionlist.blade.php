@@ -96,7 +96,7 @@
                 width: 800px !important;
             }
 
-            
+
         }
 
         .background-image {
@@ -262,20 +262,20 @@
 
                                 </h4>
                                 <!-- <div class="table-responsive">
-                                                                            <table class="table " >
+                                                                                                                                        <table class="table " >
 
 
-                                                                            <tr>
-                                                                             <td></td>
-                                                                             <td></td>
-                                                                            </tr>
+                                                                                                                                        <tr>
+                                                                                                                                         <td></td>
+                                                                                                                                         <td></td>
+                                                                                                                                        </tr>
 
 
 
 
-                                                                          </table>
+                                                                                                                                      </table>
 
-                                                                          </div> -->
+                                                                                                                                      </div> -->
                                 <section class=" d-sm-block ml-3" style="margin-top: 30px;">
                                     <div class="container">
                                         <div class="row wow fadeInUp"
@@ -346,7 +346,7 @@
     </div>
     <div class="modal fade mb-8" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLabel"
         style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document" >
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span
@@ -530,24 +530,31 @@
                                     value="{{ old('birth_registration_number') }}" required=""
                                     name="birth_registration_number" placeholder="Birth Registration Number">
                             </div>
-                            <div class="col">
+                            {{-- <div class="col">
                                 <label for="inputEmail4">Candidate's Birth Registration Certificate<span
                                         style="color: red">*</span></label>
                                 <input type="file" class="form-control" required="" name="birth_image"
                                     placeholder="Mobile">
+                            </div> --}}
+                            <div class="col">
+                                <label for="birth_image">Candidate's Birth Registration Certificate
+                                    <span style="color: red">*</span> (File size max 200 KB, accepted formats: .pdf, .jpg,
+                                    .jpeg)
+                                </label>
+                                <input type="file" class="form-control" required id="birth_image" name="birth_image"
+                                    accept=".pdf, .jpg, .jpeg">
                             </div>
 
 
                         </div>
                         <br />
                         <div class="row">
-
-
                             <div class="col">
-                                <label for="inputEmail4">Candidate's Photo<span style="color: red">*</span> (File size max
-                                    200 KB)</label>
-                                <input type="file" class="form-control" required="" name="photo"
-                                    placeholder="photo">
+                                <label for="photo">Candidate's Photo
+                                    <span style="color: red">*</span> (File size max 200 KB, accepted formats: .jpg, .jpeg)
+                                </label>
+                                <input type="file" class="form-control" required id="photo" name="photo"
+                                    accept=".jpg, .jpeg" placeholder="photo">
                             </div>
                             <div class="col">
 
@@ -637,12 +644,12 @@
                             </div>
                         </div>
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                   <div class="form-group">
-                                                                                   <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
-                                                                                      <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
-                                                                                      <span class="text-danger" id="error_status_registration_number"></span>
-                                                                                   </div>
-                                                                             </div> -->
+                                                                                                                                               <div class="form-group">
+                                                                                                                                               <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
+                                                                                                                                                  <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
+                                                                                                                                                  <span class="text-danger" id="error_status_registration_number"></span>
+                                                                                                                                               </div>
+                                                                                                                                         </div> -->
                         <div class="col-md-6 col-sm-6" style="margin-top: 5px">
                             <div class="form-group">
                                 <label>Board (বোর্ড)</label><small class="req"> *</small>
@@ -678,12 +685,12 @@
 
 
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                   <div class="form-group">
-                                                                                   <label>Admission Serial (এডমিশন সিরিয়াল)</label>
-                                                                                      <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
-                                                                                      <span class="text-danger" id="error_status_serial"></span>
-                                                                                   </div>
-                                                                             </div> -->
+                                                                                                                                               <div class="form-group">
+                                                                                                                                               <label>Admission Serial (এডমিশন সিরিয়াল)</label>
+                                                                                                                                                  <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
+                                                                                                                                                  <span class="text-danger" id="error_status_serial"></span>
+                                                                                                                                               </div>
+                                                                                                                                         </div> -->
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label>Group (বিভাগ)</label><small class="req"> *</small>
@@ -743,7 +750,7 @@
                     // Minimum age: 4 years, 11 months, and 15 days
                     var minAgeDays = (4 * 365) + (11 * 30) + 15;
                     // Maximum age: 6 years and 15 days
-                    var maxAgeDays = (6 * 365) + 45;
+                    var maxAgeDays = (6 * 365) + 60;
 
                     // Check if the total days fall within the valid range
                     if ((totalAgeDays >= minAgeDays && totalAgeDays <= maxAgeDays) || (category_id == 2 ||
@@ -776,16 +783,13 @@
                     $text .= '<p>' . $error . '</p>';
                 }
             @endphp
-
-                <
-                script >
-                Swal.fire({
-                    title: "Warning!",
-                    html: `{!! $text !!}`,
-                    icon: "warning"
-                });
+            Swal.fire({
+                title: "Warning!",
+                html: `{!! $text !!}`,
+                icon: "warning"
+            });
+        @endif
     </script>
-    @endif
 
     @if (Session::get('warning'))
         <script>
@@ -796,91 +800,155 @@
             });
         </script>
     @endif
+    <script>
+        $(function() {
 
-    $(function() {
+            $(document.body).on('click', '.kgadmission', function() {
+                var versionid = $(this).data('versionid');
+                var class_id = $(this).data('class_id');
+                var session_id = $(this).data('session_id');
+                var amount = $(this).data('amount');
+                $('#versionid').val(versionid)
+                $('#classid').val(class_id)
+                $('#sessionid').val(session_id)
+                $('#amount').val(amount)
+                if (versionid == 1) {
+                    $('#versiontext').text('ভার্সন বাংলা');
+                } else {
+                    $('#versiontext').text('Version English');
+                }
+                $('#exampleModalLong').modal('show');
+            });
+            $(document.body).on('click', '.findAdmitcard', function() {
 
-    $(document.body).on('click', '.kgadmission', function() {
-    var versionid = $(this).data('versionid');
-    var class_id = $(this).data('class_id');
-    var session_id = $(this).data('session_id');
-    var amount = $(this).data('amount');
-    $('#versionid').val(versionid)
-    $('#classid').val(class_id)
-    $('#sessionid').val(session_id)
-    $('#amount').val(amount)
-    if (versionid == 1) {
-    $('#versiontext').text('ভার্সন বাংলা');
-    } else {
-    $('#versiontext').text('Version English');
-    }
-    $('#exampleModalLong').modal('show');
-    });
-    $(document.body).on('click', '.findAdmitcard', function() {
-
-    $('#exampleModal').modal('show');
-    });
-
-
-    $(document.body).on('submit', '#checkadmissionstatus', function(e) {
+                $('#exampleModal').modal('show');
+            });
 
 
-    e.preventDefault(); // avoid to execute the actual submit of the form.
+            $(document.body).on('submit', '#checkadmissionstatus', function(e) {
 
-    var form = $(this);
-    var actionUrl = form.attr('action');
-    $.LoadingOverlay("show");
-    $.ajax({
-    type: "POST",
-    url: actionUrl,
-    data: form.serialize(), // serializes the form's elements.
-    success: function(data) {
-    $.LoadingOverlay("hide");
-    getPayment(data); // show response from the php script.
-    }
-    });
 
-    });
-    $(document.body).on('change', '.category', function() {
+                e.preventDefault(); // avoid to execute the actual submit of the form.
 
-    var category_id = $(this).val();
-    $('#dob').val('');
-    $('#age').html('');
-    $('#message').html('');
-    var url = "{{ route('getCategoryView') }}";
-    $.ajax({
-    type: "post",
-    headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
-    },
-    url: url,
-    data: {
-    "_token": "{{ csrf_token() }}",
-    category_id
-    },
-    success: function(response) {
+                var form = $(this);
+                var actionUrl = form.attr('action');
+                $.LoadingOverlay("show");
+                $.ajax({
+                    type: "POST",
+                    url: actionUrl,
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function(data) {
+                        $.LoadingOverlay("hide");
+                        getPayment(data); // show response from the php script.
+                    }
+                });
 
-    $.LoadingOverlay("hide");
-    console.log(response);
-    $('#categoryview').html(response);
+            });
+            $(document.body).on('change', '.category', function() {
 
-    },
-    error: function(data, errorThrown) {
-    $.LoadingOverlay("hide");
-    Swal.fire({
-    title: "Error",
-    text: errorThrown,
-    icon: "warning"
-    });
-    $('#categoryview').html('');
+                var category_id = $(this).val();
+                $('#dob').val('');
+                $('#age').html('');
+                $('#message').html('');
+                var url = "{{ route('getCategoryView') }}";
+                $.ajax({
+                    type: "post",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                    },
+                    url: url,
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        category_id
+                    },
+                    success: function(response) {
 
-    }
-    });
+                        $.LoadingOverlay("hide");
+                        console.log(response);
+                        $('#categoryview').html(response);
 
-    });
-    $(document.body).on('change', '#onlineformbtn', function() {
+                    },
+                    error: function(data, errorThrown) {
+                        $.LoadingOverlay("hide");
+                        Swal.fire({
+                            title: "Error",
+                            text: errorThrown,
+                            icon: "warning"
+                        });
+                        $('#categoryview').html('');
 
-    });
+                    }
+                });
 
-    });
+            });
+            $(document.body).on('change', '#onlineformbtn', function() {
+
+            });
+
+        });
+    </script>
+    <script>
+        document.getElementById('birth_image').addEventListener('change', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const allowedTypes = ['application/pdf', 'image/jpeg'];
+                const maxSize = 200 * 1024; // 200 KB
+
+                // Validate file type
+                if (!allowedTypes.includes(file.type)) {
+                    Swal.fire({
+                        title: "Warning!",
+                        html: "Only PDF, JPG, or JPEG files are allowed.",
+                        icon: "warning"
+                    });
+                    this.value = ''; // reset input
+                    return;
+                }
+
+                // Validate file size
+                if (file.size > maxSize) {
+                    Swal.fire({
+                        title: "Warning!",
+                        html: "File size must not exceed <b>200 KB</b>.",
+                        icon: "warning"
+                    });
+                    this.value = ''; // reset input
+                    return;
+                }
+            }
+        });
+    </script>
+    <script>
+        document.getElementById('photo').addEventListener('change', function() {
+            const file = this.files[0];
+
+            if (file) {
+                const allowedTypes = ['image/jpeg'];
+                const maxSize = 200 * 1024; // 200 KB
+
+                // ✅ Check file type
+                if (!allowedTypes.includes(file.type)) {
+                    Swal.fire({
+                        title: "Warning!",
+                        html: "Only JPG or JPEG files are allowed.",
+                        icon: "warning"
+                    });
+                    this.value = ''; // Reset input
+                    return;
+                }
+
+                // ✅ Check file size
+                if (file.size > maxSize) {
+                    Swal.fire({
+                        title: "Warning!",
+                        html: "File size must not exceed <b>200 KB</b>.",
+                        icon: "warning"
+                    });
+                    this.value = ''; // Reset input
+                    return;
+                }
+            }
+        });
     </script>
 @endsection
