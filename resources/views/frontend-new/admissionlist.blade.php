@@ -262,20 +262,20 @@
 
                                 </h4>
                                 <!-- <div class="table-responsive">
-                                                                                                                                        <table class="table " >
+                                                                                                                                                        <table class="table " >
 
 
-                                                                                                                                        <tr>
-                                                                                                                                         <td></td>
-                                                                                                                                         <td></td>
-                                                                                                                                        </tr>
+                                                                                                                                                        <tr>
+                                                                                                                                                         <td></td>
+                                                                                                                                                         <td></td>
+                                                                                                                                                        </tr>
 
 
 
 
-                                                                                                                                      </table>
+                                                                                                                                                      </table>
 
-                                                                                                                                      </div> -->
+                                                                                                                                                      </div> -->
                                 <section class=" d-sm-block ml-3" style="margin-top: 30px;">
                                     <div class="container">
                                         <div class="row wow fadeInUp"
@@ -537,12 +537,25 @@
                                     placeholder="Mobile">
                             </div> --}}
                             <div class="col">
-                                <label for="birth_image">Candidate's Birth Registration Certificate
-                                    <span style="color: red">*</span> (File size max 200 KB, accepted formats: .pdf, .jpg,
-                                    .jpeg)
+                                <label for="birth_image">
+                                    Candidate's Birth Registration Certificate
+                                    <span style="color: red">*</span>
+                                    (File size max 200 KB, accepted formats: .pdf, .jpg, .jpeg)
                                 </label>
+
                                 <input type="file" class="form-control" required id="birth_image" name="birth_image"
-                                    accept=".pdf, .jpg, .jpeg">
+                                    accept=".pdf,.jpg,.jpeg">
+
+                                <!-- 🔹 Preview container -->
+                                <div class="mt-2" id="birth-preview-box" style="display:none;">
+                                    <img id="birth-preview-img" src="#" alt="Preview"
+                                        style="max-width:150px; border:1px solid #ddd; border-radius:6px; padding:3px; display:none;">
+                                    <div id="birth-preview-pdf"
+                                        style="display:none; border:1px solid #ddd; border-radius:6px; padding:6px; max-width:250px;">
+                                        <i class="fa fa-file-pdf-o" style="color:red; margin-right:8px;"></i>
+                                        <span id="birth-pdf-name" style="font-size:14px;"></span>
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -551,10 +564,18 @@
                         <div class="row">
                             <div class="col">
                                 <label for="photo">Candidate's Photo
-                                    <span style="color: red">*</span> (File size max 200 KB, accepted formats: .jpg, .jpeg)
+                                    <span style="color: red">*</span>
+                                    (File size max 200 KB, accepted formats: .jpg, .jpeg)
                                 </label>
+
                                 <input type="file" class="form-control" required id="photo" name="photo"
-                                    accept=".jpg, .jpeg" placeholder="photo">
+                                    accept=".jpg,.jpeg" placeholder="photo">
+
+                                <!-- 🔹 Preview container -->
+                                <div class="mt-2">
+                                    <img id="photo-preview" src="#" alt="Preview"
+                                        style="display:none; max-width:150px; border-radius:6px; border:1px solid #ddd; padding:3px;">
+                                </div>
                             </div>
                             <div class="col">
 
@@ -644,12 +665,12 @@
                             </div>
                         </div>
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                               <div class="form-group">
-                                                                                                                                               <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
-                                                                                                                                                  <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
-                                                                                                                                                  <span class="text-danger" id="error_status_registration_number"></span>
-                                                                                                                                               </div>
-                                                                                                                                         </div> -->
+                                                                                                                                                               <div class="form-group">
+                                                                                                                                                               <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
+                                                                                                                                                                  <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
+                                                                                                                                                                  <span class="text-danger" id="error_status_registration_number"></span>
+                                                                                                                                                               </div>
+                                                                                                                                                         </div> -->
                         <div class="col-md-6 col-sm-6" style="margin-top: 5px">
                             <div class="form-group">
                                 <label>Board (বোর্ড)</label><small class="req"> *</small>
@@ -685,12 +706,12 @@
 
 
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                               <div class="form-group">
-                                                                                                                                               <label>Admission Serial (এডমিশন সিরিয়াল)</label>
-                                                                                                                                                  <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
-                                                                                                                                                  <span class="text-danger" id="error_status_serial"></span>
-                                                                                                                                               </div>
-                                                                                                                                         </div> -->
+                                                                                                                                                               <div class="form-group">
+                                                                                                                                                               <label>Admission Serial (এডমিশন সিরিয়াল)</label>
+                                                                                                                                                                  <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
+                                                                                                                                                                  <span class="text-danger" id="error_status_serial"></span>
+                                                                                                                                                               </div>
+                                                                                                                                                         </div> -->
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label>Group (বিভাগ)</label><small class="req"> *</small>
@@ -890,12 +911,20 @@
     <script>
         document.getElementById('birth_image').addEventListener('change', function() {
             const file = this.files[0];
+            const previewBox = document.getElementById('birth-preview-box');
+            const imgPreview = document.getElementById('birth-preview-img');
+            const pdfPreview = document.getElementById('birth-preview-pdf');
+            const pdfName = document.getElementById('birth-pdf-name');
+
+            previewBox.style.display = "none";
+            imgPreview.style.display = "none";
+            pdfPreview.style.display = "none";
 
             if (file) {
                 const allowedTypes = ['application/pdf', 'image/jpeg'];
                 const maxSize = 200 * 1024; // 200 KB
 
-                // Validate file type
+                // ✅ Validate file type
                 if (!allowedTypes.includes(file.type)) {
                     Swal.fire({
                         title: "Warning!",
@@ -906,7 +935,7 @@
                     return;
                 }
 
-                // Validate file size
+                // ✅ Validate file size
                 if (file.size > maxSize) {
                     Swal.fire({
                         title: "Warning!",
@@ -916,12 +945,31 @@
                     this.value = ''; // reset input
                     return;
                 }
+
+                // ✅ Show preview
+                previewBox.style.display = "block";
+                if (file.type === 'image/jpeg') {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imgPreview.src = e.target.result;
+                        imgPreview.style.display = "block";
+                        pdfPreview.style.display = "none";
+                    };
+                    reader.readAsDataURL(file);
+                } else if (file.type === 'application/pdf') {
+                    pdfName.textContent = file.name;
+                    imgPreview.style.display = "none";
+                    pdfPreview.style.display = "flex";
+                    pdfPreview.style.alignItems = "center";
+                }
             }
         });
     </script>
+
     <script>
         document.getElementById('photo').addEventListener('change', function() {
             const file = this.files[0];
+            const preview = document.getElementById('photo-preview');
 
             if (file) {
                 const allowedTypes = ['image/jpeg'];
@@ -935,6 +983,7 @@
                         icon: "warning"
                     });
                     this.value = ''; // Reset input
+                    preview.style.display = "none";
                     return;
                 }
 
@@ -946,8 +995,19 @@
                         icon: "warning"
                     });
                     this.value = ''; // Reset input
+                    preview.style.display = "none";
                     return;
                 }
+
+                // ✅ Show image preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = "none";
             }
         });
     </script>
