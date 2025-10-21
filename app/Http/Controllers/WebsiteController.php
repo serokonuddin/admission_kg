@@ -1187,7 +1187,7 @@ class WebsiteController extends Controller
 
         // dd($admissiondata[0]->admission_end_date, date('Y-m-d'));
 
-        if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_start_date <= date('Y-m-d') && $admissiondata[0]->admission_end_date >= date('Y-m-d')) {
+        if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_end_date <= date('Y-m-d')) {
             return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
         }
 
