@@ -278,13 +278,12 @@ class WebsiteController extends Controller
     }
     function housenumber($param)
     {
-        $count=DB::table('houses')->where('active',1)->count();
-        if($param % $count==0){
-           return $count;
-        }else{
-           return $param % $count;
+        $count = DB::table('houses')->where('active', 1)->count();
+        if ($param % $count == 0) {
+            return $count;
+        } else {
+            return $param % $count;
         }
-        
     }
     public function autoSection($count, $session_id, $class_code, $version_id, $shift_id, $gender)
     {
@@ -341,6 +340,7 @@ class WebsiteController extends Controller
             }
             $serial = $middel + $count + 1;
             $student_code = $session_id . '' . ($serial);
+            $roll = $serial;
             $section = $this->autoSection($count, $session_id, 0, $student->version_id, $student->shift_id, $student->gender);
             //dd($section);
             $studentdata = array(
@@ -384,7 +384,7 @@ class WebsiteController extends Controller
                 'shift_id' => $student->shift_id,
                 'section_id' => $section,
                 'group_id' => null,
-                'roll' => $student_code,
+                'roll' => $roll,
                 'house_id' => $this->housenumber($serial),
                 'category_id' => $student->category_id,
                 'active' => 1,
@@ -395,7 +395,7 @@ class WebsiteController extends Controller
             $user = array(
                 'name' => $student->name_en,
                 'email' => $student->email,
-                'username' => $student->username,
+                'username' => $student_code,
                 'phone' => $student->mobile,
                 'ref_id' => $student_code,
                 'password_text' => $password,
@@ -409,7 +409,7 @@ class WebsiteController extends Controller
                 ->update(['status' => 2]);
 
 
-            sms_send($student->mobile, 'Your Username is ' . $student->username . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: ' . env('APP_URL') . '/login');
+            sms_send($student->mobile, 'Your Username is ' . $student_code . ' and Password is ' . $password . '. Please login to following link to complete the admission form. Link: ' . env('APP_URL') . '/login');
             $text = "KG Admission payment for BAF Shaheen college Dhaka is completed. Please login and enter your admission form.";
             return redirect()->route('sslredirect')->with('warging', $text);
         }
@@ -1173,7 +1173,7 @@ class WebsiteController extends Controller
                 ->where('session_id', $session->id)->get();
         }
 
-        
+
 
         if (count($admissiondata) == 0) {
 
@@ -1184,7 +1184,7 @@ class WebsiteController extends Controller
                 ->where('session_id', $session->id)
                 ->get();
         }
-        
+
         // dd($admissiondata[0]->admission_end_date, date('Y-m-d'));
 
         if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_start_date <= date('Y-m-d') && $admissiondata[0]->admission_end_date >= date('Y-m-d')) {
@@ -1242,10 +1242,10 @@ class WebsiteController extends Controller
     public function admissionstore(Request $request)
     {
         $request->validate([
-            'staff_certification' => 'nullable|mimes:jpg,jpeg,png,pdf,webp|max:1024', // Optional file with allowed types and max size 2MB
-            'arm_certification' => 'nullable|mimes:jpg,jpeg,png,pdf,webp|max:1024', // Optional file with allowed types and max size 2MB
-            'birth_image' => 'nullable|mimes:jpg,jpeg,pdf,png,webp|max:1024', // Optional file with allowed types and max size 2MB
-            'photo' => 'nullable|mimes:jpg,jpeg,png,pdf,webp|max:1024', // Optional file with allowed types and max size 2MB
+            'staff_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
+            'arm_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
+            'birth_image' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
+            'photo' => 'nullable|mimes:jpg,jpeg|max:200', // Optional file with allowed types and max size 200KB
         ]);
         $sessions = Sessions::where('id', $request->session_id)->first();
 
@@ -1256,7 +1256,7 @@ class WebsiteController extends Controller
 
         if (empty($admissiondata)) {
             $text = "Payment does not added for admission";
-            return redirect('/admissionview')->with('warning', $text);
+            return redirect('/')->with('warning', $text);
         }
 
         if ($request->hasFile('staff_certification')) {
@@ -1332,7 +1332,7 @@ class WebsiteController extends Controller
             ->first();
         if ($admissionapplied) {
             $text = "Already Applied";
-            return redirect('/admissionview')->with('warning', $text);
+            return redirect('/')->with('warning', $text);
         }
         $studentadmission = StudentAdmission::updateOrCreate(
             [
@@ -1432,6 +1432,7 @@ class WebsiteController extends Controller
             ->first();
 
         //$admissiondata=$admissiondata->first();
+        dd($admissiondata->status);
         if ($admissiondata) {
 
             if ($admissiondata->status == 2) {

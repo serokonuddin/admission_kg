@@ -29,7 +29,7 @@
             <tr styel="padding: 10px;">
 
                 <td style="padding: 10px;width:10%;border:0px;font-size: 11pt;font-weight: bold;float: left"><img
-                        src="{{ asset('public/logo/logo.png') }}" style="width: auto;height: 68px;"></td>
+                        src="{{ $academy_info->logo }}" style="width: auto;height: 68px;"></td>
                 <td>
                     <p class="red"> Please check the admission form for final correction than press the confirm
                         button given below.</p>
@@ -479,7 +479,8 @@
 
                     <div class="input-group">
                         <input type="text" class="form-control" readonly="" name="present_police_station"
-                            value="{{ $student->present_police_station ?? '' }}" placeholder="present police station">
+                            value="{{ $student->present_police_station ?? '' }}"
+                            placeholder="present police station">
                         <a href="javascript:void(0)" class="input-group-text edit-icon"
                             data-forvalue="present_police_station"><i class="fa fa-edit"></i></a>
                     </div>
