@@ -167,7 +167,7 @@
                 /* Make the background cover the entire area */
                 background-repeat: no-repeat;
                 /* Prevent the background from repeating */
-                background-position: center;
+                background-position: center center;
                 /* Center the background image */
                 padding: 0px !important;
                 margin: 0px !important;
@@ -220,6 +220,23 @@
 
             border: var(--bs-border-width) solid #1d1d1d;
         }
+
+        .admission-link {
+            color: #337AB7;
+            /* Blue text */
+            font-weight: bold;
+            /* Bold text */
+            text-decoration: none;
+            /* Remove underline if desired */
+            animation: blink 3s step-start infinite;
+            /* Blink effect */
+        }
+
+        @keyframes blink {
+            20% {
+                opacity: 0;
+            }
+        }
     </style>
     <div class="modal fade" id="loginBlockModal" tabindex="-1" aria-labelledby="loginBlockLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -251,31 +268,36 @@
 
                                 <h3 style="text-align: center;font-weight: bold">Online Admission KG (2026) (অনলাইন ভর্তি)
                                 </h3>
+                                <div style="text-align: center; margin-top: 20px;">
+                                    <h4 style="color: black; font-weight: bold; margin-bottom: 5px;">
+                                        Last Date of Application:
+                                    </h4>
+
+                                    <div style="display: inline-block; text-align: left;">
+                                        <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333;">
+                                            Civil: <span style="color: #d63384;">22 November 2025</span>
+                                        </p>
+                                        <p style="margin: 2px 0 0; font-size: 16px; font-weight: bold; color: #333;">
+                                            BAF, SD, SEMC & GEN: <span style="color: #198754;">8 November 2025</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <h4 style="text-align: center;font-weight: bold">
+                                    <a href="{{ asset('public/admission/Admission Guidelines for XI Class-2025-Final-3-1.pdf') }}"
+                                        target="_blank" class="admission-link">
+                                        Admission Instruction (ভর্তির নির্দেশনা)
+                                    </a>
+                                </h4>
 
                                 <h4 style="text-align: center"> <img title="Hotline Number"
                                         src="{{ asset('public/call-thumbnail.png') }}" style="height: 25px" /> <a
                                         href="tel:{{ $academy_info->helpline_number }}"
                                         style="color: red;font-weight: bold;">{{ $academy_info->helpline_number }}</a></h4>
-                                {{-- <h4 style="text-align: center;color: black;font-weight: bold"> Last Date Of Application:<br/> --}}
+
                                 <h4 style="text-align: center;color: black;font-weight: bold"> <br />
                                     <div style="margin-top: 10px;">
-
+                                    </div>
                                 </h4>
-                                <!-- <div class="table-responsive">
-                                                                                                                                                        <table class="table " >
-
-
-                                                                                                                                                        <tr>
-                                                                                                                                                         <td></td>
-                                                                                                                                                         <td></td>
-                                                                                                                                                        </tr>
-
-
-
-
-                                                                                                                                                      </table>
-
-                                                                                                                                                      </div> -->
                                 <section class=" d-sm-block ml-3" style="margin-top: 30px;">
                                     <div class="container">
                                         <div class="row wow fadeInUp"
@@ -285,24 +307,37 @@
 
                                             @foreach ($admissiondata as $key => $admission)
                                                 <div class="col-sm-3">
-                                                    <a href="#gallery_home">
-                                                    </a>
                                                     <div class="card @if ($admission->version_id == 1) bg-danger @else bg-success @endif card-hover"
-                                                        style="min-height: 164px"><a href="#gallery_home">
-                                                        </a>
-                                                        <div class="card-body text-center p-0"><a href="#gallery_home">
-                                                                <div
-                                                                    class="card-icon-border-large  @if ($admission->version_id == 1) border-danger @else border-success @endif ">
-                                                                    @if ($admission->version_id == 1)
-                                                                        BV
-                                                                    @else
-                                                                        EV
-                                                                    @endif
-                                                                </div>
-                                                                <p class="text-white  font-dosis">Last date
-                                                                    {{ date('M j, Y', strtotime($admission->end_date)) }}
-                                                                </p>
-                                                            </a>
+                                                        style="min-height: 164px">
+                                                        <div class="card-body text-center p-0 pb-2">
+                                                            <div class="card-icon-border-large @if ($admission->version_id == 1) border-danger @else border-success @endif"
+                                                                style="font-size: 18px; line-height: 1.5; padding: 6px; display: flex; align-items: center; justify-content: center;">
+                                                                @if ($admission->version_id == 1)
+                                                                    <strong>বাংলা<br>ভার্সন</strong>
+                                                                @else
+                                                                    <strong>English<br>Version</strong>
+                                                                @endif
+                                                            </div>
+                                                            <h5 class="card-title mb-2 fw-bold text-dark"
+                                                                style="font-size: 16px;">
+                                                                Seat
+                                                            </h5>
+
+                                                            {{-- Seat Info --}}
+                                                            <div class="small  mb-2">
+                                                                @if ($admission->version_id == 1)
+                                                                    <p style="color: #fff" class="mb-0">Morning:
+                                                                        <strong>100</strong>
+                                                                    </p>
+                                                                    <p style="color: #fff" class="mb-0">Day:
+                                                                        <strong>100</strong>
+                                                                    </p>
+                                                                @else
+                                                                    <p class="mb-0">Morning: <strong>100</strong></p>
+                                                                    <p class="mb-0">Day: <strong>100</strong></p>
+                                                                @endif
+                                                            </div>
+
                                                             <button type="button"
                                                                 class="btn @if ($admission->version_id == 1) btn-success @else btn-danger @endif kgadmission"
                                                                 data-versionid="{{ $admission->version_id }}"
@@ -312,10 +347,8 @@
                                                                 fdprocessedid="fyjlka">
                                                                 Apply Now
                                                             </button>
-
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             @endforeach
                                         </div>
@@ -665,12 +698,12 @@
                             </div>
                         </div>
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                                               <div class="form-group">
-                                                                                                                                                               <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
-                                                                                                                                                                  <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
-                                                                                                                                                                  <span class="text-danger" id="error_status_registration_number"></span>
-                                                                                                                                                               </div>
-                                                                                                                                                         </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                       <div class="form-group">
+                                                                                                                                                                                                                                                                                                                                                                                       <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
+                                                                                                                                                                                                                                                                                                                                                                                          <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
+                                                                                                                                                                                                                                                                                                                                                                                          <span class="text-danger" id="error_status_registration_number"></span>
+                                                                                                                                                                                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                                                                                                                                                                                                 </div> -->
                         <div class="col-md-6 col-sm-6" style="margin-top: 5px">
                             <div class="form-group">
                                 <label>Board (বোর্ড)</label><small class="req"> *</small>
@@ -706,12 +739,12 @@
 
 
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                                               <div class="form-group">
-                                                                                                                                                               <label>Admission Serial (এডমিশন সিরিয়াল)</label>
-                                                                                                                                                                  <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
-                                                                                                                                                                  <span class="text-danger" id="error_status_serial"></span>
-                                                                                                                                                               </div>
-                                                                                                                                                         </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                       <div class="form-group">
+                                                                                                                                                                                                                                                                                                                                                                                       <label>Admission Serial (এডমিশন সিরিয়াল)</label>
+                                                                                                                                                                                                                                                                                                                                                                                          <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
+                                                                                                                                                                                                                                                                                                                                                                                          <span class="text-danger" id="error_status_serial"></span>
+                                                                                                                                                                                                                                                                                                                                                                                       </div>
+                                                                                                                                                                                                                                                                                                                                                                                 </div> -->
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label>Group (বিভাগ)</label><small class="req"> *</small>
@@ -1009,6 +1042,122 @@
             } else {
                 preview.style.display = "none";
             }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryInputs = document.querySelectorAll('input[name="category_id"]');
+            const shiftInputs = document.querySelectorAll('input[name="shift_id"]');
+            const submitBtn = document.getElementById('submit-btn');
+
+            // Get the last category ID dynamically
+            function getLastCategoryId() {
+                const categories = document.querySelectorAll('input[name="category_id"]');
+                if (categories.length > 0) {
+                    return categories[categories.length - 1].value;
+                }
+                return null;
+            }
+
+            // Get the first category ID
+            function getFirstCategoryId() {
+                const categories = document.querySelectorAll('input[name="category_id"]');
+                if (categories.length > 0) {
+                    return categories[0].value;
+                }
+                return null;
+            }
+
+            // Check if last category is selected
+            function isLastCategorySelected() {
+                const selectedCategory = document.querySelector('input[name="category_id"]:checked');
+                const lastCategoryId = getLastCategoryId();
+                return selectedCategory && selectedCategory.value === lastCategoryId;
+            }
+
+            // Check if morning shift is selected
+            function isMorningShiftSelected() {
+                const selectedShift = document.querySelector('input[name="shift_id"]:checked');
+                return selectedShift && selectedShift.value === '1';
+            }
+
+            // Show SweetAlert warning
+            function showWarning(message) {
+                Swal.fire({
+                    title: "Warning!",
+                    html: message,
+                    icon: "warning"
+                });
+            }
+
+            // Validate shift and category combination
+            function validateShiftCategory() {
+                const lastCategorySelected = isLastCategorySelected();
+                const morningSelected = isMorningShiftSelected();
+
+                if (lastCategorySelected && morningSelected) {
+                    // Disable submit button
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('btn-secondary');
+                    submitBtn.classList.remove('btn-primary');
+
+                    return false;
+                } else {
+                    // Enable submit button
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('btn-secondary');
+                    submitBtn.classList.add('btn-primary');
+
+                    return true;
+                }
+            }
+
+            // Handle category change
+            categoryInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const lastCategoryId = getLastCategoryId();
+
+                    if (this.value === lastCategoryId && isMorningShiftSelected()) {
+                        // If last category is selected and morning shift is currently selected
+                        showWarning(
+                            "<b>GEN- Student of Golden Eagle Nursery, Dhaka</b> cannot be selected with <b>Morning shift</b>. Please select <b>Day shift</b> instead."
+                        );
+
+                        // Automatically switch to day shift
+                        document.getElementById('flexRadioDefault2').checked = true;
+                    }
+                    validateShiftCategory();
+                });
+            });
+
+            // Handle shift change
+            shiftInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    if (this.value === '1' && isLastCategorySelected()) {
+                        // If morning shift is selected and last category is currently selected
+                        showWarning(
+                            "<b>Morning shift</b> cannot be selected with <b>GEN- Student of Golden Eagle Nursery, Dhaka</b>. Please select a <b>different category</b>."
+                        );
+
+                        // Automatically switch to first category
+                        document.getElementById('flexRadioDefault2').checked = true;
+                    }
+                    validateShiftCategory();
+                });
+            });
+
+            // Form submission validation
+            document.getElementById('checkstatusform').addEventListener('submit', function(e) {
+                if (!validateShiftCategory()) {
+                    e.preventDefault();
+                    showWarning(
+                        "Please fix the form errors before submitting. <b>GEN- Student of Golden Eagle Nursery, Dhaka</b> cannot be combined with <b>Morning shift</b>."
+                    );
+                }
+            });
+
+            // Initial validation on page load
+            validateShiftCategory();
         });
     </script>
 @endsection
