@@ -776,7 +776,7 @@
 
                 var dob = new Date($(this).val());
                 if (!isNaN(dob.getTime())) { // Check if the date is valid
-                    var today = new Date(2025, 0, 1); // February 1, 2025
+                    var today = new Date(2026, 0, 1); // February 1, 2026
 
                     // Calculate the age in terms of years, months, and days
                     var years = today.getFullYear() - dob.getFullYear();

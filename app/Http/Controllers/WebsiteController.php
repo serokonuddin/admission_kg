@@ -1239,6 +1239,47 @@ class WebsiteController extends Controller
         }
         return '';
     }
+    public function validateAge($request)
+    {
+        $dob = $request->input('dob'); // e.g. "2019-03-10"
+        $category_id = $request->input('category_id'); // e.g. 1, 2, 3, 4
+
+        if (!$dob) {
+            
+            return 'Please select a valid date.';
+        }
+
+        try {
+            $dob = Carbon::parse($dob);
+        } catch (\Exception $e) {
+            return 'Invalid date format.';
+        }
+
+        // Fixed "today" date for comparison — January 1, 2026
+        $today = Carbon::create(2026, 1, 1);
+
+        // Calculate detailed difference
+        $years = $today->diffInYears($dob);
+        $months = $today->copy()->subYears($years)->diffInMonths($dob);
+        $days = $today->copy()->subYears($years)->subMonths($months)->diffInDays($dob);
+
+        // Convert age to total days (approximation)
+        $totalAgeDays = $years * 365 + $months * 30 + $days;
+
+        // Define valid range
+        $minAgeDays = (4 * 365) + (11 * 30) + 15; // 4 years, 11 months, 15 days
+        $maxAgeDays = (6 * 365) + 60;             // 6 years and 15 days
+
+        // Check if within range or allowed category
+        $isValidAge = ($totalAgeDays >= $minAgeDays && $totalAgeDays <= $maxAgeDays)
+            || in_array($category_id, [2, 4]);
+
+        if ($isValidAge) {
+            return 1;
+        } else {
+            return 'Age is not within the valid range.';
+        }
+    }
     public function admissionstore(Request $request)
     {
         $request->validate([
@@ -1247,6 +1288,10 @@ class WebsiteController extends Controller
             'birth_image' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
             'photo' => 'nullable|mimes:jpg,jpeg|max:200', // Optional file with allowed types and max size 200KB
         ]);
+        $text=$this->validateAge($request);
+        if($text!=1){
+             return redirect('/')->with('warning', $text);
+        }
         $sessions = Sessions::where('id', $request->session_id)->first();
 
         $admissiondata = AdmissionOpen::where('session_id', $request->session_id)
