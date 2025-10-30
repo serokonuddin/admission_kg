@@ -237,6 +237,19 @@
                 opacity: 0;
             }
         }
+
+        @media (max-width: 767px) {
+            .col-sm-3 {
+                margin-bottom: 15px;
+                /* adds spacing between stacked cards */
+            }
+
+            .card {
+                width: 100%;
+                min-height: auto;
+                /* prevents height forcing overlap */
+            }
+        }
     </style>
     <div class="modal fade" id="loginBlockModal" tabindex="-1" aria-labelledby="loginBlockLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -273,15 +286,27 @@
                                         Last Date of Application:
                                     </h4>
 
-                                    <div style="display: inline-block; text-align: left;">
-                                        <p style="margin: 0; font-size: 16px; font-weight: bold; color: #333;">
-                                            Civil: <span style="color: #d63384;">22 November 2025</span>
-                                        </p>
-                                        <p style="margin: 2px 0 0; font-size: 16px; font-weight: bold; color: #333;">
-                                            BAF, SD, SEMC & GEN: <span style="color: #198754;">8 November 2025</span>
-                                        </p>
+                                    <div
+                                        style="display: inline-block; background-color: #f8f9fa; padding: 15px 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: -10px; min-width: 320px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                            <span style="font-size: 16px; font-weight: 600; color: #333;"><strong>BAF, SD,
+                                                    SEMC &
+                                                    GEN:</strong></span>
+                                            <span style="font-size: 16px; font-weight: bold; color: #d63384;">08 November
+                                                2025</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span
+                                                style="font-size: 16px; font-weight: 600; color: #333;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Civil:</strong>&nbsp;&nbsp;
+                                            </span>
+                                            <span style="font-size: 16px; font-weight: bold; color: #d63384;">22 November
+                                                2025</span>
+                                        </div>
                                     </div>
+
+
                                 </div>
+
                                 <h4 style="text-align: center;font-weight: bold">
                                     <a href="{{ asset('public/admission/Admission Guidelines for XI Class-2025-Final-3-1.pdf') }}"
                                         target="_blank" class="admission-link">
@@ -318,28 +343,8 @@
                                                                     <strong>English<br>Version</strong>
                                                                 @endif
                                                             </div>
-                                                            <h5 class="card-title mb-2 fw-bold text-dark"
-                                                                style="font-size: 16px;">
-                                                                Seat
-                                                            </h5>
-
-                                                            {{-- Seat Info --}}
-                                                            <div class="small  mb-2">
-                                                                @if ($admission->version_id == 1)
-                                                                    <p style="color: #fff" class="mb-0">Morning:
-                                                                        <strong>100</strong>
-                                                                    </p>
-                                                                    <p style="color: #fff" class="mb-0">Day:
-                                                                        <strong>100</strong>
-                                                                    </p>
-                                                                @else
-                                                                    <p class="mb-0">Morning: <strong>100</strong></p>
-                                                                    <p class="mb-0">Day: <strong>100</strong></p>
-                                                                @endif
-                                                            </div>
-
                                                             <button type="button"
-                                                                class="btn @if ($admission->version_id == 1) btn-success @else btn-danger @endif kgadmission"
+                                                                class="btn mt-3 @if ($admission->version_id == 1) btn-success @else btn-danger @endif kgadmission"
                                                                 data-versionid="{{ $admission->version_id }}"
                                                                 data-class_id="{{ $admission->class_id }}"
                                                                 data-session_id="{{ $admission->session_id }}"
@@ -409,6 +414,8 @@
                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                     &nbsp;Morning
                                                 </label>
+                                                <span id="seatInfo1" class="mt-2 text-center"
+                                                    style="font-weight: bold; color: #198754;"></span>
                                             </div>
                                         </td>
                                         <td>
@@ -418,6 +425,8 @@
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     &nbsp;Day
                                                 </label>
+                                                <span id="seatInfo2" class="mt-2 text-center"
+                                                    style="font-weight: bold; color: #198754;"></span>
                                             </div>
                                         </td>
                                     </tr>
@@ -698,12 +707,12 @@
                             </div>
                         </div>
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                                                                                                                                                                                                                                                                       <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                       <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
-                                                                                                                                                                                                                                                                                                                                                                                          <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
-                                                                                                                                                                                                                                                                                                                                                                                          <span class="text-danger" id="error_status_registration_number"></span>
-                                                                                                                                                                                                                                                                                                                                                                                       </div>
-                                                                                                                                                                                                                                                                                                                                                                                 </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <div class="form-group">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <span class="text-danger" id="error_status_registration_number"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div> -->
                         <div class="col-md-6 col-sm-6" style="margin-top: 5px">
                             <div class="form-group">
                                 <label>Board (বোর্ড)</label><small class="req"> *</small>
@@ -739,12 +748,12 @@
 
 
                         <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                                                                                                                                                                                                                                                                       <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                       <label>Admission Serial (এডমিশন সিরিয়াল)</label>
-                                                                                                                                                                                                                                                                                                                                                                                          <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
-                                                                                                                                                                                                                                                                                                                                                                                          <span class="text-danger" id="error_status_serial"></span>
-                                                                                                                                                                                                                                                                                                                                                                                       </div>
-                                                                                                                                                                                                                                                                                                                                                                                 </div> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <div class="form-group">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <label>Admission Serial (এডমিশন সিরিয়াল)</label>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <span class="text-danger" id="error_status_serial"></span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div> -->
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                 <label>Group (বিভাগ)</label><small class="req"> *</small>
@@ -868,8 +877,20 @@
                 $('#amount').val(amount)
                 if (versionid == 1) {
                     $('#versiontext').text('ভার্সন বাংলা');
+                    $('#seatInfo1').html(
+                        '(<span style="color:#dc3545;">200</span> seats)'
+                    );
+                    $('#seatInfo2').html(
+                        '(<span style="color:#dc3545;">200</span> seats)'
+                    );
                 } else {
                     $('#versiontext').text('Version English');
+                    $('#seatInfo1').html(
+                        '(<span style="color:#dc3545;">100</span> seats)'
+                    );
+                    $('#seatInfo2').html(
+                        '(<span style="color:#dc3545;">100</span> seats)'
+                    );
                 }
                 $('#exampleModalLong').modal('show');
             });

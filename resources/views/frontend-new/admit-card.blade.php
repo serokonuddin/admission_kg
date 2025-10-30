@@ -20,8 +20,8 @@
         }
 
         /* .table-striped tr:nth-child(even) {
-                                background-color: #f9f9f9;
-                            } */
+                                            background-color: #f9f9f9;
+                                        } */
         .table-bordered th,
         .table-bordered td {
             border: 1px solid #000 !important;
@@ -100,7 +100,7 @@
                     function calculateAge($birthDate)
                     {
                         $birthDate = new DateTime($birthDate);
-                        $currentDate = new DateTime('2025-01-01');
+                        $currentDate = new DateTime('2026-01-01');
 
                         $ageDifference = $currentDate->diff($birthDate);
 
@@ -170,7 +170,7 @@
                             <td>: {{ date('d F Y', strtotime($student->dob ?? '')) }}</td>
                         </tr>
                         <tr style="border: 2px solid #c0c0c0 !important">
-                            <td>Age</td>
+                            <td>Age (1 January 2026)</td>
                             <td>: {{ calculateAge($student->dob ?? '') }}</td>
                         </tr>
                         <tr style="border: 2px solid #c0c0c0 !important">
@@ -192,20 +192,20 @@
                         <td style="width:35%">
 
                             @if ($student && in_array($student->category_id, [2, 3, 4]))
-                                Viva Date & Time
+                                Viva Date
                             @elseif($student && $student->category_id == 1 && $student->version_id == 1)
-                                Lottery Date & Time
+                                Lottery Date
                             @elseif($student && $student->category_id == 1 && $student->version_id == 2)
-                                Lottery Date & Time
+                                Lottery Date
                             @endif
                         </td>
                         <td>:
                             @if ($student && in_array($student->category_id, [2, 3, 4]))
-                                8th November, 10:00 AM
+                                15th November, 2025
                             @elseif($student && $student->category_id == 1 && $student->version_id == 1)
-                                30th November 10:00 AM To 11:00 AM
+                                29th November, 2025
                             @elseif($student && $student->category_id == 1 && $student->version_id == 2)
-                                30th November 12:00 AM To 01:00 PM
+                                29th November, 2025
                             @endif
                         </td>
                     </tr>

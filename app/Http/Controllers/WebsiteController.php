@@ -1090,15 +1090,15 @@ class WebsiteController extends Controller
 
         // Image path, opacity, and size
         $mpdf->showWatermarkImage = true;
-        // $mpdf->SetHTMLHeader('
-        //         <div style="text-align: right;z-index: 999;margin-right: 80px;">
-        //             <br/>
-        //             <br/>
-        //             <br/>
+        $mpdf->SetHTMLHeader('
+                <div style="text-align: right;z-index: 999;margin-right: 80px;">
+                    <br/>
+                    <br/>
+                    <br/>
 
-        //             <img src="' . asset('public/seal.png') . '" style="max-height: 60px;">
-        //         </div>
-        //     ');
+                    <img src="' . asset('public/seal.png') . '" style="max-height: 60px;">
+                </div>
+            ');
         $session = DB::table('sessions')->where('active', 1)->first();
         $student = StudentAdmission::where('session_id', $session->id)->where('temporary_id', $number)->where('payment_status', 1)->first();
         //return view('frontend-new.admitcard',compact('student','session'));
