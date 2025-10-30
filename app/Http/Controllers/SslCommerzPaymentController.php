@@ -259,7 +259,7 @@ class SslCommerzPaymentController extends Controller
             ->max('temporary_id');
         if ($admission->version_id == 1 && $admission->shift_id == 1) {
             if(empty($max) || $max==0){
-                $number = 10000;
+                $number = 10001;
             }else{
                  $number = ((int)$max + 1);
             }
@@ -267,20 +267,20 @@ class SslCommerzPaymentController extends Controller
         } else if ($admission->version_id == 1 && $admission->shift_id == 2) {
            
             if(empty($max) || $max==0){
-                $number = 30000;
+                $number = 30001;
             }else{
                  $number = ((int)$max + 1);
             }
         } else if ($admission->version_id == 2 && $admission->shift_id == 1) {
            
             if(empty($max) || $max==0){
-                $number = 20000;
+                $number = 20001;
             }else{
                  $number = ((int)$max + 1);
             }
         } else if ($admission->version_id == 2 && $admission->shift_id == 2) {
             if(empty($max) || $max==0){
-                $number = 40000;
+                $number = 40001;
             }else{
                  $number = ((int)$max + 1);
             }
@@ -299,7 +299,7 @@ class SslCommerzPaymentController extends Controller
             ->where('temporary_id', $temporary_id)
             ->first();
 
-        if (!$student) {
+        if ($student) {
             $session_id = (int)$student->session_id + 1;
             $count = DB::table('student_activity')
                 ->where('session_id', $session_id)
