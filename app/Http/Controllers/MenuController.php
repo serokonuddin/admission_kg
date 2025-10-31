@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\masterSttings\Menu;
+use App\Models\MasterSttings\Menu;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller

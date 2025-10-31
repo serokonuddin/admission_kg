@@ -50,6 +50,7 @@ use App\Http\Controllers\Report\ReportController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SSLController;
 use App\Http\Controllers\SMSController;
+use App\Http\Controllers\CaptchaController;
 
 use App\Http\Controllers\SendMailController;
 use Illuminate\Support\Facades\Artisan;
@@ -66,7 +67,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/captcha-image', [CaptchaController::class, 'show'])->name('captcha.image');
 Route::get('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();

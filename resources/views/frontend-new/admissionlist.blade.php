@@ -516,8 +516,8 @@
                                     placeholder="English Name">
                             </div>
                             <div class="col">
-                                <label for="inputEmail4">প্রার্থীর বাংলা নাম</label>
-                                <input type="text" class="form-control" value="{{ old('name_bn') }}" name="name_bn"
+                                <label for="inputEmail4">প্রার্থীর বাংলা নাম<span style="color: red">*</span></label>
+                                <input type="text" class="form-control" required="" value="{{ old('name_bn') }}" name="name_bn"
                                     placeholder="Bangla Name">
                             </div>
 
@@ -620,7 +620,13 @@
                                 </div>
                             </div>
                             <div class="col">
-
+                                
+                                 <label for="inputEmail4">Captcha<span
+                                        style="color: red">*</span></label></br>
+                                   <img src="{{ route('captcha.image') }}" alt="captcha" style="width: 25%;display: inline">
+                                
+                                    <input type="text" name="captcha" required="" style="width: 70%;display: inline" class="form-control" placeholder="Enter the Captcha">
+                               
                             </div>
 
                         </div>
@@ -777,6 +783,15 @@
             </div>
         </div>
     </div>
+    <script>
+document.getElementById('refresh').onclick = function() {
+    fetch('/captcha/refresh')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('span').innerHTML = data.captcha;
+        });
+};
+</script>
     <script>
         $(document).ready(function() {
             $('#dob').on('change', function() {

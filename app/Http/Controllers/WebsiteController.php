@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\Website\Notice;
@@ -21,7 +22,7 @@ use App\Models\ClassCategoryHeadFee;
 use Illuminate\Http\Request;
 use App\Helpers\Helpers;
 use App\Library\SslCommerz\SslCommerzNotification;
-use App\Models\masterSttings\AcademyInfo;
+use App\Models\MasterSttings\AcademyInfo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -1287,8 +1288,19 @@ class WebsiteController extends Controller
             'arm_certification' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
             'birth_image' => 'nullable|mimes:jpg,jpeg,pdf|max:200', // Optional file with allowed types and max size 200KB
             'photo' => 'nullable|mimes:jpg,jpeg|max:200', // Optional file with allowed types and max size 200KB
+            'captcha' => 'required|numeric',
+            'name_bn' => 'required',
+            'name_en' => 'required',
         ]);
         $text=$this->validateAge($request);
+
+        $inputCaptcha = $request->input('captcha');
+        $sessionCaptcha = session('custom_captcha');
+
+        if ($inputCaptcha != $sessionCaptcha) {
+            
+            return redirect('/')->with('warning', 'Captcha is incorrect');
+        }
         if($text!=1){
              return redirect('/')->with('warning', $text);
         }

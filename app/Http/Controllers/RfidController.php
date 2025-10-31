@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\masterSttings\Role;
+use App\Models\MasterSttings\Role;
 use Illuminate\Http\Request;
 
 class RfidController extends Controller

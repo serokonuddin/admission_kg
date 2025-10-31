@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\masterSttings;
+namespace App\Models\MasterSttings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Role extends Model
 {
     use HasFactory;
 }

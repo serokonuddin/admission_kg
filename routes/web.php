@@ -75,6 +75,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApprovalStageController;
 use App\Http\Controllers\CategoryWiseLeaveBalanceController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\CaptchaController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -87,7 +88,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/captcha-image', [CaptchaController::class, 'show'])->name('captcha.image');
 Route::get('/clear-cache', function () {
     // Clear all caches
     Artisan::call('cache:clear');

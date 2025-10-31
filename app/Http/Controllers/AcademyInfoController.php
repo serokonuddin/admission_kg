@@ -6,7 +6,7 @@ use App\Models\Employee\Employee;
 use App\Models\Employee\EmployeeActivity;
 use App\Models\Exam\Exam;
 use App\Models\Exam\ExamHighestMark;
-use App\Models\masterSttings\AcademyInfo;
+use App\Models\MasterSttings\AcademyInfo;
 use App\Models\sttings\Classes;
 use App\Models\sttings\Sessions;
 use App\Models\sttings\Subjects;
