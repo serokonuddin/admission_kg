@@ -281,6 +281,13 @@
                         </a>
                     </li>
                 @endif
+                @if (Auth::user()->getMenu('admissionStatistics', 'name'))
+                    <li class="menu-item {{ Session::get('activesubmenu') == 'as' ? 'highlight blink' : '' }}">
+                        <a href="{{ route('admissionStatistics') }}" class="menu-link">
+                            <div class="text-truncate" data-i18n="Admission Statistics">Admission Statistics</div>
+                        </a>
+                    </li>
+                @endif
                 @if (Auth::user()->getMenu('kgAdmitLottery', 'name'))
                     <li class="menu-item {{ Session::get('activesubmenu') == 'KAL' ? 'highlight blink' : '' }}">
                         <a href="{{ route('kgAdmitLottery') }}" class="menu-link">

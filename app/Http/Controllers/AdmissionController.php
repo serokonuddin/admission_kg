@@ -313,6 +313,31 @@ class AdmissionController extends Controller
             'admissiondata'
         ));
     }
+    public function admissionStatistics(Request $request)
+    {
+        Session::put('activemenu', 'admission');
+        Session::put('activesubmenu', 'as');
+
+        $admissionStatistics = StudentAdmission::join('versions as v', 'student_admission.version_id', '=', 'v.id')
+            ->join('shifts as s', 'student_admission.shift_id', '=', 's.id')
+            ->join('category as ca', 'student_admission.category_id', '=', 'ca.id')
+            ->where('student_admission.payment_status', 1)
+            ->select(
+                'v.version_name as Version',
+                's.shift_name as Shift',
+                'ca.category_name as Category',
+                DB::raw('COUNT(student_admission.category_id) as Total')
+            )
+            ->groupBy('student_admission.class_id', 'student_admission.version_id', 'student_admission.shift_id', 'student_admission.category_id')
+            ->orderBy('student_admission.version_id', 'asc')
+            ->orderBy('student_admission.shift_id', 'asc')
+            ->orderBy('student_admission.category_id', 'asc')
+            ->get();
+
+        // Remove the dd() if you want to see the view, or keep it for debugging
+        // dd($admissionStatistics);
+        return view('admission.admissionStatistics', compact('admissionStatistics'));
+    }
 
     public function storeKgAdmit(Request $request)
     {

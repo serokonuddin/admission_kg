@@ -67,6 +67,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/captcha-image', [CaptchaController::class, 'show'])->name('captcha.image');
 Route::get('/logout', function () {
     Auth::logout();
@@ -405,6 +406,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/admissionIdCard', [AdmissionController::class, 'admissionIdCard'])->name('admissionIdCard');
     Route::get('/boardList', [AdmissionController::class, 'boardList'])->name('boardList');
     Route::get('/kgAdmitList', [AdmissionController::class, 'kgAdmitList'])->name('kgAdmitList');
+    Route::get('/admission-statistics', [AdmissionController::class, 'admissionStatistics'])->name('admissionStatistics');
     Route::get('/kgAdmitLottery', [AdmissionController::class, 'kgAdmitLottery'])->name('kgAdmitLottery');
     Route::get('/collegeAdmission', [AdmissionController::class, 'collegeAdmission'])->name('collegeAdmission');
 
