@@ -725,44 +725,32 @@
 
                                     <div class="form-section">
                                         <div class="col-md">
-                                            @if (isset($categories[0]->id))
-                                                <div class="form-check mt-3">
-                                                    <input name="categoryid" class="form-check-input specialinfo"
-                                                        {{ isset($student) && $student->categoryid == 1 ? 'checked="checked"' : '' }}
-                                                        type="radio" value="{{ $categories[0]->id }}"
-                                                        id="defaultRadio{{ $categories[0]->id }}">
-                                                    <label class="form-check-label"
-                                                        for="defaultRadio{{ $categories[0]->id }}">
-                                                        {{ $categories[0]->category_name }}
-                                                    </label>
-                                                </div>
-                                            @endif
-                                            @if (isset($categories[1]->id))
-                                                <div class="form-check">
-                                                    <input name="categoryid" class="form-check-input specialinfo"
-                                                        type="radio"
-                                                        {{ isset($student) && $student->categoryid == 2 ? 'checked="checked"' : '' }}
-                                                        value="{{ $categories[1]->id }}"
-                                                        id="defaultRadio{{ $categories[1]->id }}">
-                                                    <label class="form-check-label"
-                                                        for="defaultRadio{{ $categories[1]->id }}">
-                                                        {{ $categories[1]->category_name }}
-                                                    </label>
-                                                </div>
-                                            @endif
-                                            @if (isset($categories[2]->id))
-                                                <div class="form-check">
-                                                    <input name="categoryid" class="form-check-input specialinfo"
-                                                        type="radio"
-                                                        {{ isset($student) && $student->categoryid == 3 ? 'checked="checked"' : '' }}
-                                                        value="{{ $categories[2]->id }}"
-                                                        id="defaultRadio{{ $categories[2]->id }}">
-                                                    <label class="form-check-label"
-                                                        for="defaultRadio{{ $categories[2]->id }}">
-                                                        {{ $categories[2]->category_name }}
-                                                    </label>
-                                                </div>
-                                            @endif
+                                            <div class="form-check mt-3">
+                                                <input name="categoryid" class="form-check-input specialinfo"
+                                                    {{ isset($student) && $student->categoryid == 1 ? 'checked="checked"' : '' }}
+                                                    type="radio" value="1" id="defaultRadio1">
+                                                <label class="form-check-label" for="defaultRadio1">
+                                                    Civil
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input name="categoryid" class="form-check-input specialinfo"
+                                                    type="radio"
+                                                    {{ isset($student) && $student->categoryid == 2 ? 'checked="checked"' : '' }}
+                                                    value="2" id="defaultRadio2">
+                                                <label class="form-check-label" for="defaultRadio2">
+                                                    Son/daughter of Armed Forces' Member
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input name="categoryid" class="form-check-input specialinfo"
+                                                    type="radio"
+                                                    {{ isset($student) && $student->categoryid == 3 ? 'checked="checked"' : '' }}
+                                                    value="3" id="defaultRadio3">
+                                                <label class="form-check-label" for="defaultRadio3">
+                                                    Son/daughter of Teaching/Non-Teaching staff of BAFSD
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
 
