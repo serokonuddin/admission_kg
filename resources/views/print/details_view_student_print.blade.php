@@ -201,15 +201,16 @@
 
             <tr styel="padding: 10px;">
                 <td style="padding: 10px;width:4%;border:0px;font-size: 11pt;font-weight: bold">1.</td>
-                <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;font-weight: bold">Student's Name
+                <td colspan="2" style="padding: 10px;width:48%;border:0px;font-size: 11pt;font-weight: bold">
+                    Student's Name
                     (English): {{ $student->first_name ?? '' }}
 
                 </td>
-                <td class="rahenrashi" style="padding: 10px;width:48%;border:0px;font-size: 11pt;font-weight: bold">
+                {{-- <td class="rahenrashi" style="padding: 10px;width:48%;border:0px;font-size: 11pt;font-weight: bold">
                     Student's Name (Bangla): {{ $student->bangla_name ?? '' }}
 
 
-                </td>
+                </td> --}}
             </tr>
             <tr>
                 <td style="padding: 10px;width:4%;border:0px;font-size: 11pt;font-weight: bold"></td>
@@ -547,7 +548,7 @@
                 </tr>
                 <tr>
                     <td style="padding: 10px;width:4%;border:0px;font-size: 11pt;font-weight: bold"></td>
-					<td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Category: <span>Son/daughter of
+                    <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Category: <span>Son/daughter of
                             Armed Forces' Member</span>
                     </td>
                     <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Service
@@ -622,7 +623,7 @@
                     </td>
                 </tr>
             @else
-               <tr>
+                <tr>
                     <td style="padding: 10px;width:4%;border:0px;font-size: 11pt;font-weight: bold">6.</td>
                     <td colspan="2" style="padding: 10px;width:96%;border:0px;font-size: 11pt;font-weight: bold">
                         Special information for Parent:</td>
@@ -651,9 +652,9 @@
                 <td style="padding: 10px;width:4%;border:0px;font-size: 11pt;font-weight: bold"></td>
                 <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Shift:
                     {{ $activity->shift->shift_name ?? '' }}</td>
-				<td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Group:
+                <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Group:
                     {{ $activity->group->group_name ?? '' }}</td>
-				<!--
+                <!--
                 <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Category:
                     {{ $activity->category->category_name ?? '' }}</td> -->
             </tr>
@@ -670,7 +671,7 @@
                     {{ $activity->section->section_name ?? '' }}</td>
                 <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Roll: {{ $activity->roll ?? '' }}</td>
             </tr>
-			<!--
+            <!--
             <tr>
                 <td style="padding: 10px;width:4%;border:0px;font-size: 11pt;font-weight: bold"></td>
                 <td style="padding: 10px;width:48%;border:0px;font-size: 11pt;">Group:

@@ -361,6 +361,7 @@ class WebsiteController extends Controller
                 'service_number' => $student->service_name,
                 'name' => $student->service_holder_name,
                 'arms_name' => $student->name_of_service ?? $student->service_name,
+                'designation' => $student->name_of_service,
                 'is_service' => $student->in_service,
                 'office_address' => $student->office_address,
                 'name_of_staff' => $student->name_of_staff,
@@ -1246,7 +1247,7 @@ class WebsiteController extends Controller
         $category_id = $request->input('category_id'); // e.g. 1, 2, 3, 4
 
         if (!$dob) {
-            
+
             return 'Please select a valid date.';
         }
 
@@ -1292,17 +1293,17 @@ class WebsiteController extends Controller
             'name_bn' => 'required',
             'name_en' => 'required',
         ]);
-        $text=$this->validateAge($request);
+        $text = $this->validateAge($request);
 
         $inputCaptcha = $request->input('captcha');
         $sessionCaptcha = session('custom_captcha');
 
         if ($inputCaptcha != $sessionCaptcha) {
-            
+
             return redirect('/')->with('warning', 'Captcha is incorrect');
         }
-        if($text!=1){
-             return redirect('/')->with('warning', $text);
+        if ($text != 1) {
+            return redirect('/')->with('warning', $text);
         }
         $sessions = Sessions::where('id', $request->session_id)->first();
 
