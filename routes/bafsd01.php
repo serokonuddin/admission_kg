@@ -406,6 +406,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::get('/admissionIdCard', [AdmissionController::class, 'admissionIdCard'])->name('admissionIdCard');
     Route::get('/boardList', [AdmissionController::class, 'boardList'])->name('boardList');
     Route::get('/kgAdmitList', [AdmissionController::class, 'kgAdmitList'])->name('kgAdmitList');
+    Route::get('/kgAdmitListselection', [AdmissionController::class, 'kgAdmitListselection'])->name('kgAdmitListselection');
+    Route::post('/kgAdmitListselectionUpload', [AdmissionController::class, 'kgAdmitListselectionUpload'])->name('kgAdmitListselectionUpload');
     Route::get('/admission-statistics', [AdmissionController::class, 'admissionStatistics'])->name('admissionStatistics');
     Route::get('/kgAdmitLottery', [AdmissionController::class, 'kgAdmitLottery'])->name('kgAdmitLottery');
     Route::get('/collegeAdmission', [AdmissionController::class, 'collegeAdmission'])->name('collegeAdmission');

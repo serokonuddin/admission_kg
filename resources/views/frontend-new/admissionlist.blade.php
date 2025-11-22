@@ -1,296 +1,365 @@
 @extends('frontend-new.layout')
 @section('content')
-    <style>
-        .form-check {
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-            padding: 5px;
+<style>
+   .form-check {
+      border-bottom: 1px solid #eee;
+      font-size: 13px;
+      padding: 5px;
 
+   }
+
+   .form-check a {
+      color: black !important;
+   }
+
+   .form-check a:hover {
+      color: #337AB7 !important;
+      font-weight: bold;
+   }
+
+   .sidecourse-title a {
+      font-size: 16px;
+      font-weight: bold;
+   }
+
+   @media (min-width: 768px) {
+      .modal-content {
+         width: 620px !important;
+      }
+   }
+
+   .onlineformbtns {
+      border-radius: 30px !important;
+      padding: 7px 20px;
+      border: 0;
+      display: inline-block;
+      font-size: 14px;
+      border-radius: 30px;
+      background: #337AB7;
+      text-decoration: none !important;
+      color: #fff !important;
+      text-align: center;
+      /* line-height: 24px; */
+      transition: all 0.5s ease 0s;
+      box-shadow: 0px 5px 25px 0px rgba(189, 7, 69, 0.41);
+   }
+
+   .mdbtn {
+      width: 114px;
+      margin-top: 2px;
+   }
+
+   .form-check .form-check-input {
+      float: left;
+      margin-left: 0em !important;
+   }
+
+   table {
+      width: 35%;
+   }
+
+   .noborder tbody,
+   .noborder td,
+   .noborder tr {
+      border: none !important;
+   }
+
+   .form-check {
+      border-bottom: 0px solid #eee;
+      font-size: 13px;
+      padding: 1px;
+   }
+
+   .modal-body p {
+      margin-top: 0;
+      margin-bottom: .2rem;
+   }
+
+   .background-image table {
+      width: 310px !important;
+      text-align: center;
+      margin: 0px auto;
+      border: 0px solid !important;
+      --bs-table-bg: transparent;
+   }
+
+   .findAdmitcardt {
+      width: 195px !important;
+      text-align: center;
+      margin: 0px auto;
+      border: 0px solid !important;
+      --bs-table-bg: transparent;
+   }
+
+   @media (min-width: 768px) {
+      .modal-content {
+         width: 800px !important;
+      }
+
+      .modal-dialog {
+         margin-left: 18%;
+      }
+   }
+
+   .background-image {
+      background-image: url({{asset('public/062.png')}});
+   background-size: cover;
+   /* Make the background cover the entire area */
+   background-repeat: no-repeat;
+   /* Prevent the background from repeating */
+   background-position: center;
+   /* Center the background image */
+   padding: 0px !important;
+   margin: 0px !important;
+   max-width: 100% !important;
+   }
+
+   .ml-3 {
+      margin-left: 33%;
+   }
+
+   @media (max-width: 600px) {
+      .ml-3 {
+         margin-left: 3%;
+      }
+
+      .modal-dialog {
+         margin-left: 5%;
+      }
+
+      .modal-content {
+         width: 90% !important;
+      }
+
+      h3,
+      .h3,
+      h4,
+      .h4 {
+         font-size: calc(.808125rem + 0.3375vw);
+      }
+
+      h4 span {
+         font-size: 14px !important;
+      }
+
+      .btn {
+         box-shadow: 0 0.25rem 0 rgba(0, 0, 0, 0.1);
+         font-size: .7rem;
+      }
+
+      .background-image table {
+         width: 240px !important;
+         text-align: center;
+         margin: 0px auto;
+         border: 0px solid !important;
+
+      }
+
+      table.findAdmitcardt {
+         width: 145px !important;
+         text-align: center;
+         margin: 0px auto;
+         border: 0px solid !important;
+
+      }
+
+      .background-image {
+         background-image: url({{asset('public/kg-admission-mobile.jpg')}});
+   background-size: cover;
+   /* Make the background cover the entire area */
+   background-repeat: no-repeat;
+   /* Prevent the background from repeating */
+   background-position: center center;
+   /* Center the background image */
+   padding: 0px !important;
+   margin: 0px !important;
+   max-width: 100% !important;
+   }
+
+   .modal-content {
+      width: 100% !important;
+   }
+
+   .modal-dialog {
+      margin-left: 0%;
+   }
+   }
+
+   .width-100 {
+      width: 100%;
+   }
+
+   p {
+      font-size: 1.175rem;
+      color: #666;
+      font-weight: bold;
+   }
+
+   label {
+      margin-bottom: 0.2rem;
+   }
+
+   .background-image tr,
+   .background-image tbody,
+   .background-image td,
+   .background-image .table {
+
+      border: 0px solid !important;
+   }
+
+   @media (min-width: 768px) {
+      .background-image {
+         min-height: 455px;
+      }
+   }
+
+
+   .btn:hover {
+      color: black !important;
+   }
+
+   .form-check-input {
+
+      border: var(--bs-border-width) solid #1d1d1d;
+   }
+	
+	.admission-link {
+        color: #337AB7;       /* Blue text */
+        font-weight: bold;  /* Bold text */
+        text-decoration: none; /* Remove underline if desired */
+        animation: blink 3s step-start infinite; /* Blink effect */
+		}
+
+		@keyframes blink {
+			20% {
+				opacity: 0;
+			}
+		}
+	 @media (max-width: 767px) {
+        .col-sm-3 {
+            margin-top: 25px; /* adds spacing between stacked cards */
         }
-
-        .form-check a {
-            color: black !important;
+        .card {
+            width: 100%; 
+            min-height: auto; /* prevents height forcing overlap */
         }
-
-        .form-check a:hover {
-            color: #337AB7 !important;
+    }
+</style>
+<style>
+        .top-right-link {
+            position: absolute;
+            top: 155px;
+            right: 15px;
+            background-color: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
             font-weight: bold;
+            border: 1px solid #dee2e6;
         }
-
-        .sidecourse-title a {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        @media (min-width: 768px) {
-            .modal-content {
-                width: 620px !important;
-            }
-        }
-
-        .onlineformbtns {
-            border-radius: 30px !important;
-            padding: 7px 20px;
-            border: 0;
-            display: inline-block;
-            font-size: 14px;
-            border-radius: 30px;
-            background: #337AB7;
-            text-decoration: none !important;
-            color: #fff !important;
-            text-align: center;
-            /* line-height: 24px; */
-            transition: all 0.5s ease 0s;
-            box-shadow: 0px 5px 25px 0px rgba(189, 7, 69, 0.41);
-        }
-
-        .mdbtn {
-            width: 114px;
-            margin-top: 2px;
-        }
-
-        .form-check .form-check-input {
-            float: left;
-            margin-left: 0em !important;
-        }
-
-        table {
-            width: 35%;
-        }
-
-        .noborder tbody,
-        .noborder td,
-        .noborder tr {
-            border: none !important;
-        }
-
-        .form-check {
-            border-bottom: 0px solid #eee;
-            font-size: 13px;
-            padding: 1px;
-        }
-
-        .modal-body p {
-            margin-top: 0;
-            margin-bottom: .2rem;
-        }
-
-        .background-image table {
-            width: 310px !important;
-            text-align: center;
-            margin: 0px auto;
-            border: 0px solid !important;
-            --bs-table-bg: transparent;
-        }
-
-        .findAdmitcardt {
-            width: 195px !important;
-            text-align: center;
-            margin: 0px auto;
-            border: 0px solid !important;
-            --bs-table-bg: transparent;
-        }
-
-        @media (min-width: 768px) {
-            .modal-content {
-                width: 800px !important;
-            }
-
-
-        }
-
-        .background-image {
-            background-image: url({{ asset('public/kg_banner.png') }});
-            background-size: cover;
-            /* Make the background cover the entire area */
-            background-repeat: no-repeat;
-            /* Prevent the background from repeating */
-            background-position: center;
-            /* Center the background image */
-            padding: 0px !important;
-            margin: 0px !important;
-            max-width: 100% !important;
-        }
-
-        .ml-3 {
-            margin-left: 33%;
-        }
-
-        @media (max-width: 600px) {
-            .ml-3 {
-                margin-left: 3%;
-            }
-
-            .modal-dialog {
-                margin-left: 5%;
-            }
-
-            .modal-content {
-                width: 90% !important;
-            }
-
-            h3,
-            .h3,
-            h4,
-            .h4 {
-                font-size: calc(.808125rem + 0.3375vw);
-            }
-
-            h4 span {
-                font-size: 14px !important;
-            }
-
-            .btn {
-                box-shadow: 0 0.25rem 0 rgba(0, 0, 0, 0.1);
-                font-size: .7rem;
-            }
-
-            .background-image table {
-                width: 240px !important;
-                text-align: center;
-                margin: 0px auto;
-                border: 0px solid !important;
-
-            }
-
-            table.findAdmitcardt {
-                width: 145px !important;
-                text-align: center;
-                margin: 0px auto;
-                border: 0px solid !important;
-
-            }
-
-            .background-image {
-                background-image: url({{ asset('public/kg-admission-mobile.jpg') }});
-                background-size: cover;
-                /* Make the background cover the entire area */
-                background-repeat: no-repeat;
-                /* Prevent the background from repeating */
-                background-position: center center;
-                /* Center the background image */
-                padding: 0px !important;
-                margin: 0px !important;
-                max-width: 100% !important;
-            }
-
-            .modal-content {
-                width: 100% !important;
-            }
-
-            .modal-dialog {
-                margin-left: 0%;
-            }
-        }
-
-        .width-100 {
-            width: 100%;
-        }
-
-        p {
-            font-size: 1.175rem;
-            color: #666;
-            font-weight: bold;
-        }
-
-        label {
-            margin-bottom: 0.2rem;
-        }
-
-        .background-image tr,
-        .background-image tbody,
-        .background-image td,
-        .background-image .table {
-
-            border: 0px solid !important;
-        }
-
-        @media (min-width: 768px) {
-            .background-image {
-                min-height: 455px;
-            }
-        }
-
-
-        .btn:hover {
-            color: black !important;
-        }
-
-        .form-check-input {
-
-            border: var(--bs-border-width) solid #1d1d1d;
-        }
-
-        .admission-link {
-            color: #337AB7;
-            /* Blue text */
-            font-weight: bold;
-            /* Bold text */
+        .top-right-link a {
             text-decoration: none;
-            /* Remove underline if desired */
-            animation: blink 3s step-start infinite;
-            /* Blink effect */
+            color: #0d6efd;
         }
-
-        @keyframes blink {
-            20% {
-                opacity: 0;
+        .top-right-link a:hover {
+            text-decoration: underline;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        .card-icon-border-large {
+            border: 2px solid;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .admission-link {
+            color: #0d6efd;
+            text-decoration: none;
+        }
+        .admission-link:hover {
+            text-decoration: underline;
+        }
+        .spacet60 {
+            padding-top: 60px;
+        }
+        .spaceb50 {
+            padding-bottom: 50px;
+        }
+        .spacet20 {
+            padding-top: 20px;
+        }
+        .refine-categ-header {
+            position: relative;
+        }
+        @media (max-width: 768px) {
+            .pt-0-mobile {
+                padding-top: 0 !important;
             }
-        }
-
-        @media (max-width: 767px) {
-            .col-sm-3 {
+            .top-right-link {
+                position: relative;
+                top: 0;
+                right: 0;
+                text-align: center;
                 margin-bottom: 15px;
-                /* adds spacing between stacked cards */
-            }
-
-            .card {
-                width: 100%;
-                min-height: auto;
-                /* prevents height forcing overlap */
             }
         }
     </style>
-    <div class="modal fade" id="loginBlockModal" tabindex="-1" aria-labelledby="loginBlockLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="loginBlockLabel" style="color: white;margin-left: 42%;">সতর্কতা</h5>
-                    <!--button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button-->
+<div class="modal fade" id="loginBlockModal" tabindex="-1" aria-labelledby="loginBlockLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+         <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="loginBlockLabel" style="color: white;margin-left: 42%;">সতর্কতা</h5>
+         </div>
+         <div class="modal-body">
+            অনলাইন ভর্তি প্রক্রিয়া রাত ১২:০০টা থেকে সকাল ৭:০০ টা পর্যন্ত বন্ধ থাকবে।
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="container spacet20 background-image">
+   <div class="row">
+      <div class="col-md-12 spacet60 pt-0-mobile">
+		  <div class="top-right-link">
+                    <a href="https://online.bafsdadmission.com/">
+                        ১ম থেকে ৮ম শ্রেণির অনলাইন ভর্তি। শিক্ষাবর্ষ : ২০২৬
+                    </a>
                 </div>
-                <div class="modal-body">
-                    অনলাইন ভর্তি প্রক্রিয়া রাত ১২:০০টা থেকে সকাল ৭:০০ টা পর্যন্ত বন্ধ থাকবে।
-                </div>
-                <div class="modal-footer">
-                    <!--button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button-->
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container spacet20 background-image">
-        <div class="row">
-            <div class="col-md-12 spacet60 pt-0-mobile">
+         <div class="row">
+            <div class="container spaceb50">
+               <div class="row">
+                  <div class="refine-categ-header" style="margin-top: 10px;">
+                     <h3 style="text-align: center;font-weight: bold">Online Admission KG (2026) (অনলাইন ভর্তি)</h3>
+                     <h4 style="text-align: center;font-weight: bold">
+                        <a href="{{ asset('public/admission/KG _ Admission.pdf') }}"
+                           target="_blank" class="admission-link">
+                           Application Instruction (ভর্তির আবেদনের নির্দেশিকা)
+                        </a>
+                     </h4>
 
+                     <h4 style="text-align: center">
+                        <img title="Hotline Number" src="{{asset('public/call-thumbnail.png')}}" style="height: 25px" />
+                        <a href="tel:01759536622" style="color: red;font-weight: bold;">01759536622, </a>
+                        <a href="tel:01777521159" style="color: red;font-weight: bold;">01777521159</a>
+                     </h4>
 
-                <div class="row">
-                    <div class="container spaceb50">
-                        <div class="row">
-
-
-                            <div class="refine-categ-header " style="margin-top: 10px;">
-
-                                <h3 style="text-align: center;font-weight: bold">Online Admission KG (2026) (অনলাইন ভর্তি)
-                                </h3>
-                                <div style="text-align: center; margin-top: 20px;">
-                                    <h4 style="color: black; font-weight: bold; margin-bottom: 5px;">
-                                        Last Date of Application:
-                                    </h4>
-
-                                    <div
+                     <div style="text-align: center;">
+                        <h4 style="color: #212529; font-weight: bold; font-size: 20px; margin-bottom: 15px;">
+                           Last Date of Application
+                        </h4>
+                        <div
                                         style="display: inline-block; background-color: #f8f9fa; padding: 15px 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: -10px; min-width: 320px;">
                                         <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                                            <span style="font-size: 16px; font-weight: 600; color: #333;"><strong>BAF, SD,
-                                                    SEMC &
+                                            <span style="font-size: 16px; font-weight: 600; color: #333;"><strong>BAF, SD/SEMC &
                                                     GEN:</strong></span>
                                             <span style="font-size: 16px; font-weight: bold; color: #d63384;">08 November
                                                 2025</span>
@@ -304,33 +373,15 @@
                                         </div>
                                     </div>
 
-
-                                </div>
-
-                                <h4 style="text-align: center;font-weight: bold">
-                                    <a href="{{ asset('public/admission/Admission Guidelines for XI Class-2025-Final-3-1.pdf') }}"
-                                        target="_blank" class="admission-link">
-                                        Admission Instruction (ভর্তির নির্দেশনা)
-                                    </a>
-                                </h4>
-
-                                <h4 style="text-align: center"> <img title="Hotline Number"
-                                        src="{{ asset('public/call-thumbnail.png') }}" style="height: 25px" /> <a
-                                        href="tel:{{ $academy_info->helpline_number }}"
-                                        style="color: red;font-weight: bold;">{{ $academy_info->helpline_number }}</a></h4>
-
-                                <h4 style="text-align: center;color: black;font-weight: bold"> <br />
+                     </div>
+					<h4 style="text-align: center;color: black;font-weight: bold"> <br />
                                     <div style="margin-top: 10px;">
                                     </div>
                                 </h4>
-                                <section class=" d-sm-block ml-3" style="margin-top: 30px;">
-                                    <div class="container">
-                                        <div class="row wow fadeInUp"
-                                            style="visibility: visible; animation-name: fadeInUp;">
-
-
-
-                                            @foreach ($admissiondata as $key => $admission)
+                     <section class="d-sm-block ml-3" style="margin-top: 30px;">
+                        <div class="container">
+                           <div class="row wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                              @foreach ($admissiondata as $key => $admission)
                                                 <div class="col-sm-3">
                                                     <div class="card @if ($admission->version_id == 1) bg-danger @else bg-success @endif card-hover"
                                                         style="min-height: 164px">
@@ -338,7 +389,7 @@
                                                             <div class="card-icon-border-large @if ($admission->version_id == 1) border-danger @else border-success @endif"
                                                                 style="font-size: 18px; line-height: 1.5; padding: 6px; display: flex; align-items: center; justify-content: center;">
                                                                 @if ($admission->version_id == 1)
-                                                                    <strong>বাংলা<br>ভার্সন</strong>
+                                                                    <strong>বাংলা<br>ভার্শন</strong>
                                                                 @else
                                                                     <strong>English<br>Version</strong>
                                                                 @endif
@@ -356,270 +407,190 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                        </div>
-                                    </div>
-                                </section>
-                                <table class="table findAdmitcardt" style="margin-top: 10px;">
-                                    <tr>
-                                        <td style="text-align: center;border: none;">
-                                            <button type="button" class="btn btn-primary findAdmitcard"
-                                                style="background-color: #00ADEF">
-                                                Get Admit Card
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <!--./refine-categ-header-->
-
+                           </div>
                         </div>
-                        <!--./row-->
-                    </div>
-                    <!--./container-->
-                </div>
+                     </section>
 
+                     <table class="table findAdmitcardt" style="margin-top: 10px;">
+                        <tr>
+                           <td style="text-align: center;border: none;">
+                              <button type="button" class="btn btn-primary findAdmitcard" style="background-color: #00ADEF; margin-top: -40px">
+                                 Get Admit Card
+                              </button>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
             </div>
-        </div>
-        <!--./row-->
-    </div>
-    <div class="modal fade mb-8" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLabel"
-        style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span
-                            style="color: #20aee5">{{ $academy_info->academy_name }}</span> <br /> <span
-                            style="color: red">(শিক্ষাবর্ষ ২০২৬ কেজি শ্রেণির
-                            ভর্তি)</span><br /> <span style="color: rgb(46,49,146)" id="versiontext"></span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('admissionstore') }}" method="post" enctype="multipart/form-data"
-                    class="onlineform" id="checkstatusform">
-                    <div class="modal-body">
+         </div>
+      </div>
+   </div>
+</div>
 
-                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-                        <input type="hidden" id="versionid" name="version_id" />
-                        <input type="hidden" id="classid" name="class_id" />
-                        <input type="hidden" id="sessionid" name="session_id" />
-                        <input type="hidden" id="amount" name="amount" />
-                        <p>Which Shift Do You Want To Get Admitted Into KG?</p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="noborder">
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="shift_id"
-                                                    id="flexRadioDefault1" value="1" checked="">
-                                                <label class="form-check-label" for="flexRadioDefault1">
-                                                    &nbsp;Morning
-                                                </label>
-                                                <span id="seatInfo1" class="mt-2 text-center"
+<div class="modal fade mb-8" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header text-center">
+            <h5 class="modal-title" style="font-weight: bold;width: 98%;">
+               <span style="color: #20aee5">বিএএফ শাহীন কলেজ ঢাকা</span><br>
+               <span style="color: red">(শিক্ষাবর্ষ ২০২৬ কেজি শ্রেণির ভর্তি)</span><br>
+               <span style="color: rgb(46,49,146)" id="versiontext"></span>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <form action="{{route('admissionstore')}}" method="post" enctype="multipart/form-data" class="onlineform" id="checkstatusform">
+            <div class="modal-body">
+               <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+               <input type="hidden" id="versionid" name="version_id" />
+               <input type="hidden" id="classid" name="class_id" />
+               <input type="hidden" id="sessionid" name="session_id" />
+               <input type="hidden" id="amount" name="amount" />
+               
+               <p>Which Shift Do You Want To Get Admitted Into KG?</p>
+               <div class="row">
+                  <div class="col-md-12">
+                     <table class="noborder width-100">
+                        <tr>
+                           <td>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="shift_id" id="flexRadioDefault1" value="1" checked="">
+                                 <label class="form-check-label" for="flexRadioDefault1">&nbsp;Morning</label>
+								  <span id="seatInfo1" class="mt-2 text-center"
                                                     style="font-weight: bold; color: #198754;"></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="shift_id"
-                                                    id="flexRadioDefault2" value="2">
-                                                <label class="form-check-label" for="flexRadioDefault2">
-                                                    &nbsp;Day
-                                                </label>
-                                                <span id="seatInfo2" class="mt-2 text-center"
+                              </div>
+                           </td>
+                           <td>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="radio" name="shift_id" id="flexRadioDefault2" value="2">
+                                 <label class="form-check-label" for="flexRadioDefault2">&nbsp;Day</label>
+								  <span id="seatInfo2" class="mt-2 text-center"
                                                     style="font-weight: bold; color: #198754;"></span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                              </div>
+                           </td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
 
+               <p>Select Candidate's Category</p>
+               <div class="row">
+                  <div class="col-md-12">
+                     <table class="noborder width-100">
+                        <tr>
+                           <td>
+                              <div class="form-check d-flex">
+                                 <input class="form-check-input category" required type="radio" name="category_id" id="1" value="1" checked="">
+                                 <label class="form-check-label" for="1">&nbsp;Civil- Child of Civil Person</label>
+                              </div>
+                           </td>
+							<!--
+                           <td>
+                              <div class="form-check d-flex">
+                                 <input class="form-check-input category" required type="radio" name="category_id" id="2" value="2">
+                                 <label class="form-check-label" for="2">&nbsp;BAF- Child of BAF Employee (Active Service Only)</label>
+                              </div>
+                           </td> -->
+                        </tr>
+						 <!--
+                        <tr>
+                           <td>
+                              <div class="form-check d-flex">
+                                 <input class="form-check-input category" type="radio" required name="category_id" id="3" value="3">
+                                 <label class="form-check-label" for="3">&nbsp;SD/SEMC- Child of BAF Shaheen College Employee</label>
+                              </div>
+                           </td>
+                           <td>
+                              <div class="form-check d-flex">
+                                 <input class="form-check-input category" type="radio" required name="category_id" id="4" value="4">
+                                 <label class="form-check-label" for="4">&nbsp;GEN- Student of Golden Eagle Nursery, Dhaka</label>
+                              </div>
+                           </td>
+                        </tr> -->
+                     </table>
+                  </div>
+               </div>
 
-                            </div>
+               <div class="row">
+                  <div class="col-md-12" id="categoryview"></div>
+               </div>
+
+               <div class="row">
+                  <p>Personal Information</p>
+                  <div class="col">
+                     <label for="inputEmail4">Candidate's English Name<span style="color: red">*</span></label>
+                     <input type="text" class="form-control" value="{{old('name_en')}}" style="text-transform:uppercase" required name="name_en" placeholder="English Name">
+                  </div>
+                  <div class="col">
+                     <label for="inputEmail4">প্রার্থীর বাংলা নাম<span style="color: red">*</span></label>
+                     <input type="text" class="form-control" required value="{{old('name_bn')}}" name="name_bn" placeholder="Bangla Name">
+                  </div>
+               </div>
+
+               <br>
+
+               <div class="row">
+                  <div class="col">
+                     <label for="inputEmail4">Candidate's Date Of Birth<span style="color: red">*</span><span id="age"></span></label>
+                     <input type="date" class="form-control" required value="{{old('dob')}}" id="dob" name="dob" placeholder="Date of Birth">
+                     <span id="message"></span>
+                  </div>
+                  <div class="col">
+                     <label for="inputEmail4">Candidate's Gender<span style="color: red">*</span></label>
+                     <select class="form-select form-control" required name="gender" aria-label="Default select example">
+                        <option value="1" {{(old('gender')==1)?'selected="selected"':''}}>Male</option>
+                        <option value="2" {{(old('gender')==2)?'selected="selected"':''}}>Female</option>
+                     </select>
+                  </div>
+               </div>
+
+               <br>
+
+               <div class="row">
+                  <div class="col">
+                     <label for="inputEmail4">Gurdian's Name<span style="color: red">*</span></label>
+                     <input type="text" class="form-control" required value="{{old('gurdian_name')}}" name="gurdian_name" placeholder="Gurdian Name">
+                  </div>
+                  <div class="col">
+                     <label for="inputEmail4">Mobile Number<span style="color: red">*</span></label>
+                     <input type="text" class="form-control" required value="{{old('mobile')}}" name="mobile" placeholder="Mobile">
+                  </div>
+               </div>
+
+               <br>
+
+               <div class="row">
+                  <div class="col">
+                     <label for="inputEmail4">Candidate's Birth Registration Number<span style="color: red">*</span></label>
+                     <input type="text" class="form-control" value="{{old('birth_registration_number')}}" required name="birth_registration_number" placeholder="Birth Registration Number">
+                  </div>
+               </div>
+
+               <br>
+
+               <div class="row">
+                  <div class="col">
+                     <label for="photo">Candidate's Photo<span style="color: red">*</span>(File size max 200 KB, accepted formats: .jpg, .jpeg)</label>
+                     <input type="file" class="form-control" required id="photo" name="photo" accept=".jpg,.jpeg" placeholder="photo">
+                     <div class="mt-2">
+                        <img id="photo-preview" src="#" alt="Preview" style="display:none; max-width:150px; border-radius:6px; border:1px solid #ddd; padding:3px;">
+                     </div>
+                  </div>
+                  <div class="col">
+                     <label for="birth_image">Candidate's Birth Registration Certificate<span style="color: red">*</span>(File size max 200 KB, accepted formats: .pdf, .jpg, .jpeg)</label>
+                     <input type="file" class="form-control" required id="birth_image" name="birth_image" accept=".pdf,.jpg,.jpeg">
+                     <div class="mt-2" id="birth-preview-box" style="display:none;">
+                        <img id="birth-preview-img" src="#" alt="Preview" style="max-width:150px; border:1px solid #ddd; border-radius:6px; padding:3px; display:none;">
+                        <div id="birth-preview-pdf" style="display:none; border:1px solid #ddd; border-radius:6px; padding:6px; max-width:250px;">
+                           <i class="fa fa-file-pdf-o" style="color:red; margin-right:8px;"></i>
+                           <span id="birth-pdf-name" style="font-size:14px;"></span>
                         </div>
-                        <p>Select Candidate's Category</p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="noborder width-100">
-
-                                    <tr>
-                                        @if (isset($categories[0]->id))
-                                            <td>
-                                                <div class="form-check d-flex">
-                                                    <input class="form-check-input category" required=""
-                                                        type="radio" name="category_id" id="{{ $categories[0]->id }}"
-                                                        value="{{ $categories[0]->id }}" checked="">
-                                                    <label class="form-check-label" for="{{ $categories[0]->id }}">
-                                                        &nbsp;{{ $categories[0]->category_name }}
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        @endif
-
-                                        @if (isset($categories[1]->id))
-                                            <td>
-                                                <div class="form-check d-flex">
-                                                    <input class="form-check-input category" required=""
-                                                        type="radio" name="category_id" id="{{ $categories[1]->id }}"
-                                                        value="{{ $categories[1]->id }}">
-                                                    <label class="form-check-label" for="{{ $categories[1]->id }}">
-                                                        &nbsp;{{ $categories[1]->category_name }}
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        @endif
-                                    </tr>
-
-                                    <tr>
-
-                                        @if (isset($categories[2]->id))
-                                            <td>
-                                                <div class="form-check d-flex">
-                                                    <input class="form-check-input category" required=""
-                                                        type="radio" name="category_id" id="{{ $categories[2]->id }}"
-                                                        value="{{ $categories[2]->id }}">
-                                                    <label class="form-check-label" for="{{ $categories[2]->id }}">
-                                                        &nbsp;{{ $categories[2]->category_name }}
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        @endif
-
-                                        @if (isset($categories[3]->id))
-                                            <td>
-                                                <div class="form-check d-flex">
-                                                    <input class="form-check-input category" required=""
-                                                        type="radio" name="category_id" id="{{ $categories[3]->id }}"
-                                                        value="{{ $categories[3]->id }}">
-                                                    <label class="form-check-label" for="{{ $categories[3]->id }}">
-                                                        &nbsp;{{ $categories[3]->category_name }}
-                                                    </label>
-                                                </div>
-                                            </td>
-                                        @endif
-                                    </tr>
-                                </table>
-
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" id="categoryview">
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <p>Personal Information</p>
-
-                            <div class="col">
-                                <label for="inputEmail4">Candidate's English Name<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" value="{{ old('name_en') }}"
-                                    style="text-transform:uppercase" required="" name="name_en"
-                                    placeholder="English Name">
-                            </div>
-                            <div class="col">
-                                <label for="inputEmail4">প্রার্থীর বাংলা নাম<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" required="" value="{{ old('name_bn') }}" name="name_bn"
-                                    placeholder="Bangla Name">
-                            </div>
-
-
-                        </div>
-                        <br />
-                        <div class="row">
-
-                            <div class="col">
-                                <label for="inputEmail4">Candidate's Date Of Birth<span style="color: red">*</span><span
-                                        id="age"></span></label>
-                                <input type="date" class="form-control" required="" value="{{ old('dob') }}"
-                                    id="dob" name="dob" placeholder="Date of Birth">
-                                <span id="message"></span>
-                            </div>
-                            <div class="col">
-                                <label for="inputEmail4">Candidate's Gender<span style="color: red">*</span></label>
-                                <select class="form-select form-control" required="" name="gender"
-                                    aria-label="Default select example">
-                                    <option value="1" {{ old('gender') == 1 ? 'selected="selected"' : '' }}>Male
-                                    </option>
-                                    <option value="2" {{ old('gender') == 2 ? 'selected="selected"' : '' }}>Female
-                                    </option>
-                                </select>
-                            </div>
-
-
-                        </div>
-                        <br />
-                        <div class="row">
-
-                            <div class="col">
-                                <label for="inputEmail4">Gurdian's Name<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" required=""
-                                    value="{{ old('gurdian_name') }}" name="gurdian_name" placeholder="Gurdian Name">
-                            </div>
-                            <div class="col">
-                                <label for="inputEmail4">Mobile Number<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" required="" value="{{ old('mobile') }}"
-                                    name="mobile" placeholder="Mobile">
-                            </div>
-
-
-                        </div>
-                        <br />
-                        <div class="row">
-
-                            <div class="col">
-                                <label for="inputEmail4">Candidate's Birth Registration Number<span
-                                        style="color: red">*</span></label>
-                                <input type="text" class="form-control"
-                                    value="{{ old('birth_registration_number') }}" required=""
-                                    name="birth_registration_number" placeholder="Birth Registration Number">
-                            </div>
-                            {{-- <div class="col">
-                                <label for="inputEmail4">Candidate's Birth Registration Certificate<span
-                                        style="color: red">*</span></label>
-                                <input type="file" class="form-control" required="" name="birth_image"
-                                    placeholder="Mobile">
-                            </div> --}}
-                            <div class="col">
-                                <label for="birth_image">
-                                    Candidate's Birth Registration Certificate
-                                    <span style="color: red">*</span>
-                                    (File size max 200 KB, accepted formats: .pdf, .jpg, .jpeg)
-                                </label>
-
-                                <input type="file" class="form-control" required id="birth_image" name="birth_image"
-                                    accept=".pdf,.jpg,.jpeg">
-
-                                <!-- 🔹 Preview container -->
-                                <div class="mt-2" id="birth-preview-box" style="display:none;">
-                                    <img id="birth-preview-img" src="#" alt="Preview"
-                                        style="max-width:150px; border:1px solid #ddd; border-radius:6px; padding:3px; display:none;">
-                                    <div id="birth-preview-pdf"
-                                        style="display:none; border:1px solid #ddd; border-radius:6px; padding:6px; max-width:250px;">
-                                        <i class="fa fa-file-pdf-o" style="color:red; margin-right:8px;"></i>
-                                        <span id="birth-pdf-name" style="font-size:14px;"></span>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col">
-                                <label for="photo">Candidate's Photo
-                                    <span style="color: red">*</span>
-                                    (File size max 200 KB, accepted formats: .jpg, .jpeg)
-                                </label>
-
-                                <input type="file" class="form-control" required id="photo" name="photo"
-                                    accept=".jpg,.jpeg" placeholder="photo">
-
-                                <!-- 🔹 Preview container -->
-                                <div class="mt-2">
-                                    <img id="photo-preview" src="#" alt="Preview"
-                                        style="display:none; max-width:150px; border-radius:6px; border:1px solid #ddd; padding:3px;">
-                                </div>
-                            </div>
-                            <div class="col">
+                     </div>
+                  </div>
+				   
+               </div>
+				<div class="row">
+				<div class="col-6">
                                 
                                  <label for="inputEmail4">Captcha<span
                                         style="color: red">*</span></label></br>
@@ -628,572 +599,361 @@
                                     <input type="text" name="captcha" required="" style="width: 70%;display: inline" class="form-control" placeholder="Enter the Captcha">
                                
                             </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Pay Now</button>
-                    </div>
-                </form>
+				</div>
             </div>
-        </div>
-    </div>
-    <div class="modal fade mb-8" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-        style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h5 class="modal-title " style="font-weight: bold;width: 98%;"><span
-                            style="color: #20aee5">{{ $academy_info->academy_name }}</span> <br /> <span
-                            style="color: red">(শিক্ষাবর্ষ ২০২৬ কেজি শ্রেণির
-                            ভর্তি)</span><br /> <span style="color: rgb(46,49,146)" id="versiontext"></span></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('admissionsearch') }}" method="post" enctype="multipart/form-data"
-                    class="onlineform" id="checkstatusform">
-                    <div class="modal-body">
-                        <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 
-
-                        <div class="row">
-
-                            <p>Enter Your Temporary ID</p>
-
-                            <div class="col">
-                                <label for="inputEmail4">Temporary ID<span style="color: red">*</span></label>
-                                <input type="text" class="form-control" value="{{ old('temporary_id') }}"
-                                    style="text-transform:uppercase" required="" name="temporary_id"
-                                    placeholder="Temporary ID">
-                            </div>
-                            <div class="col">
-                                <label for="inputEmail4"></label><br />
-                                <button type="submit" class="btn btn-primary">Search</button>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                    </div>
-                </form>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Pay Now</button>
             </div>
-        </div>
-    </div>
-    <div id="checkOnlineAdmissionStatus" class="modal fade" role="dialog" tabindex="-1">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header modal-header-small">
-                    <button type="button" class="close closebtnmodal" data-dismiss="modal">&times;</button>
-                    <h4><span id="version_name" style="color: red; font-weight: bold;font-size:17px!important"></span>
-                    </h4>
-                </div>
-                <form action="{{ route('admissionData') }}" method="post" enctype="multipart/form-data"
-                    class="onlineform" id="checkstatusform">
-                    <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-                    <input type="hidden" name="version_id" id="version_id" value="" />
-                    <input type="hidden" name="class_id" id="class_id" value="" />
-                    <input type="hidden" name="session_id" id="session_id" value="" />
-                    <div class="modal-body" style="padding:0px">
+         </form>
+      </div>
+   </div>
+</div>
 
-                        <div class="col-md-6 col-sm-6" style="margin-top: 5px">
-                            <div class="form-group">
-                                <label>SSC Roll Number (এসএসসি রোল নম্বর)</label><small class="req"> *</small>
-                                <input type="text" class="form-control" required="" name="roll_number"
-                                    id="roll_number" autocomplete="off">
-                                <span class="text-danger" id="error_status_roll_number"></span>
-                            </div>
-                        </div>
-                        <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <label>Registration Number (রেজিস্ট্রেশন নম্বর)</label><small class="req"> *</small>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <input type="text" class="form-control" required="" name="registration_number" id="registration_number" autocomplete="off">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <span class="text-danger" id="error_status_registration_number"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div> -->
-                        <div class="col-md-6 col-sm-6" style="margin-top: 5px">
-                            <div class="form-group">
-                                <label>Board (বোর্ড)</label><small class="req"> *</small>
-                                <select class="form-control" name="board_id" id="board_id">
-
-                                    <option value=""> Select Education Board (শিক্ষাবোর্ড নির্বাচন করুণ) </option>
-                                    <option value="Dhaka">Dhaka (ঢাকা)</option>
-                                    <option value="Rajshahi">Rajshahi (রাজশাহী)</option>
-                                    <option value="Cumilla">Cumilla (কুমিল্লা)</option>
-                                    <option value="Jashore">Jashore (যশোর)</option>
-                                    <option value="Chattogram">Chattogram (চট্টগ্রাম)</option>
-                                    <option value="Barishal">Barishal (বরিশাল)</option>
-                                    <option value="Sylhet">Sylhet (সিলেট)</option>
-                                    <option value="Mymensingh">Mymensingh (ময়মনসিংহ)</option>
-                                    <option value="Dinajpur">Dinajpur (দিনাজপুর)</option>
-                                    <option value="Madrasah">Madrasah (মাদ্রাসা)</option>
-                                    <option value="BTEB">Bangladesh Technical Education (বাংলাদেশ কারিগরি শিক্ষা বোর্ড)
-                                    </option>
-                                    <option value="BOU">BOU (বাউবি)</option>
-                                </select>
-                                <!-- <input type="text" class="form-control" required="" name="board_id" id="board_id"  readonly="readonly" autocomplete="off"> -->
-                                <span class="text-danger" id="error_status_board_id"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <label>Full Name (সম্পূর্ণ নাম)</label><small class="req"> *</small>
-                                <input type="text" class="form-control" required="" name="full_name"
-                                    id="full_name" readonly="readonly" autocomplete="off">
-                                <span class="text-danger" id="error_status_full_name"></span>
-                            </div>
-                        </div>
-
-
-                        <!-- <div class="col-md-6 col-sm-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <div class="form-group">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           <label>Admission Serial (এডমিশন সিরিয়াল)</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <input type="text" class="form-control"   readonly="readonly" name="serial" id="serial" autocomplete="off">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <span class="text-danger" id="error_status_serial"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div> -->
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <label>Group (বিভাগ)</label><small class="req"> *</small>
-                                <input type="text" class="form-control" required="" id="group_name"
-                                    readonly="readonly" name="group_name" id="serial" autocomplete="off">
-                                <span class="text-danger" id="error_status_group_name"></span>
-                            </div>
-                        </div>
-
-
-
-
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="modalclosebtn btn  mdbtn" data-dismiss="modal">Close</button>
-                        <button type="submit" class="onlineformbtns mdbtn">Submit</button>
-                    </div>
-                </form>
+<div class="modal fade mb-8" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header text-center">
+            <h5 class="modal-title" style="font-weight: bold;width: 98%;">
+               <span style="color: #20aee5">বিএএফ শাহীন কলেজ ঢাকা</span><br>
+               <span style="color: red">(শিক্ষাবর্ষ ২০২৬ কেজি শ্রেণির ভর্তি)</span><br>
+               <span style="color: rgb(46,49,146)" id="versiontext"></span>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <form action="{{route('admissionsearch')}}" method="post" enctype="multipart/form-data" class="onlineform" id="checkstatusform">
+            <div class="modal-body">
+               <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+               <div class="row">
+                  <p>Enter Your Temporary ID</p>
+                  <div class="col">
+                     <label for="inputEmail4">Temporary ID<span style="color: red">*</span></label>
+                     <input type="text" class="form-control" value="{{old('temporary_id')}}" style="text-transform:uppercase" required name="temporary_id" placeholder="Temporary ID">
+                  </div>
+                  <div class="col">
+                     <label for="inputEmail4"></label><br>
+                     <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-    <script>
-document.getElementById('refresh').onclick = function() {
-    fetch('/captcha/refresh')
-        .then(response => response.json())
-        .then(data => {
-            document.querySelector('span').innerHTML = data.captcha;
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+<script>
+   $(document).ready(function() {
+      $('#dob').on('change', function() {
+         let category_id = $('input[name="category_id"]:checked').val();
+
+
+         var dob = new Date($(this).val());
+         if (!isNaN(dob.getTime())) { // Check if the date is valid
+            var today = new Date(2026, 0, 1); // February 1, 2025
+
+            // Calculate the age in terms of years, months, and days
+            var years = today.getFullYear() - dob.getFullYear();
+            var months = today.getMonth() - dob.getMonth();
+            var days = today.getDate() - dob.getDate();
+
+            // Adjust if the birth date hasn't occurred yet this month
+            if (days < 0) {
+               months--;
+               // Get the last day of the previous month
+               var lastDayOfPrevMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+               days += lastDayOfPrevMonth;
+            }
+
+            // Adjust if the birth month hasn't occurred yet this year
+            if (months < 0) {
+               years--;
+               months += 12;
+            }
+
+            // Convert the calculated age to total days for comparison
+            var totalAgeDays = years * 365 + months * 30 + days;
+
+            // Minimum age: 4 years, 11 months, and 15 days
+            var minAgeDays = (4 * 365) + (10 * 30)+1;
+            // Maximum age: 6 years and 60 days
+            var maxAgeDays = (6 * 365) + 60;
+
+            // Check if the total days fall within the valid range
+            if ((totalAgeDays >= minAgeDays && totalAgeDays <= maxAgeDays)) {
+               $('#age').text(years + ' years, ' + months + ' months, ' + days + ' days').css('color', 'green');
+               $('#message').text('Age is within the valid range').css('color', 'green');
+            } else {
+               Swal.fire({
+                  title: "Error",
+                  text: 'Age is not within the valid range',
+                  icon: "warning"
+               });
+
+               $('#age').text('');
+               $(this).val('');
+               $('#message').text('Age is not within the valid range').css('color', 'red');
+            }
+         } else {
+            $('#message').text('Please select a valid date');
+         }
+      });
+   });
+
+
+  @if($errors->any())
+    @php
+        $text = '';
+        foreach($errors->all() as $error) {
+            $text .= '<p>' . $error . '</p>';
+        }
+    @endphp
+        Swal.fire({
+            title: "Warning!",
+            html: `{!! $text !!}`,
+            icon: "warning"
         });
-};
-</script>
+    
+@endif
+	</script>
+
+@if(Session::get('warning'))
     <script>
-        $(document).ready(function() {
-            $('#dob').on('change', function() {
-                let category_id = $('input[name="category_id"]:checked').val();
-
-
-                var dob = new Date($(this).val());
-                if (!isNaN(dob.getTime())) { // Check if the date is valid
-                    var today = new Date(2026, 0, 1); // February 1, 2026
-
-                    // Calculate the age in terms of years, months, and days
-                    var years = today.getFullYear() - dob.getFullYear();
-                    var months = today.getMonth() - dob.getMonth();
-                    var days = today.getDate() - dob.getDate();
-
-                    // Adjust if the birth date hasn't occurred yet this month
-                    if (days < 0) {
-                        months--;
-                        // Get the last day of the previous month
-                        var lastDayOfPrevMonth = new Date(today.getFullYear(), today.getMonth(), 0)
-                            .getDate();
-                        days += lastDayOfPrevMonth;
-                    }
-
-                    // Adjust if the birth month hasn't occurred yet this year
-                    if (months < 0) {
-                        years--;
-                        months += 12;
-                    }
-
-                    // Convert the calculated age to total days for comparison
-                    var totalAgeDays = years * 365 + months * 30 + days;
-
-                    // Minimum age: 4 years, 11 months, and 15 days
-                    var minAgeDays = (4 * 365) + (11 * 30) + 15;
-                    // Maximum age: 6 years and 15 days
-                    var maxAgeDays = (6 * 365) + 60;
-
-                    // Check if the total days fall within the valid range
-                    if ((totalAgeDays >= minAgeDays && totalAgeDays <= maxAgeDays) || (category_id == 2 ||
-                            category_id == 4)) {
-                        $('#age').text(years + ' years, ' + months + ' months, ' + days + ' days').css(
-                            'color', 'green');
-                        $('#message').text('Age is within the valid range').css('color', 'green');
-                    } else {
-                        Swal.fire({
-                            title: "Error",
-                            text: 'Age is not within the valid range',
-                            icon: "warning"
-                        });
-
-                        $('#age').text('');
-                        $(this).val('');
-                        $('#message').text('Age is not within the valid range').css('color', 'red');
-                    }
-                } else {
-                    $('#message').text('Please select a valid date');
-                }
-            });
+        Swal.fire({
+            title: "Warning!",
+            html: `{!! Session::get('warning') !!}`,
+            icon: "warning"
         });
-
-
-        @if ($errors->any())
-            @php
-                $text = '';
-                foreach ($errors->all() as $error) {
-                    $text .= '<p>' . $error . '</p>';
-                }
-            @endphp
-            Swal.fire({
-                title: "Warning!",
-                html: `{!! $text !!}`,
-                icon: "warning"
-            });
-        @endif
     </script>
+@endif
+<script>
+   $(function() {
 
-    @if (Session::get('warning'))
-        <script>
-            Swal.fire({
-                title: "Warning!",
-                html: `{!! Session::get('warning') !!}`,
-                icon: "warning"
-            });
-        </script>
-    @endif
-    <script>
-        $(function() {
-
-            $(document.body).on('click', '.kgadmission', function() {
-                var versionid = $(this).data('versionid');
-                var class_id = $(this).data('class_id');
-                var session_id = $(this).data('session_id');
-                var amount = $(this).data('amount');
-                $('#versionid').val(versionid)
-                $('#classid').val(class_id)
-                $('#sessionid').val(session_id)
-                $('#amount').val(amount)
-                if (versionid == 1) {
-                    $('#versiontext').text('ভার্সন বাংলা');
-                    $('#seatInfo1').html(
-                        '(<span style="color:#dc3545;">200</span> seats)'
-                    );
-                    $('#seatInfo2').html(
-                        '(<span style="color:#dc3545;">200</span> seats)'
-                    );
+      $(document.body).on('click', '.kgadmission', function() {
+         var versionid = $(this).data('versionid');
+         var class_id = $(this).data('class_id');
+         var session_id = $(this).data('session_id');
+         var amount = $(this).data('amount');
+         $('#versionid').val(versionid)
+         $('#classid').val(class_id)
+         $('#sessionid').val(session_id)
+         $('#amount').val(amount)
+         if (versionid == 1) {
+                    $('#versiontext').text('ভার্শন বাংলা');
                 } else {
                     $('#versiontext').text('Version English');
-                    $('#seatInfo1').html(
-                        '(<span style="color:#dc3545;">100</span> seats)'
+                    
+                }
+		  if(versionid == 2){
+			  $('#seatInfo1').html(
+                        '(Avaiable Seats - <span style="color:#dc3545;">20</span>)'
                     );
                     $('#seatInfo2').html(
-                        '(<span style="color:#dc3545;">100</span> seats)'
+                        '(Avaiable Seats - <span style="color:#dc3545;">25</span>)'
                     );
-                }
-                $('#exampleModalLong').modal('show');
+		  }else{
+		  	  $('#seatInfo1').html('');
+              $('#seatInfo2').html('');
+		  }
+			  
+         $('#exampleModalLong').modal('show');
+      });
+      $(document.body).on('click', '.findAdmitcard', function() {
+
+         $('#exampleModal').modal('show');
+      });
+
+
+      $(document.body).on('submit', '#checkadmissionstatus', function(e) {
+
+
+         e.preventDefault(); // avoid to execute the actual submit of the form.
+
+         var form = $(this);
+         var actionUrl = form.attr('action');
+         $.LoadingOverlay("show");
+         $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data) {
+               $.LoadingOverlay("hide");
+               getPayment(data); // show response from the php script.
+            }
+         });
+
+      });
+      $(document.body).on('change', '.category', function() {
+
+         var category_id = $(this).val();
+         $('#dob').val('');
+         $('#age').html('');
+         $('#message').html('');
+         var url = "{{route('getCategoryView')}}";
+         $.ajax({
+            type: "post",
+            headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+            },
+            url: url,
+            data: {
+               "_token": "{{ csrf_token() }}",
+               category_id
+            },
+            success: function(response) {
+
+               $.LoadingOverlay("hide");
+               console.log(response);
+               $('#categoryview').html(response);
+
+            },
+            error: function(data, errorThrown) {
+               $.LoadingOverlay("hide");
+               Swal.fire({
+                  title: "Error",
+                  text: errorThrown,
+                  icon: "warning"
+               });
+               $('#categoryview').html('');
+
+            }
+         });
+
+      });
+      $(document.body).on('change', '#onlineformbtn', function() {
+
+      });
+
+   });
+</script>
+<script>
+   $(function() {
+      var currentHour = new Date().getHours();
+
+      // Show modal if time is between 9 PM (21) and 8 AM (8)
+      if (currentHour >= 0 && currentHour < 7) {
+         $('#loginBlockModal').modal({
+            backdrop: 'static', // Prevent closing by clicking outside
+            keyboard: false // Prevent closing with ESC key
+         });
+         $('#loginBlockModal').modal('show');
+      }
+   });
+</script>
+<script>
+   $(function() {
+      var currentHour = new Date().getHours();
+
+      $('#loginBlockModal1').modal({
+            backdrop: 'static', // Prevent closing by clicking outside
+            keyboard: false // Prevent closing with ESC key
+         });
+         $('#loginBlockModal1').modal('show');
+   });
+</script>
+	<script>
+document.getElementById('birth_image').addEventListener('change', function() {
+    const file = this.files[0];
+    const previewBox = document.getElementById('birth-preview-box');
+    const imgPreview = document.getElementById('birth-preview-img');
+    const pdfPreview = document.getElementById('birth-preview-pdf');
+    const pdfName = document.getElementById('birth-pdf-name');
+
+    previewBox.style.display = "none";
+    imgPreview.style.display = "none";
+    pdfPreview.style.display = "none";
+
+    if (file) {
+        const allowedTypes = ['application/pdf', 'image/jpeg'];
+        const maxSize = 200 * 1024; // 200 KB
+
+        // ✅ Validate file type
+        if (!allowedTypes.includes(file.type)) {
+            Swal.fire({
+                title: "Warning!",
+                html: "Only PDF, JPG, or JPEG files are allowed.",
+                icon: "warning"
             });
-            $(document.body).on('click', '.findAdmitcard', function() {
+            this.value = ''; // reset input
+            return;
+        }
 
-                $('#exampleModal').modal('show');
+        // ✅ Validate file size
+        if (file.size > maxSize) {
+            Swal.fire({
+                title: "Warning!",
+                html: "File size must not exceed <b>200 KB</b>.",
+                icon: "warning"
             });
+            this.value = ''; // reset input
+            return;
+        }
 
-
-            $(document.body).on('submit', '#checkadmissionstatus', function(e) {
-
-
-                e.preventDefault(); // avoid to execute the actual submit of the form.
-
-                var form = $(this);
-                var actionUrl = form.attr('action');
-                $.LoadingOverlay("show");
-                $.ajax({
-                    type: "POST",
-                    url: actionUrl,
-                    data: form.serialize(), // serializes the form's elements.
-                    success: function(data) {
-                        $.LoadingOverlay("hide");
-                        getPayment(data); // show response from the php script.
-                    }
-                });
-
-            });
-            $(document.body).on('change', '.category', function() {
-
-                var category_id = $(this).val();
-                $('#dob').val('');
-                $('#age').html('');
-                $('#message').html('');
-                var url = "{{ route('getCategoryView') }}";
-                $.ajax({
-                    type: "post",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
-                    },
-                    url: url,
-                    data: {
-                        "_token": "{{ csrf_token() }}",
-                        category_id
-                    },
-                    success: function(response) {
-
-                        $.LoadingOverlay("hide");
-                        console.log(response);
-                        $('#categoryview').html(response);
-
-                    },
-                    error: function(data, errorThrown) {
-                        $.LoadingOverlay("hide");
-                        Swal.fire({
-                            title: "Error",
-                            text: errorThrown,
-                            icon: "warning"
-                        });
-                        $('#categoryview').html('');
-
-                    }
-                });
-
-            });
-            $(document.body).on('change', '#onlineformbtn', function() {
-
-            });
-
-        });
-    </script>
-    <script>
-        document.getElementById('birth_image').addEventListener('change', function() {
-            const file = this.files[0];
-            const previewBox = document.getElementById('birth-preview-box');
-            const imgPreview = document.getElementById('birth-preview-img');
-            const pdfPreview = document.getElementById('birth-preview-pdf');
-            const pdfName = document.getElementById('birth-pdf-name');
-
-            previewBox.style.display = "none";
+        // ✅ Show preview
+        previewBox.style.display = "block";
+        if (file.type === 'image/jpeg') {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imgPreview.src = e.target.result;
+                imgPreview.style.display = "block";
+                pdfPreview.style.display = "none";
+            };
+            reader.readAsDataURL(file);
+        } else if (file.type === 'application/pdf') {
+            pdfName.textContent = file.name;
             imgPreview.style.display = "none";
-            pdfPreview.style.display = "none";
-
-            if (file) {
-                const allowedTypes = ['application/pdf', 'image/jpeg'];
-                const maxSize = 200 * 1024; // 200 KB
-
-                // ✅ Validate file type
-                if (!allowedTypes.includes(file.type)) {
-                    Swal.fire({
-                        title: "Warning!",
-                        html: "Only PDF, JPG, or JPEG files are allowed.",
-                        icon: "warning"
-                    });
-                    this.value = ''; // reset input
-                    return;
-                }
-
-                // ✅ Validate file size
-                if (file.size > maxSize) {
-                    Swal.fire({
-                        title: "Warning!",
-                        html: "File size must not exceed <b>200 KB</b>.",
-                        icon: "warning"
-                    });
-                    this.value = ''; // reset input
-                    return;
-                }
-
-                // ✅ Show preview
-                previewBox.style.display = "block";
-                if (file.type === 'image/jpeg') {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        imgPreview.src = e.target.result;
-                        imgPreview.style.display = "block";
-                        pdfPreview.style.display = "none";
-                    };
-                    reader.readAsDataURL(file);
-                } else if (file.type === 'application/pdf') {
-                    pdfName.textContent = file.name;
-                    imgPreview.style.display = "none";
-                    pdfPreview.style.display = "flex";
-                    pdfPreview.style.alignItems = "center";
-                }
-            }
-        });
-    </script>
+            pdfPreview.style.display = "flex";
+            pdfPreview.style.alignItems = "center";
+        }
+    }
+});
+</script>
 
     <script>
-        document.getElementById('photo').addEventListener('change', function() {
-            const file = this.files[0];
-            const preview = document.getElementById('photo-preview');
+document.getElementById('photo').addEventListener('change', function() {
+    const file = this.files[0];
+    const preview = document.getElementById('photo-preview');
 
-            if (file) {
-                const allowedTypes = ['image/jpeg'];
-                const maxSize = 200 * 1024; // 200 KB
+    if (file) {
+        const allowedTypes = ['image/jpeg'];
+        const maxSize = 200 * 1024; // 200 KB
 
-                // ✅ Check file type
-                if (!allowedTypes.includes(file.type)) {
-                    Swal.fire({
-                        title: "Warning!",
-                        html: "Only JPG or JPEG files are allowed.",
-                        icon: "warning"
-                    });
-                    this.value = ''; // Reset input
-                    preview.style.display = "none";
-                    return;
-                }
-
-                // ✅ Check file size
-                if (file.size > maxSize) {
-                    Swal.fire({
-                        title: "Warning!",
-                        html: "File size must not exceed <b>200 KB</b>.",
-                        icon: "warning"
-                    });
-                    this.value = ''; // Reset input
-                    preview.style.display = "none";
-                    return;
-                }
-
-                // ✅ Show image preview
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.style.display = "block";
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.style.display = "none";
-            }
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const categoryInputs = document.querySelectorAll('input[name="category_id"]');
-            const shiftInputs = document.querySelectorAll('input[name="shift_id"]');
-            const submitBtn = document.getElementById('submit-btn');
-
-            // Get the last category ID dynamically
-            function getLastCategoryId() {
-                const categories = document.querySelectorAll('input[name="category_id"]');
-                if (categories.length > 0) {
-                    return categories[categories.length - 1].value;
-                }
-                return null;
-            }
-
-            // Get the first category ID
-            function getFirstCategoryId() {
-                const categories = document.querySelectorAll('input[name="category_id"]');
-                if (categories.length > 0) {
-                    return categories[0].value;
-                }
-                return null;
-            }
-
-            // Check if last category is selected
-            function isLastCategorySelected() {
-                const selectedCategory = document.querySelector('input[name="category_id"]:checked');
-                const lastCategoryId = getLastCategoryId();
-                return selectedCategory && selectedCategory.value === lastCategoryId;
-            }
-
-            // Check if morning shift is selected
-            function isMorningShiftSelected() {
-                const selectedShift = document.querySelector('input[name="shift_id"]:checked');
-                return selectedShift && selectedShift.value === '1';
-            }
-
-            // Show SweetAlert warning
-            function showWarning(message) {
-                Swal.fire({
-                    title: "Warning!",
-                    html: message,
-                    icon: "warning"
-                });
-            }
-
-            // Validate shift and category combination
-            function validateShiftCategory() {
-                const lastCategorySelected = isLastCategorySelected();
-                const morningSelected = isMorningShiftSelected();
-
-                if (lastCategorySelected && morningSelected) {
-                    // Disable submit button
-                    submitBtn.disabled = true;
-                    submitBtn.classList.add('btn-secondary');
-                    submitBtn.classList.remove('btn-primary');
-
-                    return false;
-                } else {
-                    // Enable submit button
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('btn-secondary');
-                    submitBtn.classList.add('btn-primary');
-
-                    return true;
-                }
-            }
-
-            // Handle category change
-            categoryInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    const lastCategoryId = getLastCategoryId();
-
-                    if (this.value === lastCategoryId && isMorningShiftSelected()) {
-                        // If last category is selected and morning shift is currently selected
-                        showWarning(
-                            "<b>GEN- Student of Golden Eagle Nursery, Dhaka</b> cannot be selected with <b>Morning shift</b>. Please select <b>Day shift</b> instead."
-                        );
-
-                        // Automatically switch to day shift
-                        document.getElementById('flexRadioDefault2').checked = true;
-                    }
-                    validateShiftCategory();
-                });
+        // ✅ Check file type
+        if (!allowedTypes.includes(file.type)) {
+            Swal.fire({
+                title: "Warning!",
+                html: "Only JPG or JPEG files are allowed.",
+                icon: "warning"
             });
+            this.value = ''; // Reset input
+            preview.style.display = "none";
+            return;
+        }
 
-            // Handle shift change
-            shiftInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    if (this.value === '1' && isLastCategorySelected()) {
-                        // If morning shift is selected and last category is currently selected
-                        showWarning(
-                            "<b>Morning shift</b> cannot be selected with <b>GEN- Student of Golden Eagle Nursery, Dhaka</b>. Please select a <b>different category</b>."
-                        );
-
-                        // Automatically switch to first category
-                        document.getElementById('flexRadioDefault2').checked = true;
-                    }
-                    validateShiftCategory();
-                });
+        // ✅ Check file size
+        if (file.size > maxSize) {
+            Swal.fire({
+                title: "Warning!",
+                html: "File size must not exceed <b>200 KB</b>.",
+                icon: "warning"
             });
+            this.value = ''; // Reset input
+            preview.style.display = "none";
+            return;
+        }
 
-            // Form submission validation
-            document.getElementById('checkstatusform').addEventListener('submit', function(e) {
-                if (!validateShiftCategory()) {
-                    e.preventDefault();
-                    showWarning(
-                        "Please fix the form errors before submitting. <b>GEN- Student of Golden Eagle Nursery, Dhaka</b> cannot be combined with <b>Morning shift</b>."
-                    );
-                }
-            });
-
-            // Initial validation on page load
-            validateShiftCategory();
-        });
-    </script>
+        // ✅ Show image preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = "none";
+    }
+});
+</script>
 @endsection

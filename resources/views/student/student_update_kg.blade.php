@@ -67,8 +67,7 @@
             border-color: red !important;
         }
 
-        input:focus,
-        select:focus {
+        input:focus, select:focus {
             outline: none;
             border-color: #da45dc !important;
             box-shadow: 0 0 5px rgba(218, 69, 220, 0.5);
@@ -201,34 +200,32 @@
                                 <input type="hidden" name="student_code" id="student_code"
                                     value="{{ $student->student_code ?? '' }}" />
                                 <input type="hidden" name="id" id="id" value="{{ $id ?? '' }}" />
-
+                                
                                 <!-- Account Details -->
                                 <div id="account-details" class="content active dstepper-block">
                                     <div class="step-header">
                                         <h6 class="section-title">Student Information</h6>
-                                        <small class="text-danger">Fields marked with <span class="text-danger">*</span> are
-                                            mandatory and must be completed.</small>
+                                        <small class="text-danger">Fields marked with <span class="text-danger">*</span> are mandatory and must be completed.</small>
                                     </div>
-
+                                    
                                     <div class="form-section">
                                         <div class="row g-3">
                                             <div class="mb-3 col-md-6">
-                                                <label for="first_name" class="form-label required-field">Student's Name
-                                                    (English)</label>
+                                                <label for="first_name" class="form-label required-field">Student's Name (English)</label>
                                                 <input class="form-control" type="text" id="first_name"
                                                     {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'disabled' : '' }}
                                                     name="first_name" value="{{ $student->first_name ?? '' }}" required
                                                     placeholder="Student's Name (English)" autofocus="">
                                                 <span class="validation-message" id="first_name_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
                                                 <label for="last_name" class="form-label">Student's Name (Bangla)</label>
-                                                <input class="form-control" type="text" name="bangla_name"
-                                                    id="bangla_name" placeholder="Student's Name (Bangla)"
+                                                <input class="form-control" type="text" name="bangla_name" id="bangla_name"
+                                                    placeholder="Student's Name (Bangla)"
                                                     value="{{ $student->bangla_name ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
                                                 <label for="state" class="form-label required-field">Birth Date</label>
                                                 @if ($student->birthdate && Auth::user()->group_id != 2 && Auth::user()->group_id != 7)
@@ -242,14 +239,14 @@
                                                 @endif
                                                 <span class="validation-message" id="birthdate_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
                                                 <label for="state" class="form-label">Birth Registration No</label>
-                                                <input class="form-control" type="text" id="birth_no"
-                                                    name="birth_no" placeholder="Birth Registration No"
+                                                <input class="form-control" type="text" id="birth_no" name="birth_no"
+                                                    placeholder="Birth Registration No"
                                                     value="{{ $student->birth_no ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
                                                 <label for="religion" class="form-label required-field">Religion</label>
                                                 <select id="religion" name="religion" class="form-select"
@@ -273,10 +270,9 @@
                                                 </select>
                                                 <span class="validation-message" id="religion_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
-                                                <label for="nationality"
-                                                    class="form-label required-field">Nationality</label>
+                                                <label for="nationality" class="form-label required-field">Nationality</label>
                                                 <input type="text" class="form-control"
                                                     {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : '' }}
                                                     id="nationality" name="nationality" placeholder="Nationality"
@@ -285,29 +281,27 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-section">
                                         <div class="row g-3">
                                             <div class="mb-3 col-md-6">
                                                 <label for="email" class="form-label">E-mail</label>
-                                                <input readonly class="form-control" type="text" id="email"
+                                                <input class="form-control" type="text" id="email"
                                                     name="email" placeholder="john.doe@example.com"
-                                                    value="{{ $student->email ?? '' }}"
-                                                    placeholder="john.doe@example.com">
+                                                    value="{{ $student->email ?? '' }}" placeholder="john.doe@example.com">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
                                                 <label for="organization" class="form-label required-field">Mobile</label>
                                                 <div class="input-group input-group-merge">
                                                     <span class="input-group-text">BD (+88)</span>
-                                                    <input type="number" id="mobile" name="mobile"
-                                                        class="form-control"
+                                                    <input type="number" id="mobile" name="mobile" class="form-control"
                                                         {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : '' }}
                                                         placeholder="01XXXXXXXXX" value="{{ $student->mobile ?? '' }}">
                                                 </div>
                                                 <span class="validation-message" id="mobile_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
                                                 <label for="gender" class="form-label required-field">Gender</label>
                                                 <select id="gender" name="gender" class="form-select"
@@ -325,8 +319,7 @@
 
                                             <div class="mb-3 col-md-6">
                                                 <label for="blood" class="form-label">Blood Group</label>
-                                                <select id="blood" name="blood" id="blood"
-                                                    class="form-select">
+                                                <select id="blood" name="blood" id="blood" class="form-select">
                                                     <option value="">Select Blood Group</option>
                                                     <option value="O+"
                                                         {{ isset($student) && $student->blood == 'O+' ? 'selected="selected"' : '' }}>
@@ -356,13 +349,12 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-section">
                                         <h6 class="section-title">Parent Information</h6>
                                         <div class="row g-3">
                                             <div class="mb-3 col-md-3">
-                                                <label for="first_name" class="form-label required-field">Father's
-                                                    Name</label>
+                                                <label for="first_name" class="form-label required-field">Father's Name</label>
                                                 <input class="form-control"
                                                     {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : '' }}
                                                     type="text" id="father_name" name="father_name"
@@ -370,83 +362,74 @@
                                                     autofocus="">
                                                 <span class="validation-message" id="father_name_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
                                                 <label for="father_email" class="form-label">Father's Email</label>
                                                 <input class="form-control" type="text" id="father_email"
                                                     name="father_email" placeholder="Father's Email"
                                                     value="{{ $student->father_email ?? '' }}" autofocus="">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="father_phone" class="form-label">Father's Contact
-                                                    Number</label>
+                                                <label for="father_phone" class="form-label">Father's Contact Number</label>
                                                 <input class="form-control" type="number" id="father_phone"
                                                     name="father_phone" placeholder="Father's Phone"
                                                     value="{{ $student->father_phone ?? '' }}" autofocus="">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="father_profession" class="form-label">Father's
-                                                    Profession</label>
+                                                <label for="father_profession" class="form-label">Father's Profession</label>
                                                 <input class="form-control" type="text" id="father_profession"
                                                     name="father_profession" placeholder="Father's Profession"
                                                     value="{{ $student->father_profession ?? '' }}" autofocus="">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="mother_name" class="form-label required-field">Mother's
-                                                    Name</label>
+                                                <label for="mother_name" class="form-label required-field">Mother's Name</label>
                                                 <input class="form-control"
                                                     {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : '' }}
                                                     type="text" name="mother_name" id="mother_name"
-                                                    placeholder="Mother's Name"
-                                                    value="{{ $student->mother_name ?? '' }}">
+                                                    placeholder="Mother's Name" value="{{ $student->mother_name ?? '' }}">
                                                 <span class="validation-message" id="mother_name_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
                                                 <label for="mother_email" class="form-label">Mother's Email</label>
                                                 <input class="form-control" type="text" name="mother_email"
                                                     id="mother_email" placeholder="Mother's Email"
                                                     value="{{ $student->mother_email ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="mother_phone" class="form-label">Mother's Contact
-                                                    Number</label>
+                                                <label for="mother_phone" class="form-label">Mother's Contact Number</label>
                                                 <input class="form-control" type="number" name="mother_phone"
                                                     id="mother_phone" placeholder="Mother's Phone"
                                                     value="{{ $student->mother_phone ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="mother_profession" class="form-label">Mother's
-                                                    Profession</label>
+                                                <label for="mother_profession" class="form-label">Mother's Profession</label>
                                                 <input class="form-control" type="text" name="mother_profession"
                                                     id="mother_profession" placeholder="Mother Profession"
                                                     value="{{ $student->mother_profession ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
-                                                <label for="mother_profession" class="form-label">Father's NID
-                                                    Number</label>
+                                                <label for="mother_profession" class="form-label">Father's NID Number</label>
                                                 <input class="form-control" type="number" name="father_nid_number"
                                                     id="father_nid_number" placeholder="Father's NID Number"
                                                     value="{{ $student->father_nid_number ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
-                                                <label for="mother_profession" class="form-label">Mother's NID
-                                                    Number</label>
+                                                <label for="mother_profession" class="form-label">Mother's NID Number</label>
                                                 <input class="form-control" type="number" name="mother_nid_number"
                                                     id="mother_nid_number" placeholder="Mother's NID Number"
                                                     value="{{ $student->mother_nid_number ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
-                                                <label for="father_nid" class="form-label">Father's NID (jpg,jpeg,pdf
-                                                    format)</label>
+                                                <label for="father_nid" class="form-label">Father's NID (jpg,jpeg,pdf format)</label>
                                                 <input class="form-control" type="file" accept=".pdf, .jpg, .jpeg"
                                                     onchange="loadFile(event,'father_nid_preview')" id="father_nid"
                                                     name="father_nid">
@@ -458,10 +441,9 @@
                                                         style="height: 100px; width: auto" />
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
-                                                <label for="mother_nid" class="form-label">Mother's NID (jpg,jpeg,pdf
-                                                    format)</label>
+                                                <label for="mother_nid" class="form-label">Mother's NID (jpg,jpeg,pdf format)</label>
                                                 <input class="form-control" type="file" accept=".pdf, .jpg, .jpeg"
                                                     onchange="loadFile(event,'mother_nid_preview')" id="mother_nid"
                                                     name="mother_nid">
@@ -473,10 +455,9 @@
                                                         style="height: 100px; width: auto" />
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
-                                                <label for="sms_notification" class="form-label required-field">SMS
-                                                    Notification Number</label>
+                                                <label for="sms_notification" class="form-label required-field">SMS Notification Number</label>
                                                 <input class="form-control" type="number" name="sms_notification"
                                                     {{ $student->sms_notification && Auth::user()->group_id != 2 ? 'disabled' : '' }}
                                                     required="required" id="sms_notification"
@@ -484,17 +465,16 @@
                                                     value="{{ $student->sms_notification ?? '' }}">
                                                 <span class="validation-message" id="sms_notification_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-6">
-                                                <label for="parent_income" class="form-label">Parent's Annual
-                                                    Income</label>
+                                                <label for="parent_income" class="form-label">Parent's Annual Income</label>
                                                 <input class="form-control" type="text" name="parent_income"
                                                     id="parent_income" placeholder="Parent's Annual Income"
                                                     value="{{ $student->parent_income ?? '' }}">
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-section">
                                         <h6 class="section-title">Address Information</h6>
                                         <div class="row g-3">
@@ -504,19 +484,17 @@
                                                     class="form-control" placeholder="Present Address"
                                                     value="{{ $student->present_addr ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
-                                                <label for="present_police_station" class="form-label">Present Police
-                                                    Station</label>
+                                                <label for="present_police_station" class="form-label">Present Police Station</label>
                                                 <input type="text" id="present_police_station"
                                                     name="present_police_station" class="form-control"
                                                     placeholder="Present Police Station"
                                                     value="{{ $student->present_police_station ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
-                                                <label for="present_district_id" class="form-label">Present
-                                                    District</label>
+                                                <label for="present_district_id" class="form-label">Present District</label>
                                                 <select id="present_district_id" name="present_district_id"
                                                     id="present_district_id" class="form-select">
                                                     <option value="">Select District</option>
@@ -527,7 +505,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-12">
                                                 <div class="demo-inline-spacing">
                                                     <label class="form-check m-0">
@@ -545,19 +523,17 @@
                                                     class="form-control" placeholder="Permanent Address"
                                                     value="{{ $student->permanent_addr ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
-                                                <label for="permanent_police_station" class="form-label">Permanent Police
-                                                    Station</label>
+                                                <label for="permanent_police_station" class="form-label">Permanent Police Station</label>
                                                 <input type="text" id="permanent_police_station"
                                                     name="permanent_police_station" class="form-control"
                                                     placeholder="Permanent Police Station"
                                                     value="{{ $student->permanent_police_station ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
-                                                <label for="permanent_district_id" class="form-label">Permanent
-                                                    District</label>
+                                                <label for="permanent_district_id" class="form-label">Permanent District</label>
                                                 <select id="permanent_district_id" name="permanent_district_id"
                                                     id="permanent_district_id" class="form-select">
                                                     <option value="">Select District</option>
@@ -570,13 +546,12 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-section">
                                         <h6 class="section-title">Local Guardian Information</h6>
                                         <div class="row g-3">
                                             <div class="mb-3 col-md-3">
-                                                <label for="local_guardian_name" class="form-label required-field">Local
-                                                    Guardian Name</label>
+                                                <label for="local_guardian_name" class="form-label required-field">Local Guardian Name</label>
                                                 <input type="text" class="form-control"
                                                     {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : '' }}
                                                     id="local_guardian_name" name="local_guardian_name"
@@ -584,10 +559,9 @@
                                                     value="{{ $student->local_guardian_name ?? '' }}">
                                                 <span class="validation-message" id="local_guardian_name_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="guardian_name" class="form-label required-field">Local
-                                                    Guardian Mobile</label>
+                                                <label for="guardian_name" class="form-label required-field">Local Guardian Mobile</label>
                                                 <input type="text" class="form-control"
                                                     {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : '' }}
                                                     id="local_guardian_mobile" name="local_guardian_mobile"
@@ -595,18 +569,16 @@
                                                     value="{{ $student->local_guardian_mobile ?? '' }}">
                                                 <span class="validation-message" id="local_guardian_mobile_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="guardian_email" class="form-label">Local Guardian
-                                                    Email</label>
+                                                <label for="guardian_email" class="form-label">Local Guardian Email</label>
                                                 <input type="text" class="form-control" id="local_guardian_email"
                                                     name="local_guardian_email" placeholder="Guardian Email"
                                                     value="{{ $student->local_guardian_email ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-3">
-                                                <label for="student_relation" class="form-label required-field">Relation
-                                                    with Student</label>
+                                                <label for="student_relation" class="form-label required-field">Relation with Student</label>
                                                 <input type="text" id="student_relation"
                                                     {{ Auth::user()->group_id != 2 && Auth::user()->group_id != 7 ? 'required' : '' }}
                                                     name="student_relation" class="form-control"
@@ -614,28 +586,25 @@
                                                     value="{{ $student->student_relation ?? '' }}">
                                                 <span class="validation-message" id="student_relation_error"></span>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
-                                                <label for="local_guardian_address" class="form-label">Local Guardian
-                                                    Address</label>
+                                                <label for="local_guardian_address" class="form-label">Local Guardian Address</label>
                                                 <input type="text" id="local_guardian_address"
                                                     name="local_guardian_address" class="form-control"
                                                     placeholder="Local guardian Address"
                                                     value="{{ $student->local_guardian_address ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
-                                                <label for="local_guardian_police_station" class="form-label">Local Police
-                                                    Station</label>
+                                                <label for="local_guardian_police_station" class="form-label">Local Police Station</label>
                                                 <input type="text" id="local_guardian_police_station"
                                                     name="local_guardian_police_station" class="form-control"
                                                     placeholder="Local guardian Police Station"
                                                     value="{{ $student->local_guardian_police_station ?? '' }}">
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
-                                                <label for="local_guardian_district_id" class="form-label">Local guardian
-                                                    District</label>
+                                                <label for="local_guardian_district_id" class="form-label">Local guardian District</label>
                                                 <select id="local_guardian_district_id" name="local_guardian_district_id"
                                                     id="local_permanent_district_id" class="form-select">
                                                     <option value="">Select District</option>
@@ -648,13 +617,12 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="form-section">
                                         <h6 class="section-title">Document Upload</h6>
                                         <div class="row g-3">
                                             <div class="mb-3 col-md-6">
-                                                <label for="photo" class="form-label required-field">Student's Recent
-                                                    Passport Size Photo (jpg,jpeg format)</label>
+                                                <label for="photo" class="form-label required-field">Student's Recent Passport Size Photo (jpg,jpeg format)</label>
                                                 <input class="form-control" type="file" id="photo"
                                                     accept=".jpg, .jpeg" onchange="loadFile(event,'photo_preview')"
                                                     name="photo"
@@ -671,8 +639,7 @@
                                             </div>
 
                                             <div class="mb-3 col-md-6">
-                                                <label for="academic_transcript" class="form-label">BIRTH
-                                                    Certificate/Registration (jpg,jpeg,pdf format)</label>
+                                                <label for="academic_transcript" class="form-label">BIRTH Certificate/Registration (jpg,jpeg,pdf format)</label>
                                                 <input class="form-control" type="file" accept=".pdf, .jpg, .jpeg"
                                                     onchange="loadFile(event,'birth_certificate_preview')"
                                                     id="birth_certificate" name="birth_certificate">
@@ -682,8 +649,7 @@
                                                     name="birth_certificate_old">
                                                 <div class="mb-3 col-md-12">
                                                     <img src="{{ $student->birth_certificate ?? '' }}"
-                                                        id="birth_certificate_preview"
-                                                        style="height: 100px; width: 100px;" />
+                                                        id="birth_certificate_preview" style="height: 100px; width: 100px;" />
                                                 </div>
                                             </div>
                                         </div>
@@ -697,8 +663,9 @@
                                                     class="align-middle d-sm-inline-block d-none Previous">Previous</span>
                                             </button>
 
-                                            <button type="button" data-value="desiredsubject" data-pre="accountdetails"
-                                                data-target="#account-details" class="btn btn-info">
+                                            <button type="button" data-value="desiredsubject"
+                                                data-pre="accountdetails" data-target="#account-details"
+                                                class="btn btn-info">
                                                 <span class="align-right me-sm-1">Save</span>
                                             </button>
 
@@ -721,37 +688,38 @@
                                 <div id="personal-info" class="content">
                                     <div class="step-header">
                                         <h6 class="section-title">Select Your Category</h6>
+										<small class="text-danger">Fields marked with <span class="text-danger">*</span> are mandatory and must be completed.</small>
                                     </div>
 
                                     <div class="form-section">
                                         <div class="col-md">
-                                            <div class="form-check mt-3">
-                                                <input name="categoryid" class="form-check-input specialinfo"
-                                                    {{ isset($student) && $student->categoryid == 1 ? 'checked="checked"' : '' }}
-                                                    type="radio" value="1" id="defaultRadio1">
-                                                <label class="form-check-label" for="defaultRadio1">
-                                                    Civil
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input name="categoryid" class="form-check-input specialinfo"
-                                                    type="radio"
-                                                    {{ isset($student) && $student->categoryid == 2 ? 'checked="checked"' : '' }}
-                                                    value="2" id="defaultRadio2">
-                                                <label class="form-check-label" for="defaultRadio2">
-                                                    Son/daughter of Armed Forces' Member
-                                                </label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input name="categoryid" class="form-check-input specialinfo"
-                                                    type="radio"
-                                                    {{ isset($student) && $student->categoryid == 3 ? 'checked="checked"' : '' }}
-                                                    value="3" id="defaultRadio3">
-                                                <label class="form-check-label" for="defaultRadio3">
-                                                    Son/daughter of Teaching/Non-Teaching staff of BAFSD
-                                                </label>
-                                            </div>
-                                        </div>
+											<div class="form-check mt-3">
+												<input name="categoryid" class="form-check-input specialinfo" 
+													{{ isset($student) && $student->categoryid == 1 ? 'checked="checked"' : '' }}
+													type="radio" value="1" id="defaultRadio1">
+												<label class="form-check-label" for="defaultRadio1">
+													Civil
+												</label>
+											</div>
+											<div class="form-check">
+												<input name="categoryid" class="form-check-input specialinfo" 
+													type="radio"
+													{{ isset($student) && $student->categoryid == 2 ? 'checked="checked"' : '' }}
+													value="2" id="defaultRadio2">
+												<label class="form-check-label" for="defaultRadio2">
+													Son/daughter of Armed Forces' Member
+												</label>
+											</div>
+											<div class="form-check">
+												<input name="categoryid" class="form-check-input specialinfo" 
+													type="radio"
+													{{ isset($student) && $student->categoryid == 3 ? 'checked="checked"' : '' }}
+													value="3" id="defaultRadio3">
+												<label class="form-check-label" for="defaultRadio3">
+													Son/daughter of Teaching/Non-Teaching staff of BAFSD
+												</label>
+											</div>
+										</div>
                                     </div>
 
                                     <div class="row g-3  {{ isset($student) && $student->categoryid == 2 ? 'show' : 'hide' }}"
@@ -760,41 +728,34 @@
                                             <h6 class="section-title">Armed Forces Information</h6>
                                             <div class="row g-3">
                                                 <div class="mb-3 col-md-4">
-                                                    <label for="guardian_email" class="form-label required-field">Name of
-                                                        service Holder</label>
+                                                    <label for="guardian_email" class="form-label required-field">Name of service Holder</label>
                                                     <input type="text" class="form-control"
                                                         {{ isset($student) && $student->categoryid == 2 ? 'required' : '' }}
-                                                        id="name" name="name"
-                                                        placeholder="Name of service holder"
+                                                        id="name" name="name" placeholder="Name of service holder"
                                                         value="{{ $student->name ?? '' }}">
                                                     <span class="validation-message" id="name_error"></span>
                                                 </div>
 
                                                 <div class="mb-3 col-md-4">
-                                                    <label for="guardian_name"
-                                                        class="form-label required-field">Rank/Designation</label>
+                                                    <label for="guardian_name" class="form-label required-field">Rank/Designation</label>
                                                     <input type="text" class="form-control"
                                                         {{ isset($student) && $student->categoryid == 2 ? 'required' : '' }}
-                                                        id="designation" name="designation"
-                                                        placeholder="Rank/Designation"
+                                                        id="designation" name="designation" placeholder="Rank/Designation"
                                                         value="{{ $student->designation ?? '' }}">
                                                     <span class="validation-message" id="designation_error"></span>
                                                 </div>
-
+                                                
                                                 <div class="mb-3 col-md-4">
-                                                    <label for="local_guardian_name"
-                                                        class="form-label required-field">Service number</label>
+                                                    <label for="local_guardian_name" class="form-label required-field">Service number</label>
                                                     <input type="text" class="form-control"
                                                         {{ isset($student) && $student->categoryid == 2 ? 'required' : '' }}
-                                                        id="service_number" name="service_number"
-                                                        placeholder="Service number"
+                                                        id="service_number" name="service_number" placeholder="Service number"
                                                         value="{{ $student->service_number ?? '' }}">
                                                     <span class="validation-message" id="service_number_error"></span>
                                                 </div>
-
+                                                
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="guardian_name" class="form-label required-field">Name of
-                                                        Service</label>
+                                                    <label for="guardian_name" class="form-label required-field">Name of Service</label>
                                                     <select id="arms_name" name="arms_name"
                                                         {{ isset($student) && $student->categoryid == 2 ? 'required' : '' }}
                                                         class="form-select">
@@ -811,24 +772,23 @@
                                                     </select>
                                                     <span class="validation-message" id="arms_name_error"></span>
                                                 </div>
-
+                                                
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="guardian_email" class="form-label required-field">In
-                                                        service</label>
+                                                    <label for="guardian_email" class="form-label required-field">Serving/Retired</label>
                                                     <select id="is_service" name="is_service"
                                                         {{ isset($student) && $student->categoryid == 2 ? 'required' : '' }}
                                                         class="form-select">
                                                         <option value="">Select Option</option>
                                                         <option
                                                             {{ isset($student) && $student->is_service == 1 ? 'selected="selected"' : '' }}
-                                                            value="1">Yes</option>
+                                                            value="1">Serving</option>
                                                         <option
                                                             {{ isset($student) && $student->is_service == 2 ? 'selected="selected"' : '' }}
-                                                            value="2">No</option>
+                                                            value="2">Retired</option>
                                                     </select>
                                                     <span class="validation-message" id="is_service_error"></span>
                                                 </div>
-
+                                                
                                                 @php
                                                     if (
                                                         isset($student) &&
@@ -850,22 +810,18 @@
                                                         $requird = '';
                                                     }
                                                 @endphp
-
+                                                
                                                 <div class="mb-3 col-md-6 {{ $requird == 'required' ? 'showinput' : 'hide' }}"
                                                     id="office_address_div">
-                                                    <label for="guardian_email" class="form-label required-field">Present
-                                                        office Address</label>
+                                                    <label for="guardian_email" class="form-label required-field">Present office Address</label>
                                                     <input type="text" class="form-control" id="office_address"
-                                                        {{ $requird }} name="office_address"
-                                                        placeholder="Office Address"
+                                                        {{ $requird }} name="office_address" placeholder="Office Address"
                                                         value="{{ $student->office_address ?? '' }}">
                                                     <span class="validation-message" id="office_address_error"></span>
                                                 </div>
-
+                                                
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="arm_certification"
-                                                        class="form-label required-field">Certification/Testimonial from
-                                                        office (jpg,jpeg,png format)</label>
+                                                    <label for="arm_certification" class="form-label required-field">Certification/Testimonial from office (jpg,jpeg,png format)</label>
                                                     <input class="form-control" type="file"
                                                         onchange="loadFile(event,'arm_certification_preview')"
                                                         {{ isset($student) && $student->categoryid == 2 && $student->arm_certification == '' && $student->arm_certification == null ? 'required' : '' }}
@@ -876,8 +832,7 @@
                                                         name="arm_certification_old">
                                                     <div class="mb-3 col-md-12">
                                                         <img src="{{ $student->arm_certification ?? '' }}"
-                                                            id="arm_certification_preview"
-                                                            style="height: 100px; width: 100px;" />
+                                                            id="arm_certification_preview" style="height: 100px; width: 100px;" />
                                                     </div>
                                                     <span class="validation-message" id="arm_certification_error"></span>
                                                 </div>
@@ -906,53 +861,46 @@
                                             </div>
                                         @endif
                                     </div>
-
+                                    
                                     <div class="row g-3 {{ isset($student) && $student->categoryid == 3 ? 'show' : 'hide' }}"
                                         id="teacherinfo">
                                         <div class="form-section">
                                             <h6 class="section-title">Staff Information</h6>
                                             <div class="row g-3">
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="local_guardian_name"
-                                                        class="form-label required-field">Name of the staff</label>
+                                                    <label for="local_guardian_name" class="form-label required-field">Name of the staff</label>
                                                     <input type="text" class="form-control" id="name_of_staff"
                                                         {{ isset($student) && $student->categoryid == 3 ? 'required' : '' }}
                                                         name="name_of_staff" placeholder="Name of the staff"
                                                         value="{{ $student->name_of_staff ?? '' }}">
                                                     <span class="validation-message" id="name_of_staff_error"></span>
                                                 </div>
-
+                                                
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="guardian_name"
-                                                        class="form-label required-field">Designation</label>
+                                                    <label for="guardian_name" class="form-label required-field">Designation</label>
                                                     <input type="text" class="form-control" id="staff_designation"
                                                         {{ isset($student) && $student->categoryid == 3 ? 'required' : '' }}
                                                         name="staff_designation" placeholder="Designation"
                                                         value="{{ $student->staff_designation ?? '' }}">
                                                     <span class="validation-message" id="staff_designation_error"></span>
                                                 </div>
-
+                                                
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="guardian_email" class="form-label required-field">Staff
-                                                        ID</label>
-                                                    <input type="text" class="form-control" id="staff_id"
-                                                        name="staff_id"
+                                                    <label for="guardian_email" class="form-label required-field">Staff ID</label>
+                                                    <input type="text" class="form-control" id="staff_id" name="staff_id"
                                                         {{ isset($student) && $student->categoryid == 3 ? 'required' : '' }}
                                                         placeholder="Staff ID" value="{{ $student->staff_id ?? '' }}">
                                                     <span class="validation-message" id="staff_id_error"></span>
                                                 </div>
-
+                                                
                                                 <div class="mb-3 col-md-6">
-                                                    <label for="academic_transcript"
-                                                        class="form-label required-field">Staff Certification/Testimonial
-                                                        from BAFSD (jpg,jpeg,png format)</label>
+                                                    <label for="academic_transcript" class="form-label required-field">Staff Certification/Testimonial from BAFSD (jpg,jpeg,png format)</label>
                                                     <input class="form-control" type="file"
                                                         onchange="loadFile(event,'staff_certification_preview')"
                                                         {{ isset($student) && $student->categoryid == 3 && $student->staff_certification == '' && $student->staff_certification == null ? 'required' : '' }}
                                                         id="staff_certification" name="staff_certification">
                                                     <span style="color: rgb(0,149,221)">(File size max 200 KB)</span>
-                                                    <input class="form-control" type="hidden"
-                                                        id="staff_certification_old"
+                                                    <input class="form-control" type="hidden" id="staff_certification_old"
                                                         value="{{ $student->staff_certification ?? '' }}"
                                                         name="staff_certification_old">
                                                     <div class="mb-3 col-md-12">
@@ -960,8 +908,7 @@
                                                             id="staff_certification_preview"
                                                             style="height: 100px; width: 100px;" />
                                                     </div>
-                                                    <span class="validation-message"
-                                                        id="staff_certification_error"></span>
+                                                    <span class="validation-message" id="staff_certification_error"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -988,7 +935,7 @@
                                             </div>
                                         @endif
                                     </div>
-
+                                    
                                     <div class="row g-3 {{ isset($student) && $student->categoryid == 1 ? 'show' : 'hide' }}"
                                         id="civildata">
                                         <div class="form-section">
@@ -1026,6 +973,7 @@
                                 <div id="review-submit" class="content">
                                     <div class="step-header">
                                         <h6 class="section-title">Academic Information</h6>
+										<small class="text-danger">Note: This information is locked and cannot be modified.</small>
                                     </div>
 
                                     <input type="hidden" name="class_code" value="{{ $activity->class_code }}" />
@@ -1043,7 +991,7 @@
                                                         {{ $activity->session_id }}</option>
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
                                                 <label for="version_id" class="form-label">Version</label>
                                                 <select id="version_id" disabled="disabled" name="version_id"
@@ -1069,7 +1017,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
                                                 <label for="class_code" class="form-label">Class</label>
                                                 <select id="class_code" disabled="disabled" name="class_code"
@@ -1080,7 +1028,7 @@
                                                         KG</option>
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4" style="display: none">
                                                 <label for="category_id" class="form-label">Category</label>
                                                 <select id="category_id" name="category_id" disabled="disabled"
@@ -1093,7 +1041,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4" hidden>
                                                 <label for="group_id" class="form-label">Group</label>
                                                 <select id="group_id" name="group_id" disabled="disabled"
@@ -1119,7 +1067,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
                                                 <label for="house_id" class="form-label">House</label>
                                                 <select id="house_id" disabled="disabled" name="house_id"
@@ -1132,7 +1080,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-
+                                            
                                             <div class="mb-3 col-md-4">
                                                 <label for="roll" class="form-label">Roll</label>
                                                 <input class="form-control" disabled="disabled" type="text"
@@ -1141,7 +1089,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="col-12 d-flex justify-content-between">
                                         @if ($student->submit != 2)
                                             <input type="hidden" class="btn btn-warning me-2" name="submit"
@@ -1170,7 +1118,7 @@
         <!-- / Content -->
         <div class="content-backdrop fade"></div>
     </div>
-
+    
     <div class="modal fade" id="modalScrollable" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <form id="formAdmission" method="POST"
@@ -1202,7 +1150,7 @@
             </form>
         </div>
     </div>
-
+    
     <script src="{{ asset('public/vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
     <script src="{{ asset('/') }}public/backend/assets/js/ui-modals.js"></script>
 
@@ -1271,42 +1219,42 @@
                 previewImg.src = ''; // Clear preview image
             }
         }
-
+        
         // Function to validate required fields in a section
         function validateSection(sectionId) {
             let isValid = true;
             let firstErrorField = null;
-
+            
             // Clear previous error messages
             $(`#${sectionId} .validation-message`).text('');
             $(`#${sectionId} :input`).removeClass('error');
-
+            
             // Check required fields
             $(`#${sectionId} :input[required]`).each(function() {
                 const field = $(this);
                 const fieldId = field.attr('id');
                 const fieldValue = field.val();
-
+                
                 if (!fieldValue) {
                     isValid = false;
                     field.addClass('error');
                     $(`#${fieldId}_error`).text('This field is required');
-
+                    
                     // Store the first error field for focus
                     if (!firstErrorField) {
                         firstErrorField = field;
                     }
                 }
             });
-
+            
             // Focus on first error field
             if (firstErrorField) {
                 firstErrorField.focus();
             }
-
+            
             return isValid;
         }
-
+        
         // Function to show validation summary
         function showValidationSummary() {
             Swal.fire({
@@ -1318,7 +1266,7 @@
             });
         }
     </script>
-
+    
     <script>
         @if (Session::get('success'))
             Swal.fire({
@@ -1327,7 +1275,7 @@
                 icon: "success"
             });
         @endif
-
+        
         @if (Session::get('warning'))
             Swal.fire({
                 title: "warning!",
@@ -1335,7 +1283,7 @@
                 icon: "warning"
             });
         @endif
-
+        
         $(function() {
             $("#formAdmission").submit(function(e) {
                 e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -1350,12 +1298,12 @@
                     }
                 });
             });
-
+            
             $(document).on('click', '.edit-icon', function() {
                 var forvalue = $(this).data('forvalue');
                 $("input[name='" + forvalue + "']").prop('readonly', false);
             });
-
+            
             $(document).on('change', '#is_service', function() {
                 if ($(this).val() == 1) {
                     $("#office_address_div").removeClass('hide').addClass('showinput');
@@ -1365,7 +1313,7 @@
                     $("#office_address").removeAttr('required');
                 }
             });
-
+            
             $(document.body).on('click', '.specialinfo', function() {
                 var value = $(this).val();
                 if (value == 1) {
@@ -1400,14 +1348,14 @@
                 $('#armforce input').val('');
                 $('#teacherinfo input').val('');
             });
-
+            
             $(document.body).on('click', '.btn-info', function() {
                 var currentSection = $('.active.dstepper-block').attr('id');
                 if (!validateSection(currentSection)) {
                     showValidationSummary();
                     return false;
                 }
-
+                
                 var form = $('#formAdmission')[0];
                 var formData = new FormData(form);
                 var actionUrl = "{{ route('admissionSave') }}";
@@ -1436,7 +1384,7 @@
                     }
                 });
             });
-
+            
             $(document.body).on('click', '.headermenu', function() {
                 var elementId = '';
                 $('.active.dstepper-block').each(function() {
@@ -1452,7 +1400,7 @@
                     showValidationSummary();
                     return false;
                 }
-
+                
                 if (validateSection(elementId)) {
                     $('#formAdmission .content').removeClass('active dstepper-block');
                     $('.step').removeClass('text-bold');
@@ -1461,15 +1409,15 @@
                     $('#' + currentdata).addClass('active dstepper-block');
                 }
             });
-
+            
             $(document.body).on('click', '.nextbtn,.btn-next', function() {
                 var boxdata = $(this).data('value');
                 var currentdata = $(this).data('currentdata');
                 var pre = $(this).data('pre');
                 var targetdiv = $(this).data('target');
-
+                
                 var currentSection = $('.active.dstepper-block').attr('id');
-
+                
                 // Validate current section before proceeding
                 if (!validateSection(currentSection)) {
                     showValidationSummary();
@@ -1513,7 +1461,7 @@
                     });
                 }
             });
-
+            
             $(document.body).on('click', '.Previous', function() {
                 var elementId = '';
                 $('.active.dstepper-block').each(function() {
@@ -1530,7 +1478,7 @@
                     showValidationSummary();
                     return false;
                 }
-
+                
                 $('#formAdmission .content').removeClass('active dstepper-block');
                 $('.bs-stepper-header .step').removeClass('active');
                 $('.step').removeClass('text-bold');
@@ -1538,7 +1486,7 @@
                 $(targetvalue).addClass('active dstepper-block');
                 $('#' + next).addClass('active text-bold');
             });
-
+            
             $(document.body).on('click', '#same_as', function() {
                 if ($('#same_as').is(':checked')) {
                     var present_addr = $('#present_addr').val();
@@ -1554,14 +1502,14 @@
                     $('#permanent_district_id').val('');
                 }
             });
-
+            
             $(document.body).on('click', '.btn-save', function() {
                 var currentSection = $('.active.dstepper-block').attr('id');
                 if (!validateSection(currentSection)) {
                     showValidationSummary();
                     return false;
                 }
-
+                
                 var form = $('#formAdmission')[0];
                 var formData = new FormData(form);
                 var actionUrl = "{{ route('admissionSave') }}";
@@ -1590,14 +1538,14 @@
                     }
                 });
             });
-
+            
             $(document.body).on('click', '#btn-submit', function() {
                 var currentSection = $('.active.dstepper-block').attr('id');
                 if (!validateSection(currentSection)) {
                     showValidationSummary();
                     return false;
                 }
-
+                
                 var form = $('#formAdmission')[0];
                 var formData = new FormData(form);
                 var actionUrl = "{{ route('admissionSave') }}";
@@ -1622,7 +1570,7 @@
                     }
                 });
             });
-
+            
             $(document.body).on('click', '#final_submit', function() {
                 Swal.fire({
                     title: 'Do you want to Final Submit For Admission?',
@@ -1644,7 +1592,7 @@
                     }
                 })
             });
-
+            
             $('#lfm').filemanager('image');
             $('#lfm1').filemanager('image');
 

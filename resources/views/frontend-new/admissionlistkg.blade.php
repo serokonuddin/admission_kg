@@ -254,14 +254,15 @@
                             <div class="refine-categ-header " style="margin-top: 10px;">
 
                                 <h3 style="text-align: center">Online Admission (অনলাইন ভর্তি) </h3>
-                                {{-- <h4 style="text-align: center"> <a
+                                <h4 style="text-align: center"> <a
                                         href="{{ asset('public/admissionpdf/Onine Admission.pdf') }}"
-                                        target="_blank">Admission Instruction (ভর্তির নির্দেশনা)</a> </h4> --}}
+                                        target="_blank">Admission Instruction (ভর্তির নির্দেশনা)</a> </h4>
                                 <h4 style="text-align: center"> <img title="Hotline Number"
                                         src="{{ asset('public/call-thumbnail.png') }}" style="height: 25px" /> <a
-                                        href="tel:{{ $academy_info->helpline_number }}"
-                                        style="color: red;font-weight: bold;">{{ $academy_info->helpline_number }}</a> </h4>
-                                <h4 style="text-align: center"> KG admission deadline: December 24, 2026 </h4>
+                                        href="tel:01759536622" style="color: red;font-weight: bold;">01759536622, </a><a
+                                        href="tel:01777521159" style="color: red;font-weight: bold;">01777521159</a> </h4>
+                                <h4 style="text-align: center"> KG admission deadline(GEN, BAF, SD/SEMC): November 28, 2025
+                                </h4>
 
                                 <form action="{{ route('admissionDatakg') }}" method="post" enctype="multipart/form-data"
                                     class="onlineform" id="checkstatusform" style="min-height:400px">
@@ -345,14 +346,14 @@
 
                                         </div>
                                         <div class="row display-none">
-
-                                            <div class="col">
-                                                <label for="inputEmail4">Username (ইউজার নাম) <span
-                                                        style="color: red">*</span></label>
-                                                <input type="text" class="form-control"
-                                                    value="{{ old('full_name') }}" required="" id="username"
-                                                    name="username" placeholder="Username (ইউজার নাম) ">
-                                            </div>
+                                            <!--
+                                                                    <div class="col">
+                                                                        <label for="inputEmail4">Username (ইউজার নাম) <span
+                                                                                style="color: red">*</span></label>
+                                                                        <input type="text" class="form-control"
+                                                                            value="{{ old('full_name') }}" required="" id="username"
+                                                                            name="username" placeholder="Username (ইউজার নাম) ">
+                                                                    </div> -->
                                             <div class="col">
                                                 <label for="inputEmail4">Email (ই-মেইল)</label>
                                                 <input type="text" class="form-control" value="{{ old('email') }}"
@@ -368,8 +369,8 @@
 
                                     </div>
                                     <div class="modal-footer display-none">
-                                        <button type="button" class="onlineformbtns mdbtn"
-                                            data-bs-dismiss="modal">Close</button>
+                                        {{-- <button type="button" class="onlineformbtns mdbtn"
+                                            data-bs-dismiss="modal">Close</button> --}}
                                         <input type="submit" class="onlineformbtns mdbtn"
                                             style="background-color: orange;width: 140px!important" name="submit"
                                             value="submit">
@@ -574,25 +575,25 @@
 
                 $('#exampleModal').modal('show');
             });
-            $(document.body).on('click', '.onlineformbtn', function() {
-                var versionid = $(this).data('versionid');
-                var version_name = $(this).data('version');
-                var class_id = $(this).data('class_id');
-                var session_id = $(this).data('session_id');
-                var price = $(this).data('price');
-                $('#version_id').val(versionid);
-                $('#class_id').val(class_id);
-                $('#session_id').val(session_id);
-                $('#price').val(price);
-                var text = '';
-                // if(versionid==1){
-                //    text="KG Class Admission(কেজি শ্রেণিতে ভর্তি)"
-                // }else{
-                //    text="XI Class Admission-English Version<br/> (একাদশ শ্রেণিতে ভর্তি-ইংরেজি ভার্শন)"
-                // }
-                // $('#version_name').html(text);
-                $('#checkOnlineAdmissionStatus').modal('show');
-            });
+            // $(document.body).on('click', '.onlineformbtn', function() {
+            //     var versionid = $(this).data('versionid');
+            //     var version_name = $(this).data('version');
+            //     var class_id = $(this).data('class_id');
+            //     var session_id = $(this).data('session_id');
+            //     var price = $(this).data('price');
+            //     $('#version_id').val(versionid);
+            //     $('#class_id').val(class_id);
+            //     $('#session_id').val(session_id);
+            //     $('#price').val(price);
+            //     var text = '';
+            //     // if(versionid==1){
+            //     //    text="KG Class Admission(কেজি শ্রেণিতে ভর্তি)"
+            //     // }else{
+            //     //    text="XI Class Admission-English Version<br/> (একাদশ শ্রেণিতে ভর্তি-ইংরেজি ভার্শন)"
+            //     // }
+            //     // $('#version_name').html(text);
+            //     $('#checkOnlineAdmissionStatus').modal('show');
+            // });
             $(document.body).on('input', '#temporary_id', function() {
 
                 var temporary_id = $('#temporary_id').val();
@@ -624,6 +625,7 @@
                                 $('#temporary_id').val('');
                                 $('#version_id').val('');
                                 $('#session_id').val('');
+                                $('#class_id').val('');
                                 $('#shift_id').val('');
                                 $('#shift_name').val('');
                                 $('#name_en').val('');
@@ -641,6 +643,7 @@
                                     icon: "warning"
                                 });
                                 $('#version_name').val('');
+                                $('#class_id').val('');
                                 $('#temporary_id').val('');
                                 $('#version_name').val('');
                                 $('#version_id').val('');
@@ -656,6 +659,7 @@
                             } else {
                                 var data = jQuery.parseJSON(response)
                                 $('#version_id').val(data.version_id);
+                                $('#class_id').val(data.class_id);
                                 $('#version_name').val(data.version_id == 1 ? 'Bangla' :
                                     'English');
                                 $('#shift_name').val(data.shift_id == 1 ? 'Morning' : 'Day');

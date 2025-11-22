@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\Website\Notice;
@@ -22,7 +21,7 @@ use App\Models\ClassCategoryHeadFee;
 use Illuminate\Http\Request;
 use App\Helpers\Helpers;
 use App\Library\SslCommerz\SslCommerzNotification;
-use App\Models\MasterSttings\AcademyInfo;
+use App\Models\masterSttings\AcademyInfo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -296,7 +295,7 @@ class WebsiteController extends Controller
             ->where('version_id', $version_id)
             ->where('shift_id', $shift_id)
             ->where('gender', $gender)
-            ->where('class_code', 0)
+            ->where('class_code', $class_code)
             ->count();
 
 
@@ -315,34 +314,33 @@ class WebsiteController extends Controller
 
         return $sections[$count % $sectioncount];
     }
-    public function KgStudentCreate($id)
+    public function KgStudentCreate($student)
     {
-        $student = DB::table('student_admission')
-            ->where('id', $id)
-            ->first();
 
+        $id = $student->id;
         if ($student) {
-            $session_id = (int)$student->session_id + 1;
+            $session_id = (int)$student->session_id + 1 - (int)$student->class_id;
             $count = DB::table('student_activity')
                 ->where('session_id', $session_id)
                 ->where('version_id', $student->version_id)
                 ->where('shift_id', $student->shift_id)
-                ->where('class_code', 0)
+                ->where('class_code', $student->class_id)
                 ->count();
 
-            if ($student->shift_id == 1 && $student->version_id == 1) {
-                $middel = 1000;
-            } else if ($student->shift_id == 2 && $student->version_id == 1) {
-                $middel = 3000;
-            } else if ($student->shift_id == 1 && $student->version_id == 2) {
-                $middel = 2000;
-            } else if ($student->shift_id == 2 && $student->version_id == 2) {
-                $middel = 4000;
-            }
-            $serial = $middel + $count + 1;
-            $student_code = $session_id . '' . ($serial);
-            $roll = $serial;
-            $section = $this->autoSection($count, $session_id, 0, $student->version_id, $student->shift_id, $student->gender);
+            // if ($student->shift_id == 1 && $student->version_id == 1) {
+            //     $middel = 1000;
+            // } else if ($student->shift_id == 2 && $student->version_id == 1) {
+            //     $middel = 3000;
+            // } else if ($student->shift_id == 1 && $student->version_id == 2) {
+            //     $middel = 2000;
+            // } else if ($student->shift_id == 2 && $student->version_id == 2) {
+            //     $middel = 4000;
+            // }
+            // $serial = $middel + $count + 1;
+            $student_code = $student->student_code;
+            $roll = substr($student_code, -4);
+            // dd($student_code, $roll);
+            $section = $this->autoSection($count, $session_id, $student->class_id, $student->version_id, $student->shift_id, $student->gender);
             //dd($section);
             $studentdata = array(
                 'student_code' => $student_code,
@@ -361,8 +359,8 @@ class WebsiteController extends Controller
                 'service_number' => $student->service_name,
                 'name' => $student->service_holder_name,
                 'arms_name' => $student->name_of_service ?? $student->service_name,
-                'designation' => $student->name_of_service,
                 'is_service' => $student->in_service,
+                'designation' => $student->name_of_service,
                 'office_address' => $student->office_address,
                 'name_of_staff' => $student->name_of_staff,
                 'staff_designation' => $student->staff_designation,
@@ -387,7 +385,7 @@ class WebsiteController extends Controller
                 'section_id' => $section,
                 'group_id' => null,
                 'roll' => $roll,
-                'house_id' => $this->housenumber($serial),
+                'house_id' => $this->housenumber($roll),
                 'category_id' => $student->category_id,
                 'active' => 1,
                 'created_by' => 1,
@@ -449,7 +447,7 @@ class WebsiteController extends Controller
         //    }else{
         //     $group_id=3;
         //    }
-        //dd($request->all());
+        // dd($request->all());
 
         $student = DB::table('student_admission')
             ->where('session_id', ((int)$request->session_id))
@@ -457,7 +455,8 @@ class WebsiteController extends Controller
             ->where('shift_id', $request->shift_id)
             ->where('temporary_id', $request->temporary_id)
             ->where('status', 1)
-            ->where('class_id', 0)
+            ->where('selected', 1)
+            ->where('class_id', $request->class_id)
             ->first();
 
         if (empty($student)) {
@@ -492,7 +491,7 @@ class WebsiteController extends Controller
 
         // if($request->submit=='Bypass Payemnt'){
 
-        $this->KgStudentCreate($student->id);
+        $this->KgStudentCreate($student);
         $text = "Payment Successfully Paid";
         return redirect()->route('sslredirect')->with('warging', $text);
         // }
@@ -1093,14 +1092,14 @@ class WebsiteController extends Controller
         // Image path, opacity, and size
         $mpdf->showWatermarkImage = true;
         $mpdf->SetHTMLHeader('
-                <div style="text-align: right;z-index: 999;margin-right: 80px;">
+                 <div style="text-align: right;z-index: 999;margin-right: 80px;">
                     <br/>
                     <br/>
                     <br/>
 
                     <img src="' . asset('public/seal.png') . '" style="max-height: 60px;">
-                </div>
-            ');
+                 </div>
+           ');
         $session = DB::table('sessions')->where('active', 1)->first();
         $student = StudentAdmission::where('session_id', $session->id)->where('temporary_id', $number)->where('payment_status', 1)->first();
         //return view('frontend-new.admitcard',compact('student','session'));
@@ -1167,7 +1166,7 @@ class WebsiteController extends Controller
         $notices = Notice::where('publish_date', '<=', date('Y-m-d'))->where('validity_date', '>=', date('Y-m-d'))->orderBy('publish_date', 'desc')->orderBy('id', 'desc')->get();
         $session = DB::table('sessions')->where('active', 1)->first();
         $admissiondata = AdmissionOpen::with(['class', 'version', 'session']);
-        $categories = Category::where('active', 1)->get();
+        $categories = Category::where('active', 1)->orderBy('id', 'asc')->get();
         if (isset($request->test)) {
             $admissiondata = $admissiondata->where('session_id', $session->id)->where('class_id', 0)->get();
         } else {
@@ -1189,7 +1188,7 @@ class WebsiteController extends Controller
 
         // dd($admissiondata[0]->admission_end_date, date('Y-m-d'));
 
-        if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_end_date <= date('Y-m-d')) {
+        if (isset($admissiondata[0]->admission_start_date) && $admissiondata[0]->admission_start_date <= date('Y-m-d') && $admissiondata[0]->admission_end_date >= date('Y-m-d')) {
             return view('frontend-new.admissionlistkg', compact('admissiondata', 'categories', 'session', 'notices', 'pages'));
         }
 
@@ -1269,7 +1268,7 @@ class WebsiteController extends Controller
         $totalAgeDays = $years * 365 + $months * 30 + $days;
 
         // Define valid range
-        $minAgeDays = (4 * 365) + (11 * 30) + 15; // 4 years, 11 months, 15 days
+        $minAgeDays = (4 * 365) + (10 * 30) + 7; // 4 years, 11 months, 15 days
         $maxAgeDays = (6 * 365) + 60;             // 6 years and 15 days
 
         // Check if within range or allowed category
@@ -1293,8 +1292,6 @@ class WebsiteController extends Controller
             'name_bn' => 'required',
             'name_en' => 'required',
         ]);
-        $text = $this->validateAge($request);
-
         $inputCaptcha = $request->input('captcha');
         $sessionCaptcha = session('custom_captcha');
 
@@ -1302,9 +1299,11 @@ class WebsiteController extends Controller
 
             return redirect('/')->with('warning', 'Captcha is incorrect');
         }
+        $text = $this->validateAge($request);
         if ($text != 1) {
             return redirect('/')->with('warning', $text);
         }
+
         $sessions = Sessions::where('id', $request->session_id)->first();
 
         $admissiondata = AdmissionOpen::where('session_id', $request->session_id)
@@ -1486,17 +1485,18 @@ class WebsiteController extends Controller
         $admissiondata = DB::table('student_admission')->where('session_id', $session->id);
 
         $admissiondata = $admissiondata->where('temporary_id', $request->temporary_id)
-            //->where('status',1)
+            ->whereIn('status', [1, 2])
+            ->where('selected', 1)
             ->first();
 
         //$admissiondata=$admissiondata->first();
-        dd($admissiondata->status);
+        //dd($admissiondata->status);
         if ($admissiondata) {
 
-            if ($admissiondata->status == 2) {
+            if ($admissiondata->status == 0) {
                 return 0;
             }
-            if ($admissiondata->status == 3) {
+            if ($admissiondata->status == 2) {
                 return 2;
             }
             if ($admissiondata->status == 1) {

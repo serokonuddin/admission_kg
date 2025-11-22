@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Imports\BoardListImport;
+use App\Imports\KgSelectionImport;
 use App\Models\AdmissionOpen;
 use App\Models\BoardList;
 use App\Models\KgStudentAdmission;
@@ -312,6 +313,136 @@ class AdmissionController extends Controller
             'sessions',
             'admissiondata'
         ));
+    }
+    public function kgAdmitListselection(Request $request)
+    {
+        Session::put('activemenu', 'admission');
+        Session::put('activesubmenu', 'asl');
+
+        $sessions = Sessions::where('active', 1)->get();
+        $session = Sessions::where('active', 1)->first();
+        $versions = Versions::where('active', 1)->get();
+        $shifts = Shifts::where('active', 1)->get();
+        $categories = Category::where('active', 1)->get();
+        $classes = Classes::where('active', 1)
+            ->where('session_id', $request->session_id)
+            ->where('shift_id', $request->shift_id)
+            ->where('version_id', $request->version_id)
+            ->get();
+
+        $admissiondata = AdmissionOpen::with(['class', 'version', 'session'])
+            ->where('class_id', 0)
+            ->where('session_id', 2024)
+            ->get();
+
+        $version_id = $request->version_id;
+        $session_id = $request->session_id;
+        $shift_id = $request->shift_id;
+        $class_id = $request->class_id;
+        $category_id = $request->category_id;
+        $temporary_id = $request->temporary_id;
+        $birth_registration_number = $request->birth_registration_number;
+        $mobile = $request->mobile;
+        $text_search = $request->text_search;
+        $students = [];
+
+        if ($session_id) {
+            $students = KgStudentAdmission::with(['class', 'session', 'version'])
+                ->where('session_id', $session_id)
+                ->where('status', 1)
+                ->where('selected', 1);
+
+            if ($version_id) {
+                $students = $students->where('version_id', $version_id);
+            }
+
+            if ($shift_id) {
+                $students = $students->where('shift_id', $shift_id);
+            }
+
+            if ($class_id) {
+                $students = $students->where('class_id', $class_id);
+            }
+
+            if ($category_id) {
+                $students = $students->where('category_id', $category_id);
+            }
+
+            if ($temporary_id) {
+                $students = $students->where('temporary_id', 'LIKE', "%{$temporary_id}%");
+            }
+
+            if ($birth_registration_number) {
+                $students = $students->where('birth_registration_number', 'LIKE', "%{$birth_registration_number}%");
+            }
+
+            if ($mobile) {
+                $students = $students->where('mobile', 'LIKE', "%{$mobile}%");
+            }
+
+            if (!empty($text_search)) {
+                $students = $students->where(function ($query) use ($text_search) {
+                    $query->where('name_en', 'LIKE', "%{$text_search}%")
+                        ->orWhere('mobile', 'LIKE', "%{$text_search}%")
+                        ->orWhere('temporary_id', 'LIKE', "%{$text_search}%");
+                });
+            }
+
+            $students = $students->orderBy('student_code', 'asc')->paginate(20);
+        } else {
+            $students = KgStudentAdmission::with(['class', 'session', 'version'])
+                ->where('session_id', $session->id)
+                ->where('status', 1)
+                ->where('selected', 1)
+                ->orderBy('student_code', 'asc')
+                ->paginate(20);
+        }
+
+        return view('admission.kgAdmissionListSelection', compact(
+            'students',
+            'categories',
+            'text_search',
+            'session_id',
+            'version_id',
+            'class_id',
+            'shift_id',
+            'category_id',
+            'temporary_id',
+            'birth_registration_number',
+            'mobile',
+            'classes',
+            'shifts',
+            'versions',
+            'sessions',
+            'admissiondata'
+        ));
+    }
+    public function kgAdmitListselectionUpload(Request $request)
+    {
+        $request->validate([
+            'selection_file' => 'required', // Validate file type and size
+        ]);
+
+        $file = $request->file('selection_file');
+
+        // Process the uploaded file (e.g., read data, update database)
+        // Here, you can use a library like Maatwebsite Excel to read Excel files
+        // or simply read CSV files using built-in PHP functions.
+
+        // Example: Reading a CSV file
+
+        if ($request->hasFile('selection_file')) {
+            $destinationPath = 'admissionxl';
+            $myimage = $request->file('selection_file')->getClientOriginalName();
+            $request->file('selection_file')->move(public_path($destinationPath), $myimage);
+            $file = public_path($destinationPath) . '/' . $myimage;
+            Excel::import(new KgSelectionImport, $file);
+        } else {
+            $file = $request->file_old;
+        }
+
+
+        return redirect()->back()->with('success', 'Selection statuses updated successfully.');
     }
     public function admissionStatistics(Request $request)
     {
