@@ -20,8 +20,8 @@
         }
 
         /* .table-striped tr:nth-child(even) {
-                                            background-color: #f9f9f9;
-                                        } */
+                                                background-color: #f9f9f9;
+                                            } */
         .table-bordered th,
         .table-bordered td {
             border: 1px solid #000 !important;
@@ -174,7 +174,7 @@
                             <td>: {{ calculateAge($student->dob ?? '') }}</td>
                         </tr>
                         <tr style="border: 2px solid #c0c0c0 !important">
-                            <td>Gurdian's Name</td>
+                            <td>Guardian's Name</td>
                             <td>: {{ $student->gurdian_name ?? '' }}</td>
                         </tr>
                         <tr style="border: 2px solid #c0c0c0 !important">

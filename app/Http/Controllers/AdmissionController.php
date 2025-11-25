@@ -113,7 +113,7 @@ class AdmissionController extends Controller
         if ($studentdata) {
 
             if ($studentdata->mobile && $studentdata->temporary_id) {
-                $textdata = 'Your New Temporary Number is ' . $studentdata->temporary_id . '. Please Collect Your Admit Card Link: ' . env('APP_URL') . '/admissionview';
+                $textdata = 'Your New Temporary Number is ' . $studentdata->temporary_id . '. Please Collect Your Admit Card to access Get Admit Card Option. Link: ' . env('APP_URL');
 
                 return  sms_send($studentdata->mobile, $textdata);
             } else {

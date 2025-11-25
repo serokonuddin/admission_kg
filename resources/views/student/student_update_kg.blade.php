@@ -1508,6 +1508,7 @@
                             });
                         }
                     });
+                    $.LoadingOverlay("hide");
                 }
             });
 

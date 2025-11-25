@@ -171,7 +171,7 @@
                 <td>: {{ calculateAge($student->dob) }}</td>
             </tr>
             <tr style="border: 2px solid #eee">
-                <td>Gurdian's Name</td>
+                <td>Guardian's Name</td>
                 <td>: {{ $student->gurdian_name }}</td>
             </tr>
             <tr style="border: 2px solid #eee">
