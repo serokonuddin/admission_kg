@@ -122,8 +122,11 @@
                                     <div class="col-sm-3">
                                         <label class="form-label">
                                             <select id="session_id" name="session_id" class="form-select" required="">
-                                                <option value="{{date('Y')}}" selected="selected">{{date('Y')}}</option>
-                                                
+                                                <option value="">Select Session</option>
+                                                @foreach ($sessions as $session)
+                                                    <option value="{{ $session->id }}">{{ $session->session_name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </label>
                                     </div>
@@ -151,7 +154,7 @@
                                     <div class="col-sm-3">
                                         <select id="class_id" name="class_id" class=" form-select" required="">
                                             <option value="0" selected="selected">Kg</option>
-                                            
+
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
@@ -206,21 +209,21 @@
                                     </label>
                                 </div>
                             </div>
-							@if (Auth::user()->is_view_user == 0)
-								<div class="d-flex align-items-center justify-sapce-beteween gap-3">
-									<div>
-										<button type="button" id="printBtn" class="btn btn-success btn-sm"
-											style="display: none">Print</button>
-									</div>
-									@if (Auth::user()->group_id != 6)
-										<div>
-											<button type="button" class="btn btn-success btn-sm" id="excelDownload"
-												style="display: none">Excel
-												Download</button>
-										</div>
-									@endif
-								</div>
-							@endif
+                            @if (Auth::user()->is_view_user == 0)
+                                <div class="d-flex align-items-center justify-sapce-beteween gap-3">
+                                    <div>
+                                        <button type="button" id="printBtn" class="btn btn-success btn-sm"
+                                            style="display: none">Print</button>
+                                    </div>
+                                    @if (Auth::user()->group_id != 6)
+                                        <div>
+                                            <button type="button" class="btn btn-success btn-sm" id="excelDownload"
+                                                style="display: none">Excel
+                                                Download</button>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -259,10 +262,10 @@
                                                 <td style="width: 20px;text-align:left;">
                                                     {{ ($students->currentPage() - 1) * $students->perPage() + $loop->iteration }}
                                                 </td>
-                                          
+
                                                 <td style="width: 140px;text-align:left;">
                                                     {{ $student->student_code ?? '' }}</td>
-                                                
+
                                                 <td class="studentinfo" data-studentcode="{{ $student->student_code }}"
                                                     style="width: 200px;">
                                                     <img src="{{ $student->photo ?? asset('public/student.png') }}"
@@ -315,8 +318,8 @@
                                                                     <i class="bx bx-block me-1"></i>Inactive
                                                                 </button>
                                                             @endif
-                                                            
-                                                            
+
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -387,7 +390,8 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="disciplinaryIssuesModal" tabindex="-1" aria-labelledby="pIdModalLabel" aria-hidden="true">
+            <div class="modal fade" id="disciplinaryIssuesModal" tabindex="-1" aria-labelledby="pIdModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -397,21 +401,23 @@
                             <input type="hidden" id="studentId">
                             <div class="mb-3">
                                 <label for="photo" class="form-label">Upload Disciplinary Issues
-                                                (pdf,jpg,jpeg format)<span class="text-danger">*</span></label>
-                                            <input class="form-control" type="file" id="photo"
-                                                onchange="loadFile(event,'disciplinary_issues_preview')" name="photo">
-                                            <span style="color: rgb(0,149,221)">(File size max 2000 KB)</span>
-                                            <input class="form-control" type="hidden" id="disciplinary_issues_old"
-                                                value="" name="disciplinary_issues_old">
+                                    (pdf,jpg,jpeg format)<span class="text-danger">*</span></label>
+                                <input class="form-control" type="file" id="photo"
+                                    onchange="loadFile(event,'disciplinary_issues_preview')" name="photo">
+                                <span style="color: rgb(0,149,221)">(File size max 2000 KB)</span>
+                                <input class="form-control" type="hidden" id="disciplinary_issues_old" value=""
+                                    name="disciplinary_issues_old">
 
-                                            <div class="mb-3 col-md-12">
-                                                <img src="" id="disciplinary_issues_preview"
-                                                    style="height: 100px; width: auto" />
-                                            </div>
+                                <div class="mb-3 col-md-12">
+                                    <img src="" id="disciplinary_issues_preview"
+                                        style="height: 100px; width: auto" />
+                                </div>
                             </div>
                             <div class="mb-3">
-                                            <label for="first_name" class="form-label">Details Disciplinary Issues<span class="text-danger">*</span></label>
-                                            <textarea colspan="20" rows="6" class="form-control" type="text" id="details" name="details" required="" placeholder="Details Disciplinary Issues" autofocus=""></textarea>
+                                <label for="first_name" class="form-label">Details Disciplinary Issues<span
+                                        class="text-danger">*</span></label>
+                                <textarea colspan="20" rows="6" class="form-control" type="text" id="details" name="details"
+                                    required="" placeholder="Details Disciplinary Issues" autofocus=""></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -473,11 +479,7 @@
 
         };
     </script>
-    <script>
-       
-        
-        
-    </script>
+    <script></script>
     <script>
         function openInactiveModal(studentId) {
             document.getElementById('inactiveStudentId').value = studentId;
@@ -854,7 +856,7 @@
 
     <script type="text/javascript">
         $(function() {
-            
+
             $(document.body).on('click', '.studentinfo', function() {
                 var student_code = $(this).data('studentcode');
                 var session_id = $('#session_id').val();
