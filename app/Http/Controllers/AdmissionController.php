@@ -1399,7 +1399,8 @@ class AdmissionController extends Controller
                 ]
             );
             $result[0]->watting = $request->watting;
-            return view('admission.ajaxWinnerLottery', compact('result', 'academy_info'));
+            // return view('admission.ajaxWinnerLottery', compact('result', 'academy_info'));
+            return view('admission.ajaxWinnerLotteryAnimated', compact('result', 'academy_info'));
         } else {
             return 0;
         }

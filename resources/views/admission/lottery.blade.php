@@ -321,7 +321,7 @@
                             $('.logo-spging').css('display', 'none');
                             $('#onboardImageModal').modal('show');
                             showlist();
-                        }, 5000);
+                        }, 3000);
 
 
                     },

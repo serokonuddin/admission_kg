@@ -145,7 +145,7 @@
     .student-photo {
         height: 100px;
         width: 100px;
-        object-fit: cover;
+        /* object-fit: cover; */
         border-radius: 8px;
         border: 3px solid #00ADEF;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
@@ -413,8 +413,8 @@
             <table class="table table-borderless mb-2">
                 <tr>
                     <td colspan="2" class="pb-1">
-                        <div class="highlight-name">
-                            NAME: {{ strtoupper($result[0]->name_en ?? '') }}
+                        <div class="highlight-serial">
+                            SERIAL NO: {{ $result[0]->temporary_id ?? '' }}
                         </div>
                     </td>
                     <td rowspan="3" class="text-center" style="width: 120px;">
@@ -424,8 +424,8 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="py-1">
-                        <div class="highlight-serial">
-                            SERIAL NO: {{ $result[0]->temporary_id ?? '' }}
+                        <div class="highlight-name">
+                            NAME: {{ strtoupper($result[0]->name_en ?? '') }}
                         </div>
                     </td>
                 </tr>

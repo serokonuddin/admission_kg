@@ -145,7 +145,7 @@
     .student-photo {
         height: 100px;
         width: 100px;
-        object-fit: cover;
+        /* object-fit: cover; */
         border-radius: 8px;
         border: 3px solid #00ADEF;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);

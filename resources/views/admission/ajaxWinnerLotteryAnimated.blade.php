@@ -143,9 +143,9 @@
     }
 
     .student-photo {
-        height: 100px;
-        width: 100px;
-        object-fit: cover;
+        height: 140px;
+        width: 140px;
+        /* object-fit: cover; */
         border-radius: 8px;
         border: 3px solid #00ADEF;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
@@ -193,31 +193,39 @@
         }
     }
 
-    .info-row-compact {
+    /* Two column layout styles */
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        animation: slideInFromLeft 0.6s ease-out both;
+    }
+
+    .info-grid-item {
         display: flex;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         border-bottom: 1px solid #f0f0f0;
         padding: 0.4rem 0;
         animation: slideInFromLeft 0.6s ease-out both;
     }
 
-    .info-row-compact:nth-child(1) {
+    .info-grid-item:nth-child(1) {
         animation-delay: 0.7s;
     }
 
-    .info-row-compact:nth-child(2) {
+    .info-grid-item:nth-child(2) {
         animation-delay: 0.8s;
     }
 
-    .info-row-compact:nth-child(3) {
+    .info-grid-item:nth-child(3) {
         animation-delay: 0.9s;
     }
 
-    .info-row-compact:nth-child(4) {
+    .info-grid-item:nth-child(4) {
         animation-delay: 1.0s;
     }
 
-    .info-row-compact:nth-child(5) {
+    .info-grid-item:nth-child(5) {
         animation-delay: 1.1s;
     }
 
@@ -241,6 +249,7 @@
     .info-value {
         font-weight: 700;
         color: #222;
+        margin-left: 10px;
     }
 
     .modal-footer {
@@ -355,6 +364,46 @@
         }
     }
 
+    /* Improved table layout */
+    .student-info-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .student-info-table tr:first-child td {
+        padding-top: 0;
+    }
+
+    .student-info-table tr:last-child td {
+        padding-bottom: 0;
+    }
+
+    .student-info-table .photo-cell {
+        width: 160px;
+        text-align: center;
+        vertical-align: top;
+        padding-top: 10px !important;
+    }
+
+    .student-info-table .info-cell {
+        vertical-align: top;
+        padding-left: 0 !important;
+    }
+
+    .student-info-table .serial-cell {
+        padding-bottom: 0px !important;
+    }
+
+    .student-info-table .name-cell {
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+
+    .student-info-table .guardian-cell {
+        padding-top: 0px !important;
+        font-size: 14px;
+    }
+
     @media (max-width: 576px) {
         .modal-onboarding .onboarding-content {
             margin: 0px 1rem;
@@ -369,13 +418,22 @@
         }
 
         .student-photo {
-            height: 80px;
-            width: 80px;
+            height: 120px;
+            width: 120px;
         }
 
         .selection-message::before,
         .selection-message::after {
             font-size: 1.2rem;
+        }
+
+        .student-info-table .photo-cell {
+            width: 130px;
+        }
+
+        /* Stack columns on mobile */
+        .info-grid {
+            grid-template-columns: 1fr;
         }
     }
 </style>
@@ -410,27 +468,27 @@
         @endphp
 
         <div class="onboarding-content mb-0">
-            <table class="table table-borderless mb-2">
+            <table class="table table-borderless mb-2 student-info-table">
                 <tr>
-                    <td colspan="2" class="pb-1">
-                        <div class="highlight-name">
-                            NAME: {{ strtoupper($result[0]->name_en ?? '') }}
-                        </div>
-                    </td>
-                    <td rowspan="3" class="text-center" style="width: 120px;">
-                        <img src="{{ asset($result[0]->photo ?? '') }}" alt="Student Photo" class="student-photo"
-                            onerror="this.src='https://via.placeholder.com/100x100/00ADEF/FFFFFF?text=Photo'">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="py-1">
+                    <td colspan="2" class="serial-cell info-cell">
                         <div class="highlight-serial">
                             SERIAL NO: {{ $result[0]->temporary_id ?? '' }}
                         </div>
                     </td>
+                    <td rowspan="3" class="photo-cell">
+                        <img src="{{ asset($result[0]->photo ?? '') }}" alt="Student Photo" class="student-photo"
+                            onerror="this.src='https://via.placeholder.com/140x140/00ADEF/FFFFFF?text=Photo'">
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="pt-1">
+                    <td colspan="2" class="name-cell info-cell">
+                        <div class="highlight-name">
+                            NAME: {{ strtoupper($result[0]->name_en ?? '') }}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="guardian-cell info-cell">
                         GUARDIAN: {{ strtoupper($result[0]->gurdian_name ?? '') }}<br>
                         MOBILE: {{ $result[0]->mobile ?? '' }}
                     </td>
@@ -438,41 +496,43 @@
             </table>
 
             <div class="mt-2">
-                <div class="info-row-compact">
-                    <span class="info-label">Version:</span>
-                    <span class="info-value">
-                        @if ($result[0]->version_id == 1)
-                            Bangla
-                        @else
-                            English
-                        @endif
-                    </span>
-                </div>
+                <div class="info-grid">
+                    <div class="info-grid-item">
+                        <span class="info-label">Version:</span>
+                        <span class="info-value">
+                            @if ($result[0]->version_id == 1)
+                                Bangla
+                            @else
+                                English
+                            @endif
+                        </span>
+                    </div>
 
-                <div class="info-row-compact">
-                    <span class="info-label">Shift:</span>
-                    <span class="info-value">
-                        @if ($result[0]->shift_id == 1)
-                            Morning
-                        @else
-                            Day
-                        @endif
-                    </span>
-                </div>
+                    <div class="info-grid-item">
+                        <span class="info-label">Shift:</span>
+                        <span class="info-value">
+                            @if ($result[0]->shift_id == 1)
+                                Morning
+                            @else
+                                Day
+                            @endif
+                        </span>
+                    </div>
 
-                <div class="info-row-compact">
-                    <span class="info-label">Date of Birth:</span>
-                    <span class="info-value">{{ $result[0]->dob ?? '' }}</span>
-                </div>
+                    <div class="info-grid-item">
+                        <span class="info-label">Date of Birth:</span>
+                        <span class="info-value">{{ $result[0]->dob ?? '' }}</span>
+                    </div>
 
-                <div class="info-row-compact">
-                    <span class="info-label">Birth Registration:</span>
-                    <span class="info-value">{{ $result[0]->birth_registration_number ?? '' }}</span>
-                </div>
+                    <div class="info-grid-item">
+                        <span class="info-label">Gender:</span>
+                        <span class="info-value">{{ $gender[$result[0]->gender] ?? '' }}</span>
+                    </div>
 
-                <div class="info-row-compact">
-                    <span class="info-label">Gender:</span>
-                    <span class="info-value">{{ $gender[$result[0]->gender] ?? '' }}</span>
+                    <div class="info-grid-item" style="grid-column: span 2;">
+                        <span class="info-label">Birth Registration:</span>
+                        <span class="info-value">{{ $result[0]->birth_registration_number ?? '' }}</span>
+                    </div>
                 </div>
             </div>
         </div>
