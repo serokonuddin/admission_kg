@@ -456,7 +456,7 @@
             </a>
             <h4 class="admission-title">KG Admission 2026</h4>
             <p class="selection-message">
-                Congratulations! You Are Selected
+                Congratulations! You are selected
                 @if ($result[0]->watting == 1)
                     For Waiting List
                 @endif
